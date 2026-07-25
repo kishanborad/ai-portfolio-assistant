@@ -7,5 +7,14 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'web-llm': ['@mlc-ai/web-llm'],
+          'transformers': ['@huggingface/transformers'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 2000,
   },
 });
