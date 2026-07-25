@@ -1,7 +1,7 @@
 [
   {
     "question": "Tell me about your experience",
-    "answer": "I've been working in QA automation and software development for about five years. My focus is building test infrastructure that teams rely on daily \u2014 Playwright and Selenium tests, CI pipelines, visual regression, and actionable reporting. Want to know about a specific role or project?",
+    "answer": "I've spent about five years in QA automation and software development. Most of that time has been building test infrastructure: Playwright and Selenium suites, CI pipelines, visual regression setups, reporting dashboards. The kind of stuff teams open every morning. Want to know about a specific role or project?",
     "keywords": [
       "experience",
       "work",
@@ -23,7 +23,7 @@
   },
   {
     "question": "Show me your projects",
-    "answer": "I've built three interactive playgrounds that showcase different skills: a Test Runner Playground for writing and executing Playwright-style tests live, an Event-Stream Playground that visualizes Kafka partition mechanics, and a Visual Regression Lab for pixel-level UI comparison. Each one runs entirely in the browser. Want details on any of these?",
+    "answer": "I've got a few interactive playgrounds on my site. The Test Runner lets you write Playwright-style tests and run them against a live demo shop. The Event-Stream Playground simulates Kafka partition mechanics with real-time visualization. And the Visual Regression Lab does pixel-level UI comparison using Python in the browser. Want details on any of them?",
     "keywords": [
       "projects",
       "portfolio",
@@ -45,7 +45,7 @@
   },
   {
     "question": "What's your tech stack?",
-    "answer": "My primary languages are Python and TypeScript. For testing: Playwright, Selenium, pytest, Vitest, axe-core, PIL/Pillow. For infrastructure: Docker, GitHub Actions, shell scripting. Frontend: React, Tailwind CSS, Vite, Canvas API, WebAssembly. I also work with REST APIs, JSON Schema validation, and event streaming concepts.",
+    "answer": "Python and TypeScript are my main languages. On the testing side, I use Playwright, Selenium, pytest, Vitest, axe-core, and PIL/Pillow. For infrastructure: Docker, GitHub Actions, shell scripting. Frontend work is React, Tailwind CSS, Vite, Canvas API, and WebAssembly. I also do REST API work, JSON Schema validation, and event streaming.",
     "keywords": [
       "tech",
       "stack",
@@ -68,7 +68,7 @@
   },
   {
     "question": "Tell me About Me",
-    "answer": "I'm Kishan Borad, a QA Engineer and Developer based in the US. I build test automation infrastructure and interactive developer tools. My portfolio site at kishanborad.com showcases my work across both software development and quality assurance.",
+    "answer": "I'm Kishan Borad, a QA Engineer and Developer based in the US. I build test automation infrastructure and interactive developer tools. You can see my work at kishanborad.com.",
     "keywords": [
       "about",
       "background",
@@ -82,7 +82,7 @@
   },
   {
     "question": "What are your About Me?",
-    "answer": "I'm Kishan Borad, a QA Engineer and Developer based in the US. I build test automation infrastructure and interactive developer tools. My portfolio site at kishanborad.com showcases my work across both software development and quality assurance.",
+    "answer": "I'm Kishan Borad, a QA Engineer and Developer based in the US. I build test automation infrastructure and interactive developer tools. You can see my work at kishanborad.com.",
     "keywords": [
       "about",
       "background",
@@ -96,7 +96,7 @@
   },
   {
     "question": "Tell me Goals",
-    "answer": "My near-term goal is to work at a company where engineering quality is a competitive advantage, not a checkbox. I want to be in a role where I can influence how testing is done across the organization \u2014 not just write tests, but shape the strategy, tools, and culture.",
+    "answer": "I'm looking for a company where engineering quality is treated as a competitive edge, not a compliance checkbox. I want to influence how testing is done at the org level: the strategy, the tooling, the culture around it.",
     "keywords": [
       "future",
       "growth",
@@ -110,7 +110,7 @@
   },
   {
     "question": "What are your Goals?",
-    "answer": "My near-term goal is to work at a company where engineering quality is a competitive advantage, not a checkbox. I want to be in a role where I can influence how testing is done across the organization \u2014 not just write tests, but shape the strategy, tools, and culture.",
+    "answer": "I'm looking for a company where engineering quality is treated as a competitive edge, not a compliance checkbox. I want to influence how testing is done at the org level: the strategy, the tooling, the culture around it.",
     "keywords": [
       "future",
       "growth",
@@ -124,7 +124,7 @@
   },
   {
     "question": "Tell me Strengths",
-    "answer": "My strongest skill is bridging the gap between QA and development. I can design a test strategy, implement the automation, set up the CI pipeline, and build the dashboard \u2014 end to end. That range means I don't get stuck waiting for someone else to unblock the next step.",
+    "answer": "I work across the full QA-to-dev spectrum. I can design a test strategy, write the automation, wire up the CI pipeline, and build the reporting dashboard. I don't get stuck waiting for someone else to unblock the next piece.",
     "keywords": [
       "skills",
       "what i'm good at",
@@ -137,7 +137,7 @@
   },
   {
     "question": "What are your Strengths?",
-    "answer": "My strongest skill is bridging the gap between QA and development. I can design a test strategy, implement the automation, set up the CI pipeline, and build the dashboard \u2014 end to end. That range means I don't get stuck waiting for someone else to unblock the next step.",
+    "answer": "I work across the full QA-to-dev spectrum. I can design a test strategy, write the automation, wire up the CI pipeline, and build the reporting dashboard. I don't get stuck waiting for someone else to unblock the next piece.",
     "keywords": [
       "skills",
       "what i'm good at",
@@ -150,7 +150,7 @@
   },
   {
     "question": "Tell me about AI Portfolio Assistant",
-    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys, no data leaves the browser.",
+    "answer": "This is a browser-based assistant that answers questions about my experience, projects, and skills. It runs a language model entirely on your device. No server, no API keys, nothing leaves the browser.",
     "keywords": [
       "chatbot",
       "browser",
@@ -167,7 +167,7 @@
   },
   {
     "question": "What is AI Portfolio Assistant?",
-    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys, no data leaves the browser.",
+    "answer": "This is a browser-based assistant that answers questions about my experience, projects, and skills. It runs a language model entirely on your device. No server, no API keys, nothing leaves the browser.",
     "keywords": [
       "chatbot",
       "browser",
@@ -184,7 +184,7 @@
   },
   {
     "question": "How does AI Portfolio Assistant work?",
-    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys, no data leaves the browser.",
+    "answer": "This is a browser-based assistant that answers questions about my experience, projects, and skills. It runs a language model entirely on your device. No server, no API keys, nothing leaves the browser.",
     "keywords": [
       "chatbot",
       "browser",
@@ -201,7 +201,7 @@
   },
   {
     "question": "Tell me about Event-Stream Playground",
-    "answer": "The Event-Stream Playground is a living diagram of a Kafka-style event streaming system. You can produce event bursts, pause consumers, watch partition lag grow in real time, kill a service and see retries kick in \u2014 all visualized on an animated canvas.",
+    "answer": "The Event-Stream Playground simulates a Kafka-style streaming system as an interactive diagram. You can fire off event bursts, pause consumers, watch partition lag climb in real time, kill a service and see retries kick in. Everything plays out on an animated canvas.",
     "keywords": [
       "kafka",
       "stream",
@@ -220,7 +220,7 @@
   },
   {
     "question": "What is Event-Stream Playground?",
-    "answer": "The Event-Stream Playground is a living diagram of a Kafka-style event streaming system. You can produce event bursts, pause consumers, watch partition lag grow in real time, kill a service and see retries kick in \u2014 all visualized on an animated canvas.",
+    "answer": "The Event-Stream Playground simulates a Kafka-style streaming system as an interactive diagram. You can fire off event bursts, pause consumers, watch partition lag climb in real time, kill a service and see retries kick in. Everything plays out on an animated canvas.",
     "keywords": [
       "kafka",
       "stream",
@@ -239,7 +239,7 @@
   },
   {
     "question": "How does Event-Stream Playground work?",
-    "answer": "The Event-Stream Playground is a living diagram of a Kafka-style event streaming system. You can produce event bursts, pause consumers, watch partition lag grow in real time, kill a service and see retries kick in \u2014 all visualized on an animated canvas.",
+    "answer": "The Event-Stream Playground simulates a Kafka-style streaming system as an interactive diagram. You can fire off event bursts, pause consumers, watch partition lag climb in real time, kill a service and see retries kick in. Everything plays out on an animated canvas.",
     "keywords": [
       "kafka",
       "stream",
@@ -258,7 +258,7 @@
   },
   {
     "question": "Tell me about Test Runner Playground",
-    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
+    "answer": "The Test Runner Playground lets you write Playwright-style tests against a live demo shop and watch them execute step by step. Elements get highlighted as they're located, assertion results show up inline, and you get a full HTML report at the end of the run.",
     "keywords": [
       "runner",
       "automation",
@@ -275,7 +275,7 @@
   },
   {
     "question": "What is Test Runner Playground?",
-    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
+    "answer": "The Test Runner Playground lets you write Playwright-style tests against a live demo shop and watch them execute step by step. Elements get highlighted as they're located, assertion results show up inline, and you get a full HTML report at the end of the run.",
     "keywords": [
       "runner",
       "automation",
@@ -292,7 +292,7 @@
   },
   {
     "question": "How does Test Runner Playground work?",
-    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
+    "answer": "The Test Runner Playground lets you write Playwright-style tests against a live demo shop and watch them execute step by step. Elements get highlighted as they're located, assertion results show up inline, and you get a full HTML report at the end of the run.",
     "keywords": [
       "runner",
       "automation",
@@ -309,7 +309,7 @@
   },
   {
     "question": "Tell me about Visual Regression Lab",
-    "answer": "The Visual Regression Lab lets you compare two builds of the same UI pixel by pixel. You select a scenario, the tool renders baseline and candidate versions in hidden iframes, captures them to canvas, and runs a Python-powered diff algorithm (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail gate.",
+    "answer": "The Visual Regression Lab compares two builds of the same UI pixel by pixel. Pick a scenario, and it renders baseline and candidate versions in hidden iframes, captures them to canvas, then runs a Python diff (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail verdict.",
     "keywords": [
       "regression",
       "pixel",
@@ -328,7 +328,7 @@
   },
   {
     "question": "What is Visual Regression Lab?",
-    "answer": "The Visual Regression Lab lets you compare two builds of the same UI pixel by pixel. You select a scenario, the tool renders baseline and candidate versions in hidden iframes, captures them to canvas, and runs a Python-powered diff algorithm (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail gate.",
+    "answer": "The Visual Regression Lab compares two builds of the same UI pixel by pixel. Pick a scenario, and it renders baseline and candidate versions in hidden iframes, captures them to canvas, then runs a Python diff (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail verdict.",
     "keywords": [
       "regression",
       "pixel",
@@ -347,7 +347,7 @@
   },
   {
     "question": "How does Visual Regression Lab work?",
-    "answer": "The Visual Regression Lab lets you compare two builds of the same UI pixel by pixel. You select a scenario, the tool renders baseline and candidate versions in hidden iframes, captures them to canvas, and runs a Python-powered diff algorithm (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail gate.",
+    "answer": "The Visual Regression Lab compares two builds of the same UI pixel by pixel. Pick a scenario, and it renders baseline and candidate versions in hidden iframes, captures them to canvas, then runs a Python diff (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail verdict.",
     "keywords": [
       "regression",
       "pixel",
@@ -366,7 +366,7 @@
   },
   {
     "question": "Tell me about your Education",
-    "answer": "I hold a degree in Computer Science. My coursework covered data structures, algorithms, operating systems, databases, and software engineering principles. That foundation shapes how I think about test architecture \u2014 I treat test suites as software systems that deserve the same engineering rigor as production code.",
+    "answer": "I have a Computer Science degree. The coursework covered data structures, algorithms, operating systems, databases, and software engineering. That background is why I treat test suites the same way I'd treat production code: with real architecture, not just scripts bolted together.",
     "keywords": [
       "education",
       "computer science",
@@ -380,7 +380,7 @@
   },
   {
     "question": "What is your Education?",
-    "answer": "I hold a degree in Computer Science. My coursework covered data structures, algorithms, operating systems, databases, and software engineering principles. That foundation shapes how I think about test architecture \u2014 I treat test suites as software systems that deserve the same engineering rigor as production code.",
+    "answer": "I have a Computer Science degree. The coursework covered data structures, algorithms, operating systems, databases, and software engineering. That background is why I treat test suites the same way I'd treat production code: with real architecture, not just scripts bolted together.",
     "keywords": [
       "education",
       "computer science",
@@ -394,7 +394,7 @@
   },
   {
     "question": "Tell me about your Professional Experience",
-    "answer": "I've been working in QA automation and software development for about five years. My core focus has been building and scaling test infrastructure that teams actually rely on for daily decisions.",
+    "answer": "I've been in QA automation and software development for about five years. Most of that time has gone into building and scaling test infrastructure that teams actually depend on day to day.",
     "keywords": [
       "experience",
       "automation",
@@ -409,7 +409,7 @@
   },
   {
     "question": "What is your Professional Experience?",
-    "answer": "I've been working in QA automation and software development for about five years. My core focus has been building and scaling test infrastructure that teams actually rely on for daily decisions.",
+    "answer": "I've been in QA automation and software development for about five years. Most of that time has gone into building and scaling test infrastructure that teams actually depend on day to day.",
     "keywords": [
       "experience",
       "automation",
@@ -424,7 +424,7 @@
   },
   {
     "question": "Tell me about your Technical Skills",
-    "answer": "My primary languages are Python and TypeScript. I write Python for test automation, data processing, build scripts, and CLI tools. TypeScript is my go-to for frontend work, React components, and Node-based tooling.",
+    "answer": "Python and TypeScript are my main languages. I write Python for test automation, data processing, build scripts, and CLI tools. TypeScript handles the frontend: React components, Node-based tooling, that sort of thing.",
     "keywords": [
       "testing tools",
       "languages",
@@ -439,7 +439,7 @@
   },
   {
     "question": "What is your Technical Skills?",
-    "answer": "My primary languages are Python and TypeScript. I write Python for test automation, data processing, build scripts, and CLI tools. TypeScript is my go-to for frontend work, React components, and Node-based tooling.",
+    "answer": "Python and TypeScript are my main languages. I write Python for test automation, data processing, build scripts, and CLI tools. TypeScript handles the frontend: React components, Node-based tooling, that sort of thing.",
     "keywords": [
       "testing tools",
       "languages",
@@ -454,7 +454,7 @@
   },
   {
     "question": "What is your Collaboration Philosophy?",
-    "answer": "I think the best quality work comes from tight collaboration between developers and QA, not from throwing builds over a wall. I prefer being involved early \u2014 during design discussions, PR reviews, and architecture decisions \u2014 rather than waiting until something is \"ready to test.\"",
+    "answer": "The best quality work I've seen comes from developers and QA working closely together, not from throwing builds over a wall. I like being involved early. Design discussions, PR reviews, architecture decisions. By the time something is \"ready to test,\" I should already know the codebase.",
     "keywords": [
       "collaboration",
       "communication",
@@ -468,7 +468,7 @@
   },
   {
     "question": "Tell me about your approach to collaboration",
-    "answer": "I think the best quality work comes from tight collaboration between developers and QA, not from throwing builds over a wall. I prefer being involved early \u2014 during design discussions, PR reviews, and architecture decisions \u2014 rather than waiting until something is \"ready to test.\"",
+    "answer": "The best quality work I've seen comes from developers and QA working closely together, not from throwing builds over a wall. I like being involved early. Design discussions, PR reviews, architecture decisions. By the time something is \"ready to test,\" I should already know the codebase.",
     "keywords": [
       "collaboration",
       "communication",
@@ -482,7 +482,7 @@
   },
   {
     "question": "What is your Engineering Philosophy?",
-    "answer": "I believe good engineering is about making the right tradeoffs, not chasing perfection. Ship working software, get feedback, iterate. But \"working\" includes maintainable, testable, and observable \u2014 not just \"it passes QA.\"",
+    "answer": "Good engineering is about tradeoffs, not perfection. Ship it, get feedback, iterate. But to me, \"working\" means maintainable, testable, and observable. Not just \"it passed QA.\"",
     "keywords": [
       "engineering",
       "philosophy",
@@ -496,7 +496,7 @@
   },
   {
     "question": "Tell me about your approach to engineering",
-    "answer": "I believe good engineering is about making the right tradeoffs, not chasing perfection. Ship working software, get feedback, iterate. But \"working\" includes maintainable, testable, and observable \u2014 not just \"it passes QA.\"",
+    "answer": "Good engineering is about tradeoffs, not perfection. Ship it, get feedback, iterate. But to me, \"working\" means maintainable, testable, and observable. Not just \"it passed QA.\"",
     "keywords": [
       "engineering",
       "philosophy",
@@ -510,7 +510,7 @@
   },
   {
     "question": "What is your Testing Philosophy?",
-    "answer": "I think of test automation as infrastructure, not an afterthought. A test suite should be a system you can reason about \u2014 with its own architecture, performance budget, and maintenance plan. When tests are slow, flaky, or hard to understand, I treat that as a bug in the test infrastructure, not an acceptable cost of doing business.",
+    "answer": "I think of test automation as infrastructure. A test suite should be a system you can reason about, with its own architecture, performance budget, and maintenance plan. Slow tests, flaky tests, hard-to-read tests: those are bugs in the infrastructure, and I treat them that way.",
     "keywords": [
       "philosophy",
       "automation",
@@ -525,7 +525,7 @@
   },
   {
     "question": "Tell me about your approach to testing",
-    "answer": "I think of test automation as infrastructure, not an afterthought. A test suite should be a system you can reason about \u2014 with its own architecture, performance budget, and maintenance plan. When tests are slow, flaky, or hard to understand, I treat that as a bug in the test infrastructure, not an acceptable cost of doing business.",
+    "answer": "I think of test automation as infrastructure. A test suite should be a system you can reason about, with its own architecture, performance budget, and maintenance plan. Slow tests, flaky tests, hard-to-read tests: those are bugs in the infrastructure, and I treat them that way.",
     "keywords": [
       "philosophy",
       "automation",
