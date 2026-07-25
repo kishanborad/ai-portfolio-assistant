@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react';
 import type { Message, SuggestionChip, TierState } from '../types';
 import { MessageBubble } from './MessageBubble';
 import type { Orchestrator } from '../ai/orchestrator';
@@ -16,7 +16,8 @@ const STARTER_CHIPS: SuggestionChip[] = [
   { label: "What's your tech stack?", query: "What's your tech stack?" },
 ];
 
-export function ChatPanel({ orchestrator, tierState }: ChatPanelProps) {
+export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, ChatPanelProps>(
+  function ChatPanel({ orchestrator, tierState }, ref) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'greeting',
@@ -89,8 +90,25 @@ export function ChatPanel({ orchestrator, tierState }: ChatPanelProps) {
     }
   };
 
+  useImperativeHandle(ref, () => ({
+    sendMessage: (query: string) => handleSend(query),
+  }), [handleSend]);
+
   return (
     <div className="flex-1 flex flex-col min-w-0">
+      {/* Mobile top bar - visible on small screens */}
+      <div className="flex md:hidden items-center justify-between px-4 py-3 border-b border-white/[0.08] bg-navy-deep/90">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full gradient-accent-light flex items-center justify-center text-xs font-bold shadow-glow">
+            KB
+          </div>
+          <div>
+            <div className="text-sm font-semibold">Kishan's Assistant</div>
+            <div className="text-[10px] text-accent">{tierState.label}</div>
+          </div>
+        </div>
+      </div>
+
       {/* Header */}
       <div className="px-5 py-3 border-b border-white/[0.08] flex items-center gap-3">
         <div className="w-7 h-7 rounded-lg gradient-accent-light flex items-center justify-center text-xs font-bold shadow-glow">
@@ -166,4 +184,5 @@ export function ChatPanel({ orchestrator, tierState }: ChatPanelProps) {
       </div>
     </div>
   );
-}
+});
+
