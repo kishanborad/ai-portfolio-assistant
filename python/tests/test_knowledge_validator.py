@@ -3,8 +3,6 @@
 import os
 import tempfile
 
-import pytest
-
 from knowledge_validator import validate_frontmatter, validate_knowledge_dir
 
 

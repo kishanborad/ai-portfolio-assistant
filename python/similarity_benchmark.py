@@ -13,7 +13,6 @@ import json
 
 import numpy as np
 
-
 DEFAULT_QUERIES = [
     {"query": "Tell me about your QA experience", "expected_source": "experience.md"},
     {"query": "What tools do you use?", "expected_source": "skills.md"},

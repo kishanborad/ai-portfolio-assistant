@@ -16,7 +16,6 @@ import re
 
 import yaml
 
-
 FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 
 # Category-specific question templates

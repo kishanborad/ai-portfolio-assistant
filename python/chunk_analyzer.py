@@ -12,9 +12,7 @@ import os
 import statistics
 
 import tiktoken
-
 from build_embeddings import chunk_markdown, parse_frontmatter
-
 
 EXPECTED_CATEGORIES = {"resume", "projects", "philosophy", "personality"}
 

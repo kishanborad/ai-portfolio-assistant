@@ -4,10 +4,7 @@ import json
 import os
 import tempfile
 
-import pytest
-
-from build_embeddings import chunk_markdown, build_knowledge_json
-
+from build_embeddings import build_knowledge_json, chunk_markdown
 
 # ── chunk_markdown tests ────────────────────────────────────────────────────
 
@@ -83,7 +80,7 @@ class TestBuildKnowledgeJson:
                 )
 
             output_path = os.path.join(tmpdir, "knowledge.json")
-            result = build_knowledge_json(
+            build_knowledge_json(
                 os.path.join(tmpdir, "knowledge"), output_path
             )
 

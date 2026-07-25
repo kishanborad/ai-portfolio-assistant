@@ -3,8 +3,6 @@
 import os
 import tempfile
 
-import pytest
-
 from export_resume import export_json_resume, write_resume_json
 
 

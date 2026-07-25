@@ -14,7 +14,6 @@ import sys
 
 import yaml
 
-
 FRONTMATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 REQUIRED_FIELDS = ["title", "category", "tags"]
 

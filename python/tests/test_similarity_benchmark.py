@@ -4,8 +4,6 @@ import json
 import os
 import tempfile
 
-import pytest
-
 from similarity_benchmark import run_benchmark
 
 

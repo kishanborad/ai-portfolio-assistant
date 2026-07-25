@@ -3,8 +3,6 @@
 import os
 import tempfile
 
-import pytest
-
 from chunk_analyzer import analyze_chunks
 
 

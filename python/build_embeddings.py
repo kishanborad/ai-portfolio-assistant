@@ -12,12 +12,9 @@ import argparse
 import json
 import os
 import re
-import sys
 
-import numpy as np
 import tiktoken
 import yaml
-
 
 # ── frontmatter parsing ────────────────────────────────────────────────────
 

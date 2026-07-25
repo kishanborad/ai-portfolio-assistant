@@ -4,8 +4,6 @@ import json
 import os
 import tempfile
 
-import pytest
-
 from faq_generator import generate_faq, write_faq_json
 
 

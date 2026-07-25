@@ -1,6 +1,6 @@
 """Package setup for ai-portfolio-assistant Python tools."""
 
-from setuptools import setup, find_packages
+from setuptools import find_packages, setup
 
 setup(
     name="ai-portfolio-assistant-tools",
