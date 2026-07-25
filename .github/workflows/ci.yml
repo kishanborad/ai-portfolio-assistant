@@ -1,0 +1,134 @@
+# .github/workflows/ci.yml — Continuous Integration pipeline
+#
+# Runs on every push and pull request to main:
+#   1. Python unit tests across 3.10 / 3.11 / 3.12
+#   2. Frontend build + Vitest unit tests
+#   3. Docker image build verification
+#   4. Linting (ruff for Python, shellcheck for scripts)
+
+name: CI
+
+on:
+  push:
+    branches: [main, "feat/**", "fix/**", "chore/**"]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "20"
+  PYTHON_MIN: "3.10"
+
+jobs:
+
+  # ── 1. Python unit tests ─────────────────────────────────────────────────
+  python-tests:
+    name: "Python ${{ matrix.python-version }} tests"
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    defaults:
+      run:
+        working-directory: python
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: python/requirements.txt
+
+      - name: Install dependencies
+        run: pip install --upgrade pip && pip install -r requirements.txt
+
+      - name: Run pytest with coverage
+        run: |
+          python -m pytest tests/ \
+            --tb=short \
+            -v \
+            --cov=. \
+            --cov-report=term-missing \
+            --ignore=tests/test_similarity_benchmark.py
+
+  # ── 2. Frontend checks ──────────────────────────────────────────────────
+  frontend:
+    name: "Frontend build & tests"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Run vitest
+        run: npx vitest run --reporter=verbose
+
+      - name: Build
+        run: npx vite build
+
+  # ── 3. Docker build ────────────────────────────────────────────────────
+  docker-build:
+    name: "Docker build verification"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t ai-portfolio-assistant .
+
+      - name: Smoke test
+        run: |
+          docker run -d --name test-container -p 8080:80 ai-portfolio-assistant
+          sleep 3
+          curl -f http://localhost:8080/ || exit 1
+          docker stop test-container
+
+  # ── 4. Lint ────────────────────────────────────────────────────────────
+  lint:
+    name: "Lint"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_MIN }}
+
+      - name: Install ruff
+        run: pip install ruff
+
+      - name: Lint Python
+        run: ruff check python/
+
+      - name: Install shellcheck
+        run: sudo apt-get install -y shellcheck
+
+      - name: Lint shell scripts
+        run: shellcheck scripts/*.sh
