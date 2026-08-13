@@ -1,0 +1,45 @@
+name: Sync Knowledge Base
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday 6am UTC
+  workflow_dispatch:       # Manual trigger
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r python/requirements.txt
+
+      - name: Sync with portfolio
+        env:
+          # Needs a PAT with repo scope to read the private portfolio repo.
+          # Create at: Settings > Developer settings > Personal access tokens
+          # Store as: repo Settings > Secrets > PORTFOLIO_PAT
+          GITHUB_TOKEN: ${{ secrets.PORTFOLIO_PAT }}
+        run: cd python && python sync_portfolio.py --knowledge-dir ../knowledge
+
+      - name: Rebuild knowledge base
+        run: bash scripts/build-knowledge.sh
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: auto-sync knowledge base with portfolio"
+            git push
+          fi

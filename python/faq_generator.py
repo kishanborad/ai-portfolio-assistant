@@ -57,23 +57,7 @@ STARTER_FAQS = [
             {"label": "Show me your projects", "query": "Tell me about your projects"},
         ],
     },
-    {
-        "question": "Show me your projects",
-        "answer": (
-            "I've built three interactive playgrounds that showcase different "
-            "skills: a Test Runner Playground for writing and executing "
-            "Playwright-style tests live, an Event-Stream Playground that "
-            "visualizes Kafka partition mechanics, and a Visual Regression Lab "
-            "for pixel-level UI comparison. Each one runs entirely in the "
-            "browser. Want details on any of these?"
-        ),
-        "keywords": ["projects", "portfolio", "built", "playground", "work"],
-        "category": "projects",
-        "suggestions": [
-            {"label": "Tell me about the test runner", "query": "Tell me about the Test Runner Playground"},
-            {"label": "How does visual regression work?", "query": "How does the Visual Regression Lab work?"},
-        ],
-    },
+    # "Show me your projects" is generated dynamically — see _build_projects_overview()
     {
         "question": "What's your tech stack?",
         "answer": (
@@ -92,6 +76,41 @@ STARTER_FAQS = [
         ],
     },
 ]
+
+
+def _build_projects_overview(knowledge_dir: str) -> dict:
+    """Build 'Show me your projects' FAQ from actual knowledge files."""
+    projects_dir = os.path.join(knowledge_dir, "projects")
+    titles: list[str] = []
+    for fname in sorted(os.listdir(projects_dir)):
+        if not fname.endswith(".md"):
+            continue
+        with open(os.path.join(projects_dir, fname), encoding="utf-8") as f:
+            text = f.read()
+        match = FRONTMATTER_RE.match(text)
+        if match:
+            meta = yaml.safe_load(match.group(1)) or {}
+            titles.append(meta.get("title", fname.replace(".md", "")))
+
+    count = len(titles)
+    answer = (
+        f"I've built {count} interactive playgrounds that run in the browser "
+        f"with no server or signup needed. Want details on any of them?"
+    )
+
+    suggestions = []
+    for title in titles[:4]:
+        words = title.split()
+        label = " ".join(words[:3]) if len(words) > 3 else title
+        suggestions.append({"label": label, "query": f"Tell me about {title}"})
+
+    return {
+        "question": "Show me your projects",
+        "answer": answer,
+        "keywords": ["projects", "portfolio", "built", "playground", "work", "demos"],
+        "category": "projects",
+        "suggestions": suggestions,
+    }
 
 
 def _extract_first_paragraph(body: str) -> str:
@@ -167,7 +186,8 @@ def generate_faq(knowledge_dir: str) -> list[dict]:
 
 def write_faq_json(knowledge_dir: str, output_path: str) -> list[dict]:
     """Generate FAQs and write to JSON file, including starter FAQs."""
-    faqs = STARTER_FAQS + generate_faq(knowledge_dir)
+    projects_overview = _build_projects_overview(knowledge_dir)
+    faqs = STARTER_FAQS + [projects_overview] + generate_faq(knowledge_dir)
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
