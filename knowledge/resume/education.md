@@ -4,7 +4,7 @@ category: resume
 tags: [education, degree, university, learning, computer science]
 ---
 
-I hold a degree in Computer Science. My coursework covered data structures, algorithms, operating systems, databases, and software engineering principles. That foundation shapes how I think about test architecture — I treat test suites as software systems that deserve the same engineering rigor as production code.
+I have a Master of Science in Computer Science from North American University (2024) and a Bachelor of Engineering in Computer Engineering from the University of Mumbai (2018). Coursework covered data structures, algorithms, operating systems, databases, and software engineering. That foundation shapes how I think about test architecture — I treat test suites as software systems that deserve the same engineering rigor as production code.
 
 Beyond formal education, I've invested heavily in self-directed learning. I keep up with the testing ecosystem through conference talks, open-source repos, and hands-on experimentation with new tools. When Playwright started gaining traction, I didn't wait for a workshop — I built a playground project to learn its API by writing real tests against a demo app.
 

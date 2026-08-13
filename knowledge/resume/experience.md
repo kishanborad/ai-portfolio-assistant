@@ -1,15 +1,15 @@
 ---
 title: Professional Experience
 category: resume
-tags: [experience, work, career, QA, automation, testing]
+tags: [experience, work, career, QA, automation, testing, SDET]
 ---
 
-I've been working in QA automation and software development for about five years. My core focus has been building and scaling test infrastructure that teams actually rely on for daily decisions.
+I've been in QA automation and software development for about five years across four companies, from ed-tech startups to a regulatory compliance lab to Fortune 500 financial services.
 
-At my current role, I own the end-to-end test automation strategy. That means writing Playwright and Selenium tests, setting up CI pipelines that run them on every PR, and building dashboards so the team can see test health at a glance. I've also introduced visual regression testing into our workflow — catching pixel-level UI regressions before they reach production.
+Right now I'm a Software Engineer in Test at Prudential Financial, where I build and maintain the Playwright/TypeScript test infrastructure for advisor dashboards managing annuity policies. The framework uses layered Page Object Model abstractions with custom fixtures for authentication, test data, and API state. Regression coverage is around 85%. I also write API tests for the REST and GraphQL services behind retirement projections, with contract checks that catch schema drift before release. I cut CI/CD execution time by parallelizing runs in Docker containers and manage AWS-based test environments.
 
-Before that, I worked on API testing with Python and requests, load testing with Locust, and manual exploratory testing when the situation called for it. I'm comfortable writing test plans, triaging flaky tests, and debugging failures across browser, API, and database layers.
+Before Prudential, I was a QA & Automation Engineer at UL Solutions, where I built Python and SQL automation pipelines for regulatory compliance data workflows. That replaced roughly 50 hours a week of manual processing. I also automated SAR wireless certification testing across about 50 devices per week and built reporting tooling that cut audit report turnaround from 3 days to about 4 hours.
 
-One thing I care about is making test infrastructure something that enables speed rather than slowing teams down. I've invested time in parallel test execution, smart retries, and generating actionable reports that tell engineers exactly what broke and where.
+At iSchoolConnect I went from Quality Assurance Engineer to Product Quality Specialist II. I built the Selenium and Cypress automation framework on Page Object Model with Postman API regression suites, moving releases from bi-weekly to weekly. I ran JMeter load tests simulating 10,000+ concurrent users, and the fixes from those tests cut page load times about 35%. I also coordinated a 6-person QA team on a platform serving 500K+ students.
 
-I've also contributed to the build and deploy pipeline — writing GitHub Actions workflows, Dockerizing test environments, and making sure the whole CI chain runs fast and reliably. When tests are slow or flaky, I treat that as a production incident for the test infrastructure itself.
+I started at Quantiphi as an intern and moved to full-time Frontend Quality Analyst, growing their Selenium WebDriver suite from zero to 120+ tests across 4 product lines and closing 80+ pre-launch UI defects through cross-browser testing.
