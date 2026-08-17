@@ -2,6 +2,8 @@
 
 A browser-based AI chatbot that answers questions about my experience, projects, skills, and engineering philosophy. The language model runs entirely client-side — no server, no API keys, no data leaves the browser.
 
+**Live demo:** [kishanborad.github.io/ai-portfolio-assistant](https://kishanborad.github.io/ai-portfolio-assistant/)
+
 ## How it works
 
 Three-tier AI with graceful fallback:
@@ -12,9 +14,11 @@ Three-tier AI with graceful fallback:
 
 Knowledge retrieval uses pre-computed embeddings from a Python build pipeline. User queries are embedded at runtime via Transformers.js, and the top-5 relevant chunks are injected into the LLM's system prompt.
 
-## Quick start
+## Getting started
 
 ```bash
+git clone https://github.com/kishanborad/ai-portfolio-assistant.git
+cd ai-portfolio-assistant
 bash scripts/setup.sh
 npm run dev
 ```
@@ -31,4 +35,22 @@ npm run dev
 
 ## Tech stack
 
-TypeScript, React, Vite, Tailwind CSS, WebLLM, Transformers.js, Python, Docker, GitHub Actions
+- React 18 + TypeScript + Vite + Tailwind CSS
+- WebLLM (WebGPU-accelerated LLM inference)
+- Transformers.js (WASM-based embeddings and fallback LLM)
+- Python (knowledge pipeline, embedding generation, pytest)
+- Docker + GitHub Actions CI
+
+## AI tools
+
+Built with [Claude Code](https://claude.ai/code) as the AI copilot for code generation, agent-driven development, and automated testing workflows.
+
+## Author
+
+Kishan Borad
+- [GitHub](https://github.com/kishanborad)
+- [LinkedIn](https://linkedin.com/in/kishanborad27)
+
+## License
+
+MIT

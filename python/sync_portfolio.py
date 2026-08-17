@@ -33,10 +33,19 @@ ID_TO_FILENAME: dict[str, str] = {
 
 
 def _gh_token() -> str | None:
-    """Get GitHub token from env or gh CLI."""
+    """Get GitHub token from env, .pat_token file, or gh CLI."""
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
     if token:
         return token
+
+    # Check .pat_token file in repo root (for local runs)
+    pat_file = os.path.join(os.path.dirname(__file__), os.pardir, ".pat_token")
+    if os.path.isfile(pat_file):
+        with open(pat_file, encoding="utf-8") as f:
+            token = f.read().strip()
+        if token:
+            return token
+
     try:
         result = subprocess.run(
             ["gh", "auth", "token"],
