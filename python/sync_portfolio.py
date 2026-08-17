@@ -40,7 +40,7 @@ def _gh_token() -> str | None:
     try:
         result = subprocess.run(
             ["gh", "auth", "token"],
-            capture_output=True, text=True, timeout=10,
+            capture_output=True, text=True, timeout=10, check=False,
         )
         if result.returncode == 0:
             return result.stdout.strip()
