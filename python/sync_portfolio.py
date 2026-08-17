@@ -61,8 +61,17 @@ def fetch_github_file(path: str) -> str:
         headers["Authorization"] = f"Bearer {token}"
 
     req = urllib.request.Request(url, headers=headers)
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        data = json.loads(resp.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            auth_hint = "with token" if token else "WITHOUT token (repo may be private)"
+            raise RuntimeError(
+                f"404 fetching {path} from {REPO} ({auth_hint}). "
+                f"Check PORTFOLIO_PAT secret is set and has repo scope."
+            ) from e
+        raise
 
     content_b64 = data.get("content", "")
     return base64.b64decode(content_b64).decode("utf-8")

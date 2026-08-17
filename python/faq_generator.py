@@ -82,6 +82,14 @@ def _build_projects_overview(knowledge_dir: str) -> dict:
     """Build 'Show me your projects' FAQ from actual knowledge files."""
     projects_dir = os.path.join(knowledge_dir, "projects")
     titles: list[str] = []
+    if not os.path.isdir(projects_dir):
+        return {
+            "question": "Show me your projects",
+            "answer": "I've built interactive playgrounds that run in the browser. Want details?",
+            "keywords": ["projects", "portfolio", "built", "playground", "work", "demos"],
+            "category": "projects",
+            "suggestions": [],
+        }
     for fname in sorted(os.listdir(projects_dir)):
         if not fname.endswith(".md"):
             continue
