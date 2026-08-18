@@ -6,7 +6,7 @@ export default defineConfig({
   base: '/ai-portfolio-assistant/',
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: false,
     rollupOptions: {
       output: {
         manualChunks: {
