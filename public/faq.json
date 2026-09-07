@@ -79,10 +79,10 @@
     "question": "Tell me About Me",
     "answer": "I'm Kishan Borad, a QA Engineer and Developer based in the US. I build test automation infrastructure and interactive developer tools. My portfolio site at kishanborad.com showcases my work across both software development and quality assurance.",
     "keywords": [
-      "interests",
-      "who",
-      "background",
       "about",
+      "background",
+      "who",
+      "interests",
       "personal",
       "about me"
     ],
@@ -93,10 +93,10 @@
     "question": "What are your About Me?",
     "answer": "I'm Kishan Borad, a QA Engineer and Developer based in the US. I build test automation infrastructure and interactive developer tools. My portfolio site at kishanborad.com showcases my work across both software development and quality assurance.",
     "keywords": [
-      "interests",
-      "who",
-      "background",
       "about",
+      "background",
+      "who",
+      "interests",
       "personal",
       "about me"
     ],
@@ -107,11 +107,11 @@
     "question": "Tell me Goals",
     "answer": "My near-term goal is to work at a company where engineering quality is a competitive advantage, not a checkbox. I want to be in a role where I can influence how testing is done across the organization \u2014 not just write tests, but shape the strategy, tools, and culture.",
     "keywords": [
-      "career",
-      "goals",
-      "future",
-      "aspirations",
       "growth",
+      "future",
+      "goals",
+      "aspirations",
+      "career",
       "goals"
     ],
     "category": "personality",
@@ -121,11 +121,11 @@
     "question": "What are your Goals?",
     "answer": "My near-term goal is to work at a company where engineering quality is a competitive advantage, not a checkbox. I want to be in a role where I can influence how testing is done across the organization \u2014 not just write tests, but shape the strategy, tools, and culture.",
     "keywords": [
-      "career",
-      "goals",
-      "future",
-      "aspirations",
       "growth",
+      "future",
+      "goals",
+      "aspirations",
+      "career",
       "goals"
     ],
     "category": "personality",
@@ -135,10 +135,10 @@
     "question": "Tell me Strengths",
     "answer": "My strongest skill is bridging the gap between QA and development. I can design a test strategy, implement the automation, set up the CI pipeline, and build the dashboard \u2014 end to end. That range means I don't get stuck waiting for someone else to unblock the next step.",
     "keywords": [
-      "skills",
-      "what i'm good at",
       "advantages",
+      "skills",
       "strengths",
+      "what i'm good at",
       "strengths"
     ],
     "category": "personality",
@@ -148,339 +148,21 @@
     "question": "What are your Strengths?",
     "answer": "My strongest skill is bridging the gap between QA and development. I can design a test strategy, implement the automation, set up the CI pipeline, and build the dashboard \u2014 end to end. That range means I don't get stuck waiting for someone else to unblock the next step.",
     "keywords": [
-      "skills",
-      "what i'm good at",
       "advantages",
+      "skills",
       "strengths",
+      "what i'm good at",
       "strengths"
     ],
     "category": "personality",
     "suggestions": []
   },
   {
-    "question": "Tell me about AI Portfolio Assistant",
-    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys, no data leaves the browser.",
-    "keywords": [
-      "ai",
-      "transformers",
-      "llm",
-      "rag",
-      "chatbot",
-      "browser",
-      "wasm",
-      "webgpu",
-      "ai portfolio assistant"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "What is AI Portfolio Assistant?",
-    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys, no data leaves the browser.",
-    "keywords": [
-      "ai",
-      "transformers",
-      "llm",
-      "rag",
-      "chatbot",
-      "browser",
-      "wasm",
-      "webgpu",
-      "ai portfolio assistant"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "How does AI Portfolio Assistant work?",
-    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys, no data leaves the browser.",
-    "keywords": [
-      "ai",
-      "transformers",
-      "llm",
-      "rag",
-      "chatbot",
-      "browser",
-      "wasm",
-      "webgpu",
-      "ai portfolio assistant"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "Tell me about AI Test Generator",
-    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU.",
-    "keywords": [
-      "nlp",
-      "ai",
-      "generator",
-      "webllm",
-      "playwright",
-      "cypress",
-      "webgpu",
-      "test",
-      "ai test generator"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "What is AI Test Generator?",
-    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU.",
-    "keywords": [
-      "nlp",
-      "ai",
-      "generator",
-      "webllm",
-      "playwright",
-      "cypress",
-      "webgpu",
-      "test",
-      "ai test generator"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "How does AI Test Generator work?",
-    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU.",
-    "keywords": [
-      "nlp",
-      "ai",
-      "generator",
-      "webllm",
-      "playwright",
-      "cypress",
-      "webgpu",
-      "test",
-      "ai test generator"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "Tell me about Event-Stream Playground",
-    "answer": "The Event-Stream Playground is a living diagram of a Kafka-style event streaming system. You can produce event bursts, pause consumers, watch partition lag grow in real time, kill a service and see retries kick in \u2014 all visualized on an animated canvas.",
-    "keywords": [
-      "event",
-      "events",
-      "time",
-      "playground",
-      "stream",
-      "kafka",
-      "streaming",
-      "real-time",
-      "real",
-      "event-stream",
-      "event-stream playground"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "What is Event-Stream Playground?",
-    "answer": "The Event-Stream Playground is a living diagram of a Kafka-style event streaming system. You can produce event bursts, pause consumers, watch partition lag grow in real time, kill a service and see retries kick in \u2014 all visualized on an animated canvas.",
-    "keywords": [
-      "event",
-      "events",
-      "time",
-      "playground",
-      "stream",
-      "kafka",
-      "streaming",
-      "real-time",
-      "real",
-      "event-stream",
-      "event-stream playground"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "How does Event-Stream Playground work?",
-    "answer": "The Event-Stream Playground is a living diagram of a Kafka-style event streaming system. You can produce event bursts, pause consumers, watch partition lag grow in real time, kill a service and see retries kick in \u2014 all visualized on an animated canvas.",
-    "keywords": [
-      "event",
-      "events",
-      "time",
-      "playground",
-      "stream",
-      "kafka",
-      "streaming",
-      "real-time",
-      "real",
-      "event-stream",
-      "event-stream playground"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "Tell me about SQL Analytics Workbench",
-    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install.",
-    "keywords": [
-      "workbench",
-      "database",
-      "query",
-      "wasm",
-      "data",
-      "analytics",
-      "duckdb",
-      "sql",
-      "sql analytics workbench"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "What is SQL Analytics Workbench?",
-    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install.",
-    "keywords": [
-      "workbench",
-      "database",
-      "query",
-      "wasm",
-      "data",
-      "analytics",
-      "duckdb",
-      "sql",
-      "sql analytics workbench"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "How does SQL Analytics Workbench work?",
-    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install.",
-    "keywords": [
-      "workbench",
-      "database",
-      "query",
-      "wasm",
-      "data",
-      "analytics",
-      "duckdb",
-      "sql",
-      "sql analytics workbench"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "Tell me about Test Runner Playground",
-    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
-    "keywords": [
-      "automation",
-      "runner",
-      "playwright",
-      "demo",
-      "test-runner",
-      "sandbox",
-      "test",
-      "testing",
-      "test runner playground"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "What is Test Runner Playground?",
-    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
-    "keywords": [
-      "automation",
-      "runner",
-      "playwright",
-      "demo",
-      "test-runner",
-      "sandbox",
-      "test",
-      "testing",
-      "test runner playground"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "How does Test Runner Playground work?",
-    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
-    "keywords": [
-      "automation",
-      "runner",
-      "playwright",
-      "demo",
-      "test-runner",
-      "sandbox",
-      "test",
-      "testing",
-      "test runner playground"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "Tell me about Visual Regression Lab",
-    "answer": "The Visual Regression Lab lets you compare two builds of the same UI pixel by pixel. You select a scenario, the tool renders baseline and candidate versions in hidden iframes, captures them to canvas, and runs a Python-powered diff algorithm (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail gate.",
-    "keywords": [
-      "visual-regression",
-      "visual",
-      "pixel-diff",
-      "diff",
-      "python",
-      "pixel",
-      "regression",
-      "canvas",
-      "pil",
-      "testing",
-      "visual regression lab"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "What is Visual Regression Lab?",
-    "answer": "The Visual Regression Lab lets you compare two builds of the same UI pixel by pixel. You select a scenario, the tool renders baseline and candidate versions in hidden iframes, captures them to canvas, and runs a Python-powered diff algorithm (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail gate.",
-    "keywords": [
-      "visual-regression",
-      "visual",
-      "pixel-diff",
-      "diff",
-      "python",
-      "pixel",
-      "regression",
-      "canvas",
-      "pil",
-      "testing",
-      "visual regression lab"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
-    "question": "How does Visual Regression Lab work?",
-    "answer": "The Visual Regression Lab lets you compare two builds of the same UI pixel by pixel. You select a scenario, the tool renders baseline and candidate versions in hidden iframes, captures them to canvas, and runs a Python-powered diff algorithm (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail gate.",
-    "keywords": [
-      "visual-regression",
-      "visual",
-      "pixel-diff",
-      "diff",
-      "python",
-      "pixel",
-      "regression",
-      "canvas",
-      "pil",
-      "testing",
-      "visual regression lab"
-    ],
-    "category": "projects",
-    "suggestions": []
-  },
-  {
     "question": "Tell me about your Education",
     "answer": "I have a Master of Science in Computer Science from North American University (2024) and a Bachelor of Engineering in Computer Engineering from the University of Mumbai (2018). Coursework covered data structures, algorithms, operating systems, databases, and software engineering. That foundation shapes how I think about test architecture \u2014 I treat test suites as software systems that deserve the same engineering rigor as production code.",
     "keywords": [
-      "learning",
       "university",
+      "learning",
       "education",
       "degree",
       "computer science",
@@ -493,8 +175,8 @@
     "question": "What is your Education?",
     "answer": "I have a Master of Science in Computer Science from North American University (2024) and a Bachelor of Engineering in Computer Engineering from the University of Mumbai (2018). Coursework covered data structures, algorithms, operating systems, databases, and software engineering. That foundation shapes how I think about test architecture \u2014 I treat test suites as software systems that deserve the same engineering rigor as production code.",
     "keywords": [
-      "learning",
       "university",
+      "learning",
       "education",
       "degree",
       "computer science",
@@ -507,13 +189,13 @@
     "question": "Tell me about your Professional Experience",
     "answer": "I've been in QA automation and software development for about five years across four companies, from ed-tech startups to a regulatory compliance lab to Fortune 500 financial services.",
     "keywords": [
-      "career",
-      "automation",
+      "experience",
       "qa",
+      "testing",
+      "automation",
       "sdet",
       "work",
-      "experience",
-      "testing",
+      "career",
       "professional experience"
     ],
     "category": "resume",
@@ -523,13 +205,13 @@
     "question": "What is your Professional Experience?",
     "answer": "I've been in QA automation and software development for about five years across four companies, from ed-tech startups to a regulatory compliance lab to Fortune 500 financial services.",
     "keywords": [
-      "career",
-      "automation",
+      "experience",
       "qa",
+      "testing",
+      "automation",
       "sdet",
       "work",
-      "experience",
-      "testing",
+      "career",
       "professional experience"
     ],
     "category": "resume",
@@ -539,12 +221,12 @@
     "question": "Tell me about your Technical Skills",
     "answer": "My primary languages are Python, SQL, and TypeScript. Python handles test automation, data processing, build scripts, and CLI tools. SQL is for data validation against production and test databases. TypeScript covers the frontend: React components, Playwright test suites, and Node-based tooling.",
     "keywords": [
-      "languages",
-      "tools",
-      "tech stack",
       "skills",
-      "frameworks",
+      "tech stack",
+      "tools",
       "testing tools",
+      "languages",
+      "frameworks",
       "technical skills"
     ],
     "category": "resume",
@@ -554,15 +236,333 @@
     "question": "What is your Technical Skills?",
     "answer": "My primary languages are Python, SQL, and TypeScript. Python handles test automation, data processing, build scripts, and CLI tools. SQL is for data validation against production and test databases. TypeScript covers the frontend: React components, Playwright test suites, and Node-based tooling.",
     "keywords": [
-      "languages",
-      "tools",
-      "tech stack",
       "skills",
-      "frameworks",
+      "tech stack",
+      "tools",
       "testing tools",
+      "languages",
+      "frameworks",
       "technical skills"
     ],
     "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about AI Portfolio Assistant",
+    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys, no data leaves the browser.",
+    "keywords": [
+      "wasm",
+      "rag",
+      "browser",
+      "llm",
+      "chatbot",
+      "transformers",
+      "ai",
+      "webgpu",
+      "ai portfolio assistant"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is AI Portfolio Assistant?",
+    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys, no data leaves the browser.",
+    "keywords": [
+      "wasm",
+      "rag",
+      "browser",
+      "llm",
+      "chatbot",
+      "transformers",
+      "ai",
+      "webgpu",
+      "ai portfolio assistant"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does AI Portfolio Assistant work?",
+    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys, no data leaves the browser.",
+    "keywords": [
+      "wasm",
+      "rag",
+      "browser",
+      "llm",
+      "chatbot",
+      "transformers",
+      "ai",
+      "webgpu",
+      "ai portfolio assistant"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about AI Test Generator",
+    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU.",
+    "keywords": [
+      "cypress",
+      "webllm",
+      "generator",
+      "test",
+      "playwright",
+      "ai",
+      "webgpu",
+      "nlp",
+      "ai test generator"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is AI Test Generator?",
+    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU.",
+    "keywords": [
+      "cypress",
+      "webllm",
+      "generator",
+      "test",
+      "playwright",
+      "ai",
+      "webgpu",
+      "nlp",
+      "ai test generator"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does AI Test Generator work?",
+    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU.",
+    "keywords": [
+      "cypress",
+      "webllm",
+      "generator",
+      "test",
+      "playwright",
+      "ai",
+      "webgpu",
+      "nlp",
+      "ai test generator"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about Event-Stream Playground",
+    "answer": "The Event-Stream Playground is a living diagram of a Kafka-style event streaming system. You can produce event bursts, pause consumers, watch partition lag grow in real time, kill a service and see retries kick in \u2014 all visualized on an animated canvas.",
+    "keywords": [
+      "event-stream",
+      "stream",
+      "real-time",
+      "events",
+      "streaming",
+      "real",
+      "playground",
+      "kafka",
+      "time",
+      "event",
+      "event-stream playground"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is Event-Stream Playground?",
+    "answer": "The Event-Stream Playground is a living diagram of a Kafka-style event streaming system. You can produce event bursts, pause consumers, watch partition lag grow in real time, kill a service and see retries kick in \u2014 all visualized on an animated canvas.",
+    "keywords": [
+      "event-stream",
+      "stream",
+      "real-time",
+      "events",
+      "streaming",
+      "real",
+      "playground",
+      "kafka",
+      "time",
+      "event",
+      "event-stream playground"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does Event-Stream Playground work?",
+    "answer": "The Event-Stream Playground is a living diagram of a Kafka-style event streaming system. You can produce event bursts, pause consumers, watch partition lag grow in real time, kill a service and see retries kick in \u2014 all visualized on an animated canvas.",
+    "keywords": [
+      "event-stream",
+      "stream",
+      "real-time",
+      "events",
+      "streaming",
+      "real",
+      "playground",
+      "kafka",
+      "time",
+      "event",
+      "event-stream playground"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about SQL Analytics Workbench",
+    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install.",
+    "keywords": [
+      "workbench",
+      "wasm",
+      "query",
+      "duckdb",
+      "analytics",
+      "database",
+      "data",
+      "sql",
+      "sql analytics workbench"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is SQL Analytics Workbench?",
+    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install.",
+    "keywords": [
+      "workbench",
+      "wasm",
+      "query",
+      "duckdb",
+      "analytics",
+      "database",
+      "data",
+      "sql",
+      "sql analytics workbench"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does SQL Analytics Workbench work?",
+    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install.",
+    "keywords": [
+      "workbench",
+      "wasm",
+      "query",
+      "duckdb",
+      "analytics",
+      "database",
+      "data",
+      "sql",
+      "sql analytics workbench"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about Test Runner Playground",
+    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
+    "keywords": [
+      "testing",
+      "test-runner",
+      "runner",
+      "demo",
+      "test",
+      "playwright",
+      "automation",
+      "sandbox",
+      "test runner playground"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is Test Runner Playground?",
+    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
+    "keywords": [
+      "testing",
+      "test-runner",
+      "runner",
+      "demo",
+      "test",
+      "playwright",
+      "automation",
+      "sandbox",
+      "test runner playground"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does Test Runner Playground work?",
+    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
+    "keywords": [
+      "testing",
+      "test-runner",
+      "runner",
+      "demo",
+      "test",
+      "playwright",
+      "automation",
+      "sandbox",
+      "test runner playground"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about Visual Regression Lab",
+    "answer": "The Visual Regression Lab lets you compare two builds of the same UI pixel by pixel. You select a scenario, the tool renders baseline and candidate versions in hidden iframes, captures them to canvas, and runs a Python-powered diff algorithm (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail gate.",
+    "keywords": [
+      "python",
+      "pixel-diff",
+      "regression",
+      "testing",
+      "visual-regression",
+      "pixel",
+      "canvas",
+      "pil",
+      "visual",
+      "diff",
+      "visual regression lab"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is Visual Regression Lab?",
+    "answer": "The Visual Regression Lab lets you compare two builds of the same UI pixel by pixel. You select a scenario, the tool renders baseline and candidate versions in hidden iframes, captures them to canvas, and runs a Python-powered diff algorithm (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail gate.",
+    "keywords": [
+      "python",
+      "pixel-diff",
+      "regression",
+      "testing",
+      "visual-regression",
+      "pixel",
+      "canvas",
+      "pil",
+      "visual",
+      "diff",
+      "visual regression lab"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does Visual Regression Lab work?",
+    "answer": "The Visual Regression Lab lets you compare two builds of the same UI pixel by pixel. You select a scenario, the tool renders baseline and candidate versions in hidden iframes, captures them to canvas, and runs a Python-powered diff algorithm (PIL/Pillow via Pyodide) to produce a highlighted diff image with a pass/fail gate.",
+    "keywords": [
+      "python",
+      "pixel-diff",
+      "regression",
+      "testing",
+      "visual-regression",
+      "pixel",
+      "canvas",
+      "pil",
+      "visual",
+      "diff",
+      "visual regression lab"
+    ],
+    "category": "projects",
     "suggestions": []
   },
   {
@@ -570,10 +570,10 @@
     "answer": "I think the best quality work comes from tight collaboration between developers and QA, not from throwing builds over a wall. I prefer being involved early \u2014 during design discussions, PR reviews, and architecture decisions \u2014 rather than waiting until something is \"ready to test.\"",
     "keywords": [
       "communication",
-      "code review",
       "process",
-      "teamwork",
       "collaboration",
+      "code review",
+      "teamwork",
       "collaboration philosophy"
     ],
     "category": "philosophy",
@@ -584,10 +584,10 @@
     "answer": "I think the best quality work comes from tight collaboration between developers and QA, not from throwing builds over a wall. I prefer being involved early \u2014 during design discussions, PR reviews, and architecture decisions \u2014 rather than waiting until something is \"ready to test.\"",
     "keywords": [
       "communication",
-      "code review",
       "process",
-      "teamwork",
       "collaboration",
+      "code review",
+      "teamwork",
       "collaboration philosophy"
     ],
     "category": "philosophy",
@@ -597,11 +597,11 @@
     "question": "What is your Engineering Philosophy?",
     "answer": "I believe good engineering is about making the right tradeoffs, not chasing perfection. Ship working software, get feedback, iterate. But \"working\" includes maintainable, testable, and observable \u2014 not just \"it passes QA.\"",
     "keywords": [
-      "principles",
-      "philosophy",
       "craft",
-      "engineering",
+      "philosophy",
+      "principles",
       "software design",
+      "engineering",
       "engineering philosophy"
     ],
     "category": "philosophy",
@@ -611,11 +611,11 @@
     "question": "Tell me about your approach to engineering",
     "answer": "I believe good engineering is about making the right tradeoffs, not chasing perfection. Ship working software, get feedback, iterate. But \"working\" includes maintainable, testable, and observable \u2014 not just \"it passes QA.\"",
     "keywords": [
-      "principles",
-      "philosophy",
       "craft",
-      "engineering",
+      "philosophy",
+      "principles",
       "software design",
+      "engineering",
       "engineering philosophy"
     ],
     "category": "philosophy",
@@ -625,12 +625,12 @@
     "question": "What is your Testing Philosophy?",
     "answer": "I think of test automation as infrastructure, not an afterthought. A test suite should be a system you can reason about \u2014 with its own architecture, performance budget, and maintenance plan. When tests are slow, flaky, or hard to understand, I treat that as a bug in the test infrastructure, not an acceptable cost of doing business.",
     "keywords": [
-      "strategy",
-      "automation",
       "quality",
-      "principles",
-      "philosophy",
       "testing",
+      "philosophy",
+      "automation",
+      "principles",
+      "strategy",
       "testing philosophy"
     ],
     "category": "philosophy",
@@ -640,12 +640,12 @@
     "question": "Tell me about your approach to testing",
     "answer": "I think of test automation as infrastructure, not an afterthought. A test suite should be a system you can reason about \u2014 with its own architecture, performance budget, and maintenance plan. When tests are slow, flaky, or hard to understand, I treat that as a bug in the test infrastructure, not an acceptable cost of doing business.",
     "keywords": [
-      "strategy",
-      "automation",
       "quality",
-      "principles",
-      "philosophy",
       "testing",
+      "philosophy",
+      "automation",
+      "principles",
+      "strategy",
       "testing philosophy"
     ],
     "category": "philosophy",
