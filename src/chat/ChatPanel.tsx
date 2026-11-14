@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react';
 import type { Message, SuggestionChip, TierState } from '../types';
 import { MessageBubble } from './MessageBubble';
+import { Avatar } from './Avatar';
 import type { Orchestrator } from '../ai/orchestrator';
 
 interface ChatPanelProps {
   orchestrator: Orchestrator;
   tierState: TierState;
+  onBusyChange?: (busy: boolean) => void;
 }
 
 const GREETING = "Hey! I'm Kishan's AI assistant, running entirely in your browser. Your questions and answers stay on this page; model weights and fonts are downloaded from content delivery networks. I can tell you about my experience, projects, technical skills, or engineering philosophy. What are you curious about?";
@@ -56,7 +58,7 @@ function ThemeToggle({ theme, onToggle }: { theme: Theme; onToggle: () => void }
 }
 
 export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, ChatPanelProps>(
-  function ChatPanel({ orchestrator, tierState }, ref) {
+  function ChatPanel({ orchestrator, tierState, onBusyChange }, ref) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'greeting',
@@ -69,6 +71,8 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
   const [suggestions, setSuggestions] = useState<SuggestionChip[]>(STARTER_CHIPS);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [justAnswered, setJustAnswered] = useState(false);
+  const answerTimerRef = useRef<number | undefined>(undefined);
   const [theme, setTheme] = useState<Theme>(readInitialTheme);
   const [themeChosen, setThemeChosen] = useState(() => {
     try {
@@ -112,6 +116,14 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
     scrollToBottom();
   }, [messages, isTyping, scrollToBottom]);
 
+  useEffect(() => {
+    onBusyChange?.(isTyping);
+  }, [isTyping, onBusyChange]);
+
+  useEffect(() => () => window.clearTimeout(answerTimerRef.current), []);
+
+  const avatarState = isTyping ? 'thinking' : justAnswered ? 'speaking' : 'idle';
+
   const handleSend = useCallback(async (query: string) => {
     if (!query.trim() || isTyping) return;
 
@@ -151,6 +163,9 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
 
     setMessages((prev) => [...prev, botMessage]);
     setIsTyping(false);
+    setJustAnswered(true);
+    window.clearTimeout(answerTimerRef.current);
+    answerTimerRef.current = window.setTimeout(() => setJustAnswered(false), 3500);
     inputRef.current?.focus();
   }, [orchestrator, tierState, isTyping]);
 
@@ -170,9 +185,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
       {/* Mobile top bar - visible on small screens */}
       <div className="flex md:hidden items-center justify-between px-4 py-3 border-b border-line bg-navy-deep/90">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full gradient-accent-light flex items-center justify-center text-xs font-bold shadow-glow text-on-accent">
-            KB
-          </div>
+          <Avatar state={avatarState} sizeClass="h-8 w-8" />
           <div>
             <div className="text-sm font-semibold">Kishan's Assistant</div>
             <div className="text-[10px] text-accent">{tierState.label}</div>
@@ -183,9 +196,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
 
       {/* Header */}
       <div className="px-5 py-3 border-b border-line flex items-center gap-3">
-        <div className="w-7 h-7 rounded-lg gradient-accent-light flex items-center justify-center text-xs font-bold shadow-glow text-on-accent">
-          AI
-        </div>
+        <Avatar state={avatarState} sizeClass="h-7 w-7" />
         <div>
           <div className="text-sm font-semibold">Kishan's Assistant</div>
           <div className="text-[10px] text-dimmed">Powered by Phi-3 · In-browser</div>
@@ -217,9 +228,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
         {/* Typing indicator */}
         {isTyping && (
           <div className="flex gap-3 max-w-[85%] opacity-60">
-            <div className="w-7 h-7 rounded-full gradient-accent-light flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-on-accent">
-              KB
-            </div>
+            <Avatar state="thinking" sizeClass="h-7 w-7" />
             <div className="glass-surface rounded-tl-[4px] rounded-tr-xl rounded-br-xl rounded-bl-xl px-5 py-3 flex gap-1 items-center">
               <span className="w-1.5 h-1.5 rounded-full bg-accent" style={{ animation: 'typing-dot 1.4s 0s infinite' }} />
               <span className="w-1.5 h-1.5 rounded-full bg-accent" style={{ animation: 'typing-dot 1.4s 0.2s infinite' }} />

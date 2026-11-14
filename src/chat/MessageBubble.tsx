@@ -1,4 +1,5 @@
 import type { Message } from '../types';
+import { Avatar } from './Avatar';
 
 interface MessageBubbleProps {
   message: Message;
@@ -17,9 +18,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
   return (
     <div className="flex gap-3 max-w-[85%]">
-      <div className="w-7 h-7 rounded-full gradient-accent-light flex-shrink-0 flex items-center justify-center text-[10px] font-bold shadow-glow text-on-accent">
-        KB
-      </div>
+      <Avatar sizeClass="h-7 w-7" animated={false} />
       <div className="glass-surface border-l-[3px] border-l-accent rounded-tl-[4px] rounded-tr-xl rounded-br-xl rounded-bl-xl px-4 py-3 text-sm leading-relaxed">
         {message.content}
       </div>
