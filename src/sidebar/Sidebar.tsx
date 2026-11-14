@@ -20,18 +20,18 @@ function StatusBadge({ tierState }: { tierState: TierState }) {
     <div
       className={`rounded-lg px-3 py-2 text-center text-[11px] border transition-all duration-500 ${
         isReady
-          ? 'bg-green-500/15 border-green-500/30 shadow-[0_0_20px_rgba(34,197,94,0.15)]'
+          ? 'bg-status/15 border-status/30 shadow-glow'
           : isLoading
             ? 'bg-accent/15 border-accent/30'
-            : 'bg-white/5 border-white/10'
+            : 'bg-chip border-line'
       }`}
     >
       <span
         className={`inline-block w-1.5 h-1.5 rounded-full mr-1.5 ${
-          isReady ? 'bg-green-500' : isLoading ? 'bg-accent animate-pulse' : 'bg-dimmed'
+          isReady ? 'bg-status' : isLoading ? 'bg-accent animate-pulse' : 'bg-dimmed'
         }`}
       />
-      <span className={isReady ? 'text-green-400' : isLoading ? 'text-accent' : 'text-muted'}>
+      <span className={isReady ? 'text-status' : isLoading ? 'text-accent' : 'text-muted'}>
         {tierState.label}
       </span>
     </div>
@@ -40,10 +40,10 @@ function StatusBadge({ tierState }: { tierState: TierState }) {
 
 export function Sidebar({ tierState, onCategoryClick }: SidebarProps) {
   return (
-    <aside className="w-[260px] border-r border-white/[0.08] flex flex-col p-5 bg-navy-deep/90 flex-shrink-0 hidden md:flex">
+    <aside className="w-[260px] border-r border-line flex flex-col p-5 bg-navy-deep/90 flex-shrink-0 hidden md:flex">
       {/* Avatar + Name */}
       <div className="text-center mb-5">
-        <div className="w-16 h-16 rounded-full gradient-accent-light mx-auto mb-3 flex items-center justify-center text-2xl font-bold text-white shadow-[0_0_20px_rgba(99,102,241,0.3)]">
+        <div className="w-16 h-16 rounded-full gradient-accent-light mx-auto mb-3 flex items-center justify-center text-2xl font-bold text-on-accent shadow-glow">
           KB
         </div>
         <div className="text-[15px] font-semibold">Kishan Borad</div>
@@ -98,7 +98,7 @@ export function Sidebar({ tierState, onCategoryClick }: SidebarProps) {
 
       {/* Privacy Note */}
       <div className="mt-auto pt-4">
-        <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[10px] text-dimmed leading-relaxed">
+        <div className="p-3 rounded-lg bg-chip border border-line text-[10px] text-dimmed leading-relaxed">
           🔒 Your questions and answers stay in your browser. Model weights and fonts are downloaded from content delivery networks.
         </div>
       </div>

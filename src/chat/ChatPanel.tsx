@@ -16,6 +16,45 @@ const STARTER_CHIPS: SuggestionChip[] = [
   { label: "What's your tech stack?", query: "What's your tech stack?" },
 ];
 
+type Theme = 'day' | 'night';
+
+const THEME_STORAGE_KEY = 'assistant-theme';
+
+function readInitialTheme(): Theme {
+  if (typeof document !== 'undefined') {
+    const applied = document.documentElement.getAttribute('data-theme');
+    if (applied === 'day' || applied === 'night') return applied;
+  }
+  if (typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'night';
+  }
+  return 'day';
+}
+
+function ThemeToggle({ theme, onToggle }: { theme: Theme; onToggle: () => void }) {
+  const night = theme === 'night';
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-label={night ? 'Switch to day mode' : 'Switch to night mode'}
+      title={night ? 'Switch to day mode' : 'Switch to night mode'}
+      className="ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line bg-surface text-muted transition-colors hover:text-ink"
+    >
+      {night ? (
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path strokeLinecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+        </svg>
+      ) : (
+        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
 export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, ChatPanelProps>(
   function ChatPanel({ orchestrator, tierState }, ref) {
   const [messages, setMessages] = useState<Message[]>([
@@ -30,8 +69,40 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
   const [suggestions, setSuggestions] = useState<SuggestionChip[]>(STARTER_CHIPS);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [theme, setTheme] = useState<Theme>(readInitialTheme);
+  const [themeChosen, setThemeChosen] = useState(() => {
+    try {
+      return localStorage.getItem(THEME_STORAGE_KEY) !== null;
+    } catch {
+      return false;
+    }
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+
+  // Until the visitor picks a theme, follow the system preference live.
+  useEffect(() => {
+    if (themeChosen) return;
+    const query = window.matchMedia('(prefers-color-scheme: dark)');
+    const onChange = (event: MediaQueryListEvent) => setTheme(event.matches ? 'night' : 'day');
+    query.addEventListener('change', onChange);
+    return () => query.removeEventListener('change', onChange);
+  }, [themeChosen]);
+
+  const toggleTheme = useCallback(() => {
+    const next: Theme = theme === 'night' ? 'day' : 'night';
+    setTheme(next);
+    setThemeChosen(true);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, next);
+    } catch {
+      // storage unavailable: the choice still applies for this visit
+    }
+  }, [theme]);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -97,9 +168,9 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
   return (
     <div className="flex-1 flex flex-col min-w-0">
       {/* Mobile top bar - visible on small screens */}
-      <div className="flex md:hidden items-center justify-between px-4 py-3 border-b border-white/[0.08] bg-navy-deep/90">
+      <div className="flex md:hidden items-center justify-between px-4 py-3 border-b border-line bg-navy-deep/90">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full gradient-accent-light flex items-center justify-center text-xs font-bold shadow-glow">
+          <div className="w-8 h-8 rounded-full gradient-accent-light flex items-center justify-center text-xs font-bold shadow-glow text-on-accent">
             KB
           </div>
           <div>
@@ -107,17 +178,19 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
             <div className="text-[10px] text-accent">{tierState.label}</div>
           </div>
         </div>
+        <ThemeToggle theme={theme} onToggle={toggleTheme} />
       </div>
 
       {/* Header */}
-      <div className="px-5 py-3 border-b border-white/[0.08] flex items-center gap-3">
-        <div className="w-7 h-7 rounded-lg gradient-accent-light flex items-center justify-center text-xs font-bold shadow-glow">
+      <div className="px-5 py-3 border-b border-line flex items-center gap-3">
+        <div className="w-7 h-7 rounded-lg gradient-accent-light flex items-center justify-center text-xs font-bold shadow-glow text-on-accent">
           AI
         </div>
         <div>
           <div className="text-sm font-semibold">Kishan's Assistant</div>
           <div className="text-[10px] text-dimmed">Powered by Phi-3 · In-browser</div>
         </div>
+        <ThemeToggle theme={theme} onToggle={toggleTheme} />
       </div>
 
       {/* Messages */}
@@ -144,7 +217,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
         {/* Typing indicator */}
         {isTyping && (
           <div className="flex gap-3 max-w-[85%] opacity-60">
-            <div className="w-7 h-7 rounded-full gradient-accent-light flex-shrink-0 flex items-center justify-center text-[10px] font-bold">
+            <div className="w-7 h-7 rounded-full gradient-accent-light flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-on-accent">
               KB
             </div>
             <div className="glass-surface rounded-tl-[4px] rounded-tr-xl rounded-br-xl rounded-bl-xl px-5 py-3 flex gap-1 items-center">
@@ -159,7 +232,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
       </div>
 
       {/* Input bar */}
-      <div className="px-5 py-3 border-t border-white/[0.08] bg-navy-deep/50">
+      <div className="px-5 py-3 border-t border-line bg-navy-deep/50">
         <div className="flex gap-3 items-center">
           <input
             ref={inputRef}
@@ -168,7 +241,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask me anything about Kishan..."
-            className="flex-1 bg-[rgba(20,20,30,0.8)] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-[#f4f4f6] placeholder:text-dimmed focus:outline-none focus:ring-2 focus:ring-accent/30 focus:shadow-glow transition-all duration-200"
+            className="flex-1 bg-surface border border-line rounded-xl px-4 py-2.5 text-sm text-ink placeholder:text-dimmed focus:outline-none focus:ring-2 focus:ring-accent/30 focus:shadow-glow transition-all duration-200"
             disabled={isTyping}
           />
           <button
@@ -176,7 +249,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
             disabled={!input.trim() || isTyping}
             className="w-10 h-10 rounded-[10px] gradient-accent flex items-center justify-center shadow-glow hover:shadow-glow-strong hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-40 disabled:hover:scale-100 cursor-pointer disabled:cursor-not-allowed"
           >
-            <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg className="w-4 h-4 text-on-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
             </svg>
           </button>
