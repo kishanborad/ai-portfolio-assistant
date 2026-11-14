@@ -18,8 +18,7 @@ COPY python/ ./python/
 # Run tests during build (fail fast on broken code)
 RUN cd python && python -m pytest tests/ \
     --tb=short -q \
-    --ignore=tests/test_similarity_benchmark.py \
-    || true
+    --ignore=tests/test_similarity_benchmark.py
 
 # Build knowledge.json and faq.json
 RUN mkdir -p public \
@@ -41,7 +40,10 @@ COPY . .
 COPY --from=knowledge-builder /app/public/knowledge.json ./public/knowledge.json
 COPY --from=knowledge-builder /app/public/faq.json ./public/faq.json
 
-RUN npx tsc -b && npx vite build
+# nginx serves the app at the server root, so build with a root base.
+# (GitHub Pages uses the /ai-portfolio-assistant/ base from vite.config.ts;
+# the Docker image is a separate deployment that serves from /.)
+RUN npx tsc -b && npx vite build --base=/
 
 # ── Stage 3: Serve with nginx ───────────────────────────────────────────────
 
