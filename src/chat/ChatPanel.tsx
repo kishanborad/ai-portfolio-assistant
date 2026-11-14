@@ -8,7 +8,7 @@ interface ChatPanelProps {
   tierState: TierState;
 }
 
-const GREETING = "Hey! I'm Kishan's AI assistant, running entirely in your browser — no data leaves this page. I can tell you about my experience, projects, technical skills, or engineering philosophy. What are you curious about?";
+const GREETING = "Hey! I'm Kishan's AI assistant, running entirely in your browser. Your questions and answers stay on this page; model weights and fonts are downloaded from content delivery networks. I can tell you about my experience, projects, technical skills, or engineering philosophy. What are you curious about?";
 
 const STARTER_CHIPS: SuggestionChip[] = [
   { label: 'Tell me about your experience', query: 'Tell me about your experience' },

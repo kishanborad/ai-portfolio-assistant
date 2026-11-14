@@ -1,6 +1,6 @@
 # AI Portfolio Assistant
 
-A browser-based AI chatbot that answers questions about my experience, projects, skills, and engineering philosophy. The language model runs entirely client-side — no server, no API keys, no data leaves the browser.
+A browser-based AI chatbot that answers questions about my experience, projects, skills, and engineering philosophy. The language model runs entirely client-side, with no server and no API keys. Your questions and answers stay in the browser, while model weights and fonts are downloaded from content delivery networks.
 
 **Live demo:** [kishanborad.github.io/ai-portfolio-assistant](https://kishanborad.github.io/ai-portfolio-assistant/)
 
@@ -8,7 +8,7 @@ A browser-based AI chatbot that answers questions about my experience, projects,
 
 Three-tier AI with graceful fallback:
 
-1. **WebGPU** — Phi-3-mini via WebLLM (~800MB, cached after first download)
+1. **WebGPU**: Phi-3-mini via WebLLM (about 2.2 GB download, 3,672 MB VRAM required, cached after first download)
 2. **WASM** — Qwen2-0.5B via Transformers.js (~400MB)
 3. **Template** — FAQ-based pattern matching (instant, no download)
 
