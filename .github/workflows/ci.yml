@@ -1,7 +1,7 @@
 # .github/workflows/ci.yml — Continuous Integration pipeline
 #
 # Runs on every push and pull request to main:
-#   1. Python unit tests across 3.13 / 3.14 / 3.15
+#   1. Python unit tests with 3.15
 #   2. Frontend build + Vitest unit tests
 #   3. Docker image build verification
 #   4. Linting (ruff for Python, shellcheck for scripts)
@@ -20,7 +20,7 @@ concurrency:
 
 env:
   NODE_VERSION: "20"
-  PYTHON_MIN: "3.13"
+  PYTHON_MIN: "3.15"
 
 jobs:
 
@@ -32,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.13", "3.14", "3.15"]
+        python-version: ["3.15"]
 
     defaults:
       run:
