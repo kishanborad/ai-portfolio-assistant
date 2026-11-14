@@ -4,14 +4,28 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/ai-portfolio-assistant/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <title>AI Portfolio Assistant — Kishan Borad</title>
+    <script>
+      // Apply the saved theme (or the system preference) before first paint
+      // so the page never flashes the wrong theme. The toggle in the chat
+      // panel owns the choice afterwards.
+      (function () {
+        try {
+          var stored = localStorage.getItem('assistant-theme');
+          var theme = stored === 'day' || stored === 'night' ? stored : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day');
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.backgroundColor = theme === 'night' ? '#141414' : '#F6F3ED';
+        } catch (e) { /* storage unavailable: fall back to the day theme */ }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="/ai-portfolio-assistant/assets/index-CiSG1ss0.js"></script>
-    <link rel="stylesheet" crossorigin href="/ai-portfolio-assistant/assets/index-BspMWu0o.css">
+    <script type="module" crossorigin src="/ai-portfolio-assistant/assets/index-B3tqhFGU.js"></script>
+    <link rel="stylesheet" crossorigin href="/ai-portfolio-assistant/assets/index-MYFLNH4Z.css">
   </head>
-  <body class="bg-[#050816] text-[#f4f4f6] font-[Poppins] antialiased">
+  <body class="font-[Poppins] antialiased">
     <div id="root"></div>
   </body>
 </html>
