@@ -2,10 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Day theme (warm paper) is the default. Night theme (charcoal amber)
+   overrides the same variables when data-theme="night" is set on <html>.
+   Values are RGB triplets so Tailwind opacity modifiers keep working. */
+:root {
+  --theme-bg: 246 243 237;
+  --theme-surface: 255 253 248;
+  --theme-border: 229 222 210;
+  --theme-text: 43 38 32;
+  --theme-muted: 111 103 92;
+  --theme-dimmed: 154 145 132;
+  --theme-accent: 140 91 59;
+  --theme-accent-deep: 122 78 49;
+  --theme-on-accent: 255 255 255;
+  --theme-chip: 243 233 223;
+  --theme-status: 93 125 95;
+  color-scheme: light;
+}
+
+[data-theme='night'] {
+  --theme-bg: 20 20 20;
+  --theme-surface: 31 31 31;
+  --theme-border: 51 51 51;
+  --theme-text: 244 244 245;
+  --theme-muted: 212 212 216;
+  --theme-dimmed: 133 133 133;
+  --theme-accent: 232 168 76;
+  --theme-accent-deep: 217 119 6;
+  --theme-on-accent: 31 31 31;
+  --theme-chip: 38 38 38;
+  --theme-status: 74 222 128;
+  color-scheme: dark;
+}
+
 @layer base {
+  body {
+    background-color: rgb(var(--theme-bg));
+    color: rgb(var(--theme-text));
+  }
+
   * {
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+    scrollbar-color: rgb(var(--theme-dimmed) / 0.4) transparent;
   }
 
   *::-webkit-scrollbar {
@@ -17,22 +55,22 @@
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgb(var(--theme-dimmed) / 0.4);
     border-radius: 3px;
   }
 
   ::selection {
-    background-color: rgba(99, 102, 241, 0.3);
-    color: #f4f4f6;
+    background-color: rgb(var(--theme-accent) / 0.25);
+    color: inherit;
   }
 }
 
 @layer components {
   .glass-surface {
-    background: rgba(20, 20, 30, 0.7);
+    background: rgb(var(--theme-surface) / 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgb(var(--theme-border));
   }
 
   .glass-surface-hover {
@@ -40,16 +78,16 @@
   }
 
   .glass-surface-hover:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+    border-color: rgb(var(--theme-accent) / 0.35);
+    box-shadow: 0 0 20px rgb(var(--theme-accent) / 0.15);
   }
 
   .gradient-accent {
-    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    background: linear-gradient(135deg, rgb(var(--theme-accent-deep)), rgb(var(--theme-accent)));
   }
 
   .gradient-accent-light {
-    background: linear-gradient(135deg, #6366f1, #818cf8);
+    background: linear-gradient(135deg, rgb(var(--theme-accent)), rgb(var(--theme-accent-deep)));
   }
 
 }
