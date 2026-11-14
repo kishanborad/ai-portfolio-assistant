@@ -2,7 +2,7 @@
 # Builds the knowledge.json and faq.json from markdown sources.
 # ────────────────────────────────────────────────────────────────────────────
 
-FROM python:3.12-slim-bookworm AS knowledge-builder
+FROM python:3.15-slim-bookworm AS knowledge-builder
 
 WORKDIR /app
 
