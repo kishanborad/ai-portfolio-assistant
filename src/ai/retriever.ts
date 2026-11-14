@@ -150,6 +150,33 @@ export function rankChunks(
     .map((s) => s.text);
 }
 
+type EmbedderFn = (
+  text: string,
+  options: { pooling: string; normalize: boolean },
+) => Promise<{ data: ArrayLike<number> }>;
+
+// One shared embedding pipeline for the lifetime of the page. Creating
+// a pipeline per query pays ONNX session setup every time.
+let embedderPromise: Promise<EmbedderFn> | null = null;
+
+async function getEmbedder(): Promise<EmbedderFn> {
+  if (!embedderPromise) {
+    embedderPromise = (async () => {
+      const { pipeline } = await import('@huggingface/transformers');
+      const embedder = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', {
+        dtype: 'fp32',
+      });
+      return embedder as unknown as EmbedderFn;
+    })();
+    // If loading fails, clear the cache so a later query retries
+    // instead of reusing a rejected promise.
+    embedderPromise.catch(() => {
+      embedderPromise = null;
+    });
+  }
+  return embedderPromise;
+}
+
 /**
  * Embed a query and retrieve the top-K most relevant knowledge chunks.
  *
@@ -167,13 +194,9 @@ export async function retrieveChunks(
     return [];
   }
 
-  const { pipeline } = await import('@huggingface/transformers');
-  const embedder = await pipeline('feature-extraction', 'Xenova/all-MiniLM-L6-v2', {
-    dtype: 'fp32',
-  });
-
+  const embedder = await getEmbedder();
   const output = await embedder(query, { pooling: 'mean', normalize: true });
-  const queryEmbedding: number[] = Array.from(output.data as Float32Array);
+  const queryEmbedding: number[] = Array.from(output.data);
 
   return rankChunks(queryEmbedding, chunks, query, topK);
 }
