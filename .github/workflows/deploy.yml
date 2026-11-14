@@ -1,0 +1,47 @@
+# .github/workflows/deploy.yml: Deploy to GitHub Pages
+#
+# Runs on every push to main: builds the app with Vite and publishes
+# the dist/ output to the gh-pages branch, which GitHub Pages serves.
+# Uses the committed public/knowledge.json and public/faq.json as built
+# (no knowledge regeneration step, so the deploy matches what CI builds).
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: "Build and deploy"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npx vite build
+
+      - name: Deploy to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
