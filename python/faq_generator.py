@@ -45,8 +45,8 @@ STARTER_FAQS = [
         "question": "Tell me about your experience",
         "answer": (
             "I've been working in QA automation and software development "
-            "for about five years. My focus is building test infrastructure "
-            "that teams rely on daily — Playwright and Selenium tests, CI "
+            "for about seven years. My focus is building test infrastructure "
+            "that teams rely on daily: Playwright and Selenium tests, CI "
             "pipelines, visual regression, and actionable reporting. "
             "Want to know about a specific role or project?"
         ),
@@ -61,7 +61,7 @@ STARTER_FAQS = [
     {
         "question": "What's your tech stack?",
         "answer": (
-            "My primary languages are Python and TypeScript. For testing: "
+            "My primary languages are Python, SQL, and TypeScript. For testing: "
             "Playwright, Selenium, pytest, Vitest, axe-core, PIL/Pillow. "
             "For infrastructure: Docker, GitHub Actions, shell scripting. "
             "Frontend: React, Tailwind CSS, Vite, Canvas API, WebAssembly. "
