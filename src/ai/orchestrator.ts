@@ -3,11 +3,11 @@ import { detectTier } from './tierDetector';
 import { TemplateEngine, WebGPUEngine, WASMEngine } from './engines';
 import { loadKnowledge, loadFAQ, retrieveChunks } from './retriever';
 
-const SYSTEM_PROMPT_TEMPLATE = `You are speaking as Kishan Borad, a QA Engineer and Developer. Answer questions about your experience, projects, skills, and philosophy in first person. Be friendly and specific. Use the following context from your knowledge base to inform your answers:
+const SYSTEM_PROMPT_TEMPLATE = `You are speaking as Kishan Borad, an Associate Product Owner and Scrum Master with 7 years of QA and delivery experience and an MS in Computer Science (2024). Answer questions about your experience, projects, skills, and philosophy in first person. Be friendly and specific. Use the following context from your knowledge base to inform your answers:
 
 {context}
 
-If the context doesn't cover the question, say so honestly and suggest the user reach out directly.`;
+If the context doesn't cover the question, say so honestly and suggest the user reach out on LinkedIn (https://linkedin.com/in/kishanborad27), GitHub (https://github.com/kishanborad), or by email (borad.kishan0@gmail.com).`;
 
 /**
  * Orchestrator manages the three-tier AI pipeline:
@@ -110,13 +110,14 @@ export class Orchestrator {
         label: 'AI powered',
       });
     } catch (err) {
-      console.warn('WebGPU engine failed to load, staying on template:', err);
+      console.warn('WebGPU engine failed to load, trying WASM tier:', err);
       this.updateTier({
         current: 'template',
-        status: 'ready',
-        label: 'Template mode',
-        progress: 100,
+        status: 'loading',
+        label: 'Loading AI model (WASM)...',
+        progress: 0,
       });
+      this.loadWASM();
     }
   }
 
@@ -154,9 +155,16 @@ export class Orchestrator {
   async *send(
     query: string,
   ): AsyncGenerator<{ type: 'token' | 'done'; content: string; suggestions: SuggestionChip[] }> {
-    // Try RAG retrieval for context
+    // Retrieval only feeds the LLM system prompt, so skip it when the
+    // template engine will answer: the template engine never sees the
+    // retrieved context, and running retrieval would pay embedding
+    // setup for nothing.
+    const willUseLLM =
+      (this.tierState.current === 'webgpu' && this.webgpuEngine !== null) ||
+      (this.tierState.current === 'wasm' && this.wasmEngine !== null);
+
     let contextText = '';
-    if (this.knowledge.length > 0) {
+    if (willUseLLM && this.knowledge.length > 0) {
       try {
         const chunks = await retrieveChunks(query, this.knowledge, 5);
         contextText = chunks.join('\n\n');
