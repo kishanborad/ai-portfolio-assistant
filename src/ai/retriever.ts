@@ -47,11 +47,116 @@ export async function loadFAQ(): Promise<unknown[]> {
 }
 
 /**
- * Embed a query and retrieve the top-K most relevant knowledge chunks
- * by cosine similarity against pre-computed embeddings.
+ * Minimum combined score for a chunk to be returned as context.
+ * Measured score separation on this corpus: on-topic queries score
+ * 0.20 to 0.56 at top-1, off-topic probes score 0.05 to 0.12.
+ */
+export const RETRIEVAL_SIMILARITY_THRESHOLD = 0.15;
+
+/**
+ * Weight of the keyword-overlap boost added to the cosine score.
+ * The boost uses chunk metadata (category and source filename), not
+ * chunk text: metadata tokens are the discriminating signal on this
+ * small corpus, while text overlap misleads generic queries.
+ */
+const KEYWORD_BOOST_WEIGHT = 0.3;
+
+/**
+ * Common words ignored when matching queries to content, both for the
+ * retrieval keyword boost and for template matching. Kept in one place
+ * so both engines filter the same way.
+ */
+export const STOPWORDS: ReadonlySet<string> = new Set([
+  'a', 'an', 'the', 'and', 'or', 'but', 'if', 'then', 'else', 'when',
+  'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into',
+  'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from',
+  'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again',
+  'further', 'once', 'here', 'there', 'all', 'any', 'both', 'each', 'few',
+  'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only',
+  'own', 'same', 'so', 'than', 'too', 'very', 'can', 'will', 'just',
+  'should', 'now', 'i', 'me', 'my', 'we', 'our', 'you', 'your', 'he',
+  'him', 'his', 'she', 'her', 'it', 'its', 'they', 'them', 'their',
+  'what', 'which', 'who', 'whom', 'this', 'that', 'these', 'those', 'am',
+  'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has',
+  'had', 'having', 'do', 'does', 'did', 'doing', 'would', 'could',
+  'ought', 'tell', 'please',
+]);
+
+/**
+ * Tokenize text into lowercase content words: punctuation stripped,
+ * single-character words and stopwords removed.
+ */
+export function contentTokens(text: string): string[] {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s]/g, '')
+    .split(/\s+/)
+    .filter((w) => w.length > 1 && !STOPWORDS.has(w));
+}
+
+/**
+ * Metadata tokens for a chunk: its category plus the words in its
+ * source filename stem (for example, "test-runner.md" gives
+ * "test" and "runner").
+ */
+function metadataTokens(chunk: KnowledgeChunk): Set<string> {
+  const stem = chunk.source.replace(/\.md$/, '');
+  const parts = [chunk.category, ...stem.toLowerCase().split(/[^a-z0-9]+/)];
+  return new Set(parts.filter((p) => p.length > 1));
+}
+
+/**
+ * Fraction of the unique query content tokens that appear in the
+ * chunk metadata. Returns 0 when the query has no content tokens.
+ */
+function metadataOverlap(queryTokens: string[], chunk: KnowledgeChunk): number {
+  const unique = new Set(queryTokens);
+  if (unique.size === 0) {
+    return 0;
+  }
+  const meta = metadataTokens(chunk);
+  let matched = 0;
+  for (const token of unique) {
+    if (meta.has(token)) {
+      matched++;
+    }
+  }
+  return matched / unique.size;
+}
+
+/**
+ * Rank chunks for a query embedding: cosine similarity plus a
+ * metadata keyword boost, keeping only chunks at or above the
+ * similarity threshold, best first, up to topK.
+ */
+export function rankChunks(
+  queryEmbedding: number[],
+  chunks: KnowledgeChunk[],
+  query: string,
+  topK: number = 5,
+): string[] {
+  const queryTokens = contentTokens(query);
+  const scored = chunks.map((chunk) => ({
+    text: chunk.text,
+    score:
+      cosineSimilarity(queryEmbedding, chunk.embedding) +
+      KEYWORD_BOOST_WEIGHT * metadataOverlap(queryTokens, chunk),
+  }));
+
+  scored.sort((a, b) => b.score - a.score);
+  return scored
+    .filter((s) => s.score >= RETRIEVAL_SIMILARITY_THRESHOLD)
+    .slice(0, topK)
+    .map((s) => s.text);
+}
+
+/**
+ * Embed a query and retrieve the top-K most relevant knowledge chunks.
  *
- * Uses Transformers.js to embed the query with all-MiniLM-L6-v2.
- * Returns the text content of the top-K matching chunks.
+ * Uses Transformers.js to embed the query with all-MiniLM-L6-v2, then
+ * ranks chunks by cosine similarity plus a metadata keyword boost,
+ * dropping chunks below the similarity threshold.
+ * Returns the text content of the matching chunks, best first.
  */
 export async function retrieveChunks(
   query: string,
@@ -70,11 +175,5 @@ export async function retrieveChunks(
   const output = await embedder(query, { pooling: 'mean', normalize: true });
   const queryEmbedding: number[] = Array.from(output.data as Float32Array);
 
-  const scored = chunks.map((chunk) => ({
-    text: chunk.text,
-    score: cosineSimilarity(queryEmbedding, chunk.embedding),
-  }));
-
-  scored.sort((a, b) => b.score - a.score);
-  return scored.slice(0, topK).map((s) => s.text);
+  return rankChunks(queryEmbedding, chunks, query, topK);
 }
