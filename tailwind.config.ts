@@ -8,22 +8,31 @@ export default {
         poppins: ['Poppins', 'sans-serif'],
       },
       colors: {
+        // Theme-driven tokens: values come from CSS variables in index.css,
+        // one set for day (warm paper) and one for night (charcoal amber).
+        // The navy/deep names are legacy; they now follow the active theme.
         navy: {
-          DEFAULT: '#050816',
-          deep: '#0a0a1a',
+          DEFAULT: 'rgb(var(--theme-bg) / <alpha-value>)',
+          deep: 'rgb(var(--theme-surface) / <alpha-value>)',
         },
+        surface: 'rgb(var(--theme-surface) / <alpha-value>)',
+        line: 'rgb(var(--theme-border) / <alpha-value>)',
+        ink: 'rgb(var(--theme-text) / <alpha-value>)',
         accent: {
-          DEFAULT: '#818cf8',
-          dim: '#6366f1',
-          dark: '#4f46e5',
+          DEFAULT: 'rgb(var(--theme-accent) / <alpha-value>)',
+          dim: 'rgb(var(--theme-accent-deep) / <alpha-value>)',
+          dark: 'rgb(var(--theme-accent-deep) / <alpha-value>)',
         },
-        muted: '#aaa6c3',
-        dimmed: '#64648a',
+        'on-accent': 'rgb(var(--theme-on-accent) / <alpha-value>)',
+        muted: 'rgb(var(--theme-muted) / <alpha-value>)',
+        dimmed: 'rgb(var(--theme-dimmed) / <alpha-value>)',
+        status: 'rgb(var(--theme-status) / <alpha-value>)',
+        chip: 'rgb(var(--theme-chip) / <alpha-value>)',
       },
       boxShadow: {
-        glass: '0 8px 32px rgba(0, 0, 0, 0.3)',
-        glow: '0 0 20px rgba(99, 102, 241, 0.15)',
-        'glow-strong': '0 0 30px rgba(99, 102, 241, 0.3)',
+        glass: '0 8px 32px rgb(var(--theme-text) / 0.12)',
+        glow: '0 0 20px rgb(var(--theme-accent) / 0.15)',
+        'glow-strong': '0 0 30px rgb(var(--theme-accent) / 0.3)',
       },
       backdropBlur: {
         glass: '12px',

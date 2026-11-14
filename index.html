@@ -4,12 +4,26 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
     <title>AI Portfolio Assistant — Kishan Borad</title>
+    <script>
+      // Apply the saved theme (or the system preference) before first paint
+      // so the page never flashes the wrong theme. The toggle in the chat
+      // panel owns the choice afterwards.
+      (function () {
+        try {
+          var stored = localStorage.getItem('assistant-theme');
+          var theme = stored === 'day' || stored === 'night' ? stored : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day');
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.backgroundColor = theme === 'night' ? '#141414' : '#F6F3ED';
+        } catch (e) { /* storage unavailable: fall back to the day theme */ }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   </head>
-  <body class="bg-[#050816] text-[#f4f4f6] font-[Poppins] antialiased">
+  <body class="font-[Poppins] antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
