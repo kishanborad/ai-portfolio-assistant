@@ -10,7 +10,7 @@ export function ProblemBanner() {
         <span className="shrink-0 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium uppercase tracking-wider text-[10px]">Free</span>
         <span className="truncate">
           AI chatbots like Tidio or Intercom cost $29-99/mo and send data to their servers.
-          This runs a real LLM entirely in your browser — WebGPU → WASM → template fallback. No API keys, no backend, your data stays local.
+          This runs a real LLM entirely in your browser (WebGPU, WASM, then template fallback). No API keys, no backend. Your questions and answers stay local; model weights and fonts are downloaded from content delivery networks.
         </span>
       </div>
       <button onClick={() => setDismissed(true)} className="shrink-0 text-slate-500 hover:text-slate-300 cursor-pointer" aria-label="Dismiss">✕</button>

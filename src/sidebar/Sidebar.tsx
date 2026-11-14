@@ -47,7 +47,7 @@ export function Sidebar({ tierState, onCategoryClick }: SidebarProps) {
           KB
         </div>
         <div className="text-[15px] font-semibold">Kishan Borad</div>
-        <div className="text-[11px] text-muted mt-0.5">QA Engineer & Developer</div>
+        <div className="text-[11px] text-muted mt-0.5">Associate Product Owner & Scrum Master</div>
       </div>
 
       {/* Status Badge */}
@@ -69,10 +69,37 @@ export function Sidebar({ tierState, onCategoryClick }: SidebarProps) {
         ))}
       </div>
 
+      {/* Contact */}
+      <div className="text-[10px] uppercase tracking-widest text-dimmed mb-2 mt-5">Contact</div>
+      <div className="flex flex-col gap-1.5">
+        <a
+          href="https://linkedin.com/in/kishanborad27"
+          target="_blank"
+          rel="noreferrer"
+          className="px-3 py-2 rounded-lg text-left text-xs glass-surface-hover cursor-pointer"
+        >
+          💼 LinkedIn
+        </a>
+        <a
+          href="https://github.com/kishanborad"
+          target="_blank"
+          rel="noreferrer"
+          className="px-3 py-2 rounded-lg text-left text-xs glass-surface-hover cursor-pointer"
+        >
+          💻 GitHub
+        </a>
+        <a
+          href="mailto:borad.kishan0@gmail.com"
+          className="px-3 py-2 rounded-lg text-left text-xs glass-surface-hover cursor-pointer"
+        >
+          ✉️ Email
+        </a>
+      </div>
+
       {/* Privacy Note */}
       <div className="mt-auto pt-4">
         <div className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06] text-[10px] text-dimmed leading-relaxed">
-          🔒 Runs entirely in your browser. No data is sent to any server.
+          🔒 Your questions and answers stay in your browser. Model weights and fonts are downloaded from content delivery networks.
         </div>
       </div>
     </aside>
