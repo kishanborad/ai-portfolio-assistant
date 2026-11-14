@@ -4,7 +4,7 @@ category: projects
 tags: [ai, chatbot, LLM, WebGPU, WASM, transformers, RAG, browser]
 ---
 
-The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys. Your questions and answers stay in the browser, while model weights and fonts are downloaded from content delivery networks.
+The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys, no data leaves the browser.
 
 It uses a three-tier approach: if your device supports WebGPU, it loads Phi-3-mini via WebLLM for real-time streaming responses. If only WASM is available, it falls back to Qwen2-0.5B via Transformers.js. And if neither works or while models are downloading, it uses FAQ-based template matching for instant responses.
 
