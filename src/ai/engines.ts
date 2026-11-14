@@ -1,11 +1,21 @@
 import type { FAQEntry, SuggestionChip } from '../types';
+import { STOPWORDS } from './retriever';
 
 // ── Template Engine (Tier 3) ───────────────────────────────────────────────
 
 /**
+ * Minimum score for a query to match an FAQ entry. A keyword match
+ * scores 2 and a question-token match scores 1, so 3 requires at
+ * least one keyword match plus a question-token match (or equivalent),
+ * and common words alone can never win a match.
+ */
+const MATCH_THRESHOLD = 3;
+
+/**
  * FAQ-based template matching engine.
- * Tokenizes the query, scores against FAQ entries by keyword overlap
- * and category weight, returns the best-matching pre-written answer.
+ * Tokenizes the query, drops stopwords, and scores against FAQ entries
+ * by keyword overlap with a small bonus for question similarity,
+ * returning the best-matching pre-written answer.
  */
 export class TemplateEngine {
   private entries: FAQEntry[];
@@ -53,7 +63,7 @@ export class TemplateEngine {
    * Returns a fallback response if no match scores above threshold.
    */
   respond(query: string): { answer: string; suggestions: SuggestionChip[] } {
-    const queryTokens = this.tokenize(query);
+    const queryTokens = this.tokenize(query).filter((t) => !STOPWORDS.has(t));
 
     if (queryTokens.length === 0) {
       return {
@@ -77,10 +87,10 @@ export class TemplateEngine {
       }
     }
 
-    if (!bestEntry || bestScore < 1) {
+    if (!bestEntry || bestScore < MATCH_THRESHOLD) {
       return {
         answer:
-          "I don't have specific details on that topic, but feel free to reach out to me directly. I'm happy to chat about my experience, projects, or technical skills.",
+          "I don't have specific details on that topic, but you can reach me on LinkedIn at https://linkedin.com/in/kishanborad27, on GitHub at https://github.com/kishanborad, or by email at borad.kishan0@gmail.com. I'm happy to chat about my experience, projects, or technical skills.",
         suggestions: [
           { label: 'Tell me about your experience', query: 'Tell me about your experience' },
           { label: "What's your tech stack?", query: "What's your tech stack?" },
@@ -99,7 +109,8 @@ export class TemplateEngine {
 
 /**
  * WebGPU-powered LLM engine using WebLLM.
- * Loads Phi-3-mini-4k-instruct with q4f16_1 quantization (~800MB).
+ * Loads Phi-3-mini-4k-instruct with q4f16_1 quantization (about 2.2 GB
+ * download, 3,672 MB VRAM required).
  * Streams tokens during generation.
  */
 export class WebGPUEngine {
