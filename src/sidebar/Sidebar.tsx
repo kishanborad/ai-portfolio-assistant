@@ -1,7 +1,10 @@
+import { useEffect, useRef, useState } from 'react';
 import type { TierState } from '../types';
+import { Avatar, type AvatarState } from '../chat/Avatar';
 
 interface SidebarProps {
   tierState: TierState;
+  isBusy: boolean;
   onCategoryClick: (query: string) => void;
 }
 
@@ -38,14 +41,40 @@ function StatusBadge({ tierState }: { tierState: TierState }) {
   );
 }
 
-export function Sidebar({ tierState, onCategoryClick }: SidebarProps) {
+export function Sidebar({ tierState, isBusy, onCategoryClick }: SidebarProps) {
+  const [greeted, setGreeted] = useState(false);
+  const [speaking, setSpeaking] = useState(false);
+  const wasBusyRef = useRef(false);
+  const speakTimerRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (isBusy) {
+      setGreeted(true);
+      setSpeaking(false);
+      wasBusyRef.current = true;
+      return;
+    }
+    if (wasBusyRef.current) {
+      wasBusyRef.current = false;
+      setSpeaking(true);
+      speakTimerRef.current = window.setTimeout(() => setSpeaking(false), 3500);
+    }
+    return () => window.clearTimeout(speakTimerRef.current);
+  }, [isBusy]);
+
+  const avatarState: AvatarState = isBusy
+    ? 'thinking'
+    : speaking
+      ? 'speaking'
+      : greeted
+        ? 'idle'
+        : 'greeting';
+
   return (
     <aside className="w-[260px] border-r border-line flex flex-col p-5 bg-navy-deep/90 flex-shrink-0 hidden md:flex">
       {/* Avatar + Name */}
       <div className="text-center mb-5">
-        <div className="w-16 h-16 rounded-full gradient-accent-light mx-auto mb-3 flex items-center justify-center text-2xl font-bold text-on-accent shadow-glow">
-          KB
-        </div>
+        <Avatar state={avatarState} sizeClass="mx-auto mb-3 h-16 w-16" onGreetingDone={() => setGreeted(true)} />
         <div className="text-[15px] font-semibold">Kishan Borad</div>
         <div className="text-[11px] text-muted mt-0.5">Associate Product Owner & Scrum Master</div>
       </div>

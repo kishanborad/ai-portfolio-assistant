@@ -9,6 +9,7 @@ const orchestrator = new Orchestrator();
 
 export default function App() {
   const [tierState, setTierState] = useState<TierState>(orchestrator.getTierState());
+  const [assistantBusy, setAssistantBusy] = useState(false);
   const chatPanelRef = useRef<{ sendMessage: (query: string) => void }>(null);
 
   useEffect(() => {
@@ -25,8 +26,8 @@ export default function App() {
     <div className="flex flex-col h-screen bg-navy font-poppins">
       <ProblemBanner />
       <div className="flex flex-1 min-h-0">
-        <Sidebar tierState={tierState} onCategoryClick={handleCategoryClick} />
-        <ChatPanel ref={chatPanelRef} orchestrator={orchestrator} tierState={tierState} />
+        <Sidebar tierState={tierState} isBusy={assistantBusy} onCategoryClick={handleCategoryClick} />
+        <ChatPanel ref={chatPanelRef} orchestrator={orchestrator} tierState={tierState} onBusyChange={setAssistantBusy} />
       </div>
     </div>
   );
