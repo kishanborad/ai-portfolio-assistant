@@ -71,6 +71,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
   const [suggestions, setSuggestions] = useState<SuggestionChip[]>(STARTER_CHIPS);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
   const [justAnswered, setJustAnswered] = useState(false);
   const answerTimerRef = useRef<number | undefined>(undefined);
   const [theme, setTheme] = useState<Theme>(readInitialTheme);
@@ -139,12 +140,31 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
     setInput('');
     setSuggestions([]);
     setIsTyping(true);
+    setIsStreaming(false);
 
+    // The bot message appears with the first streamed token and grows
+    // as tokens arrive, so the first words show in split seconds.
+    // Whole-answer engines (template, WASM) still append once, at done.
+    const botMessage: Message = {
+      id: `bot-${Date.now()}`,
+      role: 'bot',
+      content: '',
+      tier: tierState.current,
+      timestamp: Date.now(),
+    };
     let botContent = '';
+    let started = false;
 
     for await (const chunk of orchestrator.send(query)) {
       if (chunk.type === 'token') {
         botContent += chunk.content;
+        if (!started) {
+          started = true;
+          setIsStreaming(true);
+          setMessages((prev) => [...prev, { ...botMessage, content: botContent }]);
+        } else {
+          setMessages((prev) => prev.map((m) => (m.id === botMessage.id ? { ...m, content: botContent } : m)));
+        }
       } else if (chunk.type === 'done') {
         botContent = chunk.content;
         if (chunk.suggestions.length > 0) {
@@ -153,16 +173,13 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
       }
     }
 
-    const botMessage: Message = {
-      id: `bot-${Date.now()}`,
-      role: 'bot',
-      content: botContent,
-      tier: tierState.current,
-      timestamp: Date.now(),
-    };
-
-    setMessages((prev) => [...prev, botMessage]);
+    if (!started) {
+      setMessages((prev) => [...prev, { ...botMessage, content: botContent }]);
+    } else {
+      setMessages((prev) => prev.map((m) => (m.id === botMessage.id ? { ...m, content: botContent } : m)));
+    }
     setIsTyping(false);
+    setIsStreaming(false);
     setJustAnswered(true);
     window.clearTimeout(answerTimerRef.current);
     answerTimerRef.current = window.setTimeout(() => setJustAnswered(false), 3500);
@@ -225,8 +242,8 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
           </div>
         )}
 
-        {/* Typing indicator */}
-        {isTyping && (
+        {/* Typing indicator: only until the first streamed token lands */}
+        {isTyping && !isStreaming && (
           <div className="flex gap-3 max-w-[85%] opacity-60">
             <Avatar state="thinking" sizeClass="h-7 w-7" />
             <div className="glass-surface rounded-tl-[4px] rounded-tr-xl rounded-br-xl rounded-bl-xl px-5 py-3 flex gap-1 items-center">
