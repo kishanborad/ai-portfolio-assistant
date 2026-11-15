@@ -79,6 +79,13 @@ describe('Orchestrator WebGPU streaming', () => {
     const chunks: Array<{ type: string; content: string }> = [];
     for await (const chunk of orch.send('Hi')) chunks.push(chunk);
 
-    expect(chunks).toEqual([{ type: 'done', content: 'template answer', suggestions: [] }]);
+    expect(chunks).toEqual([
+      {
+        type: 'done',
+        content: 'template answer',
+        suggestions: [],
+        meta: { tier: 'webgpu', route: 'template-fallback', templateScore: null, fallback: true },
+      },
+    ]);
   });
 });

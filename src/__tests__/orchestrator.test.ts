@@ -62,4 +62,40 @@ describe('Orchestrator', () => {
     expect(done).toBeDefined();
     expect(done!.content).toContain('QA');
   });
+
+  it('reports template routing metadata on the done chunk', async () => {
+    const orch = new Orchestrator();
+    await orch.init();
+
+    const chunks: Array<{ type: string; meta?: unknown }> = [];
+    for await (const chunk of orch.send('Tell me about your experience')) {
+      chunks.push(chunk);
+    }
+
+    expect(chunks).toHaveLength(1);
+    expect(chunks[0].meta).toEqual({
+      tier: 'template',
+      route: 'template',
+      templateScore: 3,
+      fallback: false,
+    });
+  });
+
+  it('marks an unmatched question as a fallback in its metadata', async () => {
+    const orch = new Orchestrator();
+    await orch.init();
+
+    const chunks: Array<{ type: string; meta?: unknown }> = [];
+    for await (const chunk of orch.send('favorite pizza topping')) {
+      chunks.push(chunk);
+    }
+
+    expect(chunks).toHaveLength(1);
+    expect(chunks[0].meta).toEqual({
+      tier: 'template',
+      route: 'template',
+      templateScore: 0,
+      fallback: true,
+    });
+  });
 });
