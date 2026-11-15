@@ -36,3 +36,27 @@ export interface TierState {
   progress: number;
   label: string;
 }
+
+/**
+ * A paraphrase mapping: when a query contains one of the tokens or
+ * the phrase, the target FAQ entry gets a matching boost. Targets
+ * are FAQ question strings and must exist in faq.json.
+ */
+export interface KeywordMapEntry {
+  tokens?: string[];
+  phrase?: string;
+  target: string;
+}
+
+export type ResponseRoute = 'template' | 'webgpu' | 'wasm' | 'template-fallback';
+
+/**
+ * Routing outcome attached to the final chunk of an answer, so the
+ * question log can record which path answered each question.
+ */
+export interface ResponseMeta {
+  tier: Tier;
+  route: ResponseRoute;
+  templateScore: number | null;
+  fallback: boolean;
+}
