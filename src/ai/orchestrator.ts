@@ -1,7 +1,7 @@
-import type { Tier, TierState, FAQEntry, SuggestionChip, KnowledgeChunk } from '../types';
+import type { ResponseMeta, Tier, TierState, FAQEntry, SuggestionChip, KnowledgeChunk } from '../types';
 import { detectTier } from './tierDetector';
 import { TemplateEngine, WebGPUEngine, WASMEngine } from './engines';
-import { loadKnowledge, loadFAQ, retrieveChunks, warmEmbedder } from './retriever';
+import { loadKnowledge, loadFAQ, loadKeywordMap, retrieveChunks, warmEmbedder } from './retriever';
 
 const SYSTEM_PROMPT_TEMPLATE = `You are speaking as Kishan Borad, an Associate Product Owner and Scrum Master with 7 years of QA and delivery experience and an MS in Computer Science (2024). Answer questions about your experience, projects, skills, and philosophy in first person. Be friendly and specific. Use the following context from your knowledge base to inform your answers:
 
@@ -56,13 +56,14 @@ export class Orchestrator {
    * 3. Start loading LLM in background if available
    */
   async init(): Promise<void> {
-    // Load FAQ and knowledge in parallel
-    const [faqData, knowledgeData] = await Promise.all([
+    // Load FAQ, knowledge, and the keyword map in parallel
+    const [faqData, knowledgeData, keywordMap] = await Promise.all([
       loadFAQ().catch(() => []),
       loadKnowledge().catch(() => []),
+      loadKeywordMap().catch(() => []),
     ]);
 
-    this.templateEngine = new TemplateEngine(faqData as FAQEntry[]);
+    this.templateEngine = new TemplateEngine(faqData as FAQEntry[], keywordMap);
     this.knowledge = knowledgeData;
 
     // Detect tier
@@ -157,11 +158,38 @@ export class Orchestrator {
   /**
    * Send a user query and receive response chunks.
    * Yields {type: 'token', content} during streaming,
-   * then {type: 'done', content, suggestions} at the end.
+   * then {type: 'done', content, suggestions, meta} at the end.
+   *
+   * A question the template engine matches is answered at once on
+   * every tier, without waiting for model generation: the match is
+   * already the right information. Only unmatched questions reach
+   * the model tiers.
    */
   async *send(
     query: string,
-  ): AsyncGenerator<{ type: 'token' | 'done'; content: string; suggestions: SuggestionChip[] }> {
+  ): AsyncGenerator<{
+    type: 'token' | 'done';
+    content: string;
+    suggestions: SuggestionChip[];
+    meta?: ResponseMeta;
+  }> {
+    const templateResult = this.templateEngine?.respond(query);
+    if (templateResult?.matched) {
+      yield {
+        type: 'done',
+        content: templateResult.answer,
+        suggestions: templateResult.suggestions,
+        meta: {
+          tier: this.tierState.current,
+          route: 'template',
+          templateScore: templateResult.score,
+          fallback: false,
+        },
+      };
+      return;
+    }
+    const templateScore = templateResult?.score ?? null;
+
     // Retrieval only feeds the LLM system prompt, so skip it when the
     // template engine will answer: the template engine never sees the
     // retrieved context, and running retrieval would pay embedding
@@ -225,19 +253,36 @@ export class Orchestrator {
 
       if (failed && fullResponse === '') {
         // Nothing streamed: fall back to the template answer.
-        const result = this.templateEngine!.respond(query);
-        yield { type: 'done', content: result.answer, suggestions: result.suggestions };
+        const result = templateResult ?? this.templateEngine?.respond(query);
+        if (result) {
+          yield {
+            type: 'done',
+            content: result.answer,
+            suggestions: result.suggestions,
+            meta: { tier: 'webgpu', route: 'template-fallback', templateScore, fallback: true },
+          };
+        }
         return;
       }
 
-      yield { type: 'done', content: fullResponse, suggestions: [] };
+      yield {
+        type: 'done',
+        content: fullResponse,
+        suggestions: [],
+        meta: { tier: 'webgpu', route: 'webgpu', templateScore, fallback: false },
+      };
       return;
     }
 
     if (this.tierState.current === 'wasm' && this.wasmEngine) {
       try {
         const response = await this.wasmEngine.generate(query, systemPrompt, () => {});
-        yield { type: 'done', content: response, suggestions: [] };
+        yield {
+          type: 'done',
+          content: response,
+          suggestions: [],
+          meta: { tier: 'wasm', route: 'wasm', templateScore, fallback: false },
+        };
         return;
       } catch {
         // Fall back to template
@@ -245,9 +290,18 @@ export class Orchestrator {
     }
 
     // Template fallback
-    if (this.templateEngine) {
-      const result = this.templateEngine.respond(query);
-      yield { type: 'done', content: result.answer, suggestions: result.suggestions };
+    if (templateResult) {
+      yield {
+        type: 'done',
+        content: templateResult.answer,
+        suggestions: templateResult.suggestions,
+        meta: {
+          tier: this.tierState.current,
+          route: this.tierState.current === 'template' ? 'template' : 'template-fallback',
+          templateScore,
+          fallback: true,
+        },
+      };
     }
   }
 }
