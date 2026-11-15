@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react';
-import type { Message, SuggestionChip, TierState } from '../types';
+import type { Message, ResponseMeta, SuggestionChip, TierState } from '../types';
 import { MessageBubble } from './MessageBubble';
 import { Avatar } from './Avatar';
 import type { Orchestrator } from '../ai/orchestrator';
+import { logQuestion } from '../ai/questionLog';
 
 interface ChatPanelProps {
   orchestrator: Orchestrator;
@@ -154,9 +155,15 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
     };
     let botContent = '';
     let started = false;
+    let firstTokenMs: number | null = null;
+    let meta: ResponseMeta | undefined;
+    const startedAt = Date.now();
 
     for await (const chunk of orchestrator.send(query)) {
       if (chunk.type === 'token') {
+        if (firstTokenMs === null) {
+          firstTokenMs = Date.now() - startedAt;
+        }
         botContent += chunk.content;
         if (!started) {
           started = true;
@@ -167,11 +174,25 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
         }
       } else if (chunk.type === 'done') {
         botContent = chunk.content;
+        meta = chunk.meta;
         if (chunk.suggestions.length > 0) {
           setSuggestions(chunk.suggestions);
         }
       }
     }
+
+    // Record the question and how it was answered, locally only, so
+    // missed questions can be turned into keyword mappings later.
+    logQuestion({
+      askedAt: new Date(startedAt).toISOString(),
+      question: query.trim(),
+      tier: meta?.tier ?? tierState.current,
+      route: meta?.route ?? 'template',
+      templateScore: meta?.templateScore ?? null,
+      fallback: meta?.fallback ?? false,
+      durationMs: Date.now() - startedAt,
+      firstTokenMs,
+    });
 
     if (!started) {
       setMessages((prev) => [...prev, { ...botMessage, content: botContent }]);
