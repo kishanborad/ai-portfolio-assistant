@@ -1,4 +1,4 @@
-import type { FAQEntry, SuggestionChip } from '../types';
+import type { FAQEntry, KeywordMapEntry, SuggestionChip } from '../types';
 import { STOPWORDS } from './retriever';
 
 // ── Template Engine (Tier 3) ───────────────────────────────────────────────
@@ -12,6 +12,14 @@ import { STOPWORDS } from './retriever';
 const MATCH_THRESHOLD = 3;
 
 /**
+ * Score added to a FAQ entry when the query hits one of its keyword
+ * map mappings. Exactly the match threshold, so a paraphrase that
+ * shares no keywords with its entry still matches, while an entry
+ * with real keyword overlap still outscores a merely mapped one.
+ */
+const ALIAS_BOOST = 3;
+
+/**
  * FAQ-based template matching engine.
  * Tokenizes the query, drops stopwords, and scores against FAQ entries
  * by keyword overlap with a small bonus for question similarity,
@@ -19,9 +27,11 @@ const MATCH_THRESHOLD = 3;
  */
 export class TemplateEngine {
   private entries: FAQEntry[];
+  private keywordMap: KeywordMapEntry[];
 
-  constructor(entries: FAQEntry[]) {
+  constructor(entries: FAQEntry[], keywordMap: KeywordMapEntry[] = []) {
     this.entries = entries;
+    this.keywordMap = keywordMap;
   }
 
   /**
@@ -59,13 +69,44 @@ export class TemplateEngine {
   }
 
   /**
+   * FAQ questions whose keyword-map mappings hit this query. Token
+   * mappings match against the raw query words, so mappings can use
+   * words the stopword filter would otherwise remove, and phrase
+   * mappings match the query text itself.
+   */
+  private aliasTargets(query: string): Set<string> {
+    const rawTokens = new Set(this.tokenize(query));
+    const flatQuery = ` ${query.toLowerCase().replace(/[^\w\s]/g, ' ')} `;
+    const targets = new Set<string>();
+    for (const mapping of this.keywordMap) {
+      const tokenHit = mapping.tokens?.some((t) => rawTokens.has(t.toLowerCase()));
+      const phraseHit =
+        mapping.phrase !== undefined && flatQuery.includes(` ${mapping.phrase.toLowerCase()} `);
+      if (tokenHit || phraseHit) {
+        targets.add(mapping.target);
+      }
+    }
+    return targets;
+  }
+
+  /**
    * Find the best-matching FAQ entry for a query.
    * Returns a fallback response if no match scores above threshold.
+   * The result carries the winning score and whether it matched, so
+   * callers can route on match quality and log the outcome.
    */
-  respond(query: string): { answer: string; suggestions: SuggestionChip[] } {
+  respond(query: string): {
+    answer: string;
+    suggestions: SuggestionChip[];
+    score: number;
+    matched: boolean;
+  } {
     const queryTokens = this.tokenize(query).filter((t) => !STOPWORDS.has(t));
+    const boosted = this.aliasTargets(query);
 
-    if (queryTokens.length === 0) {
+    // A query of only common words still matches when a keyword-map
+    // phrase names it, such as "who are you".
+    if (queryTokens.length === 0 && boosted.size === 0) {
       return {
         answer:
           "I didn't catch that — could you rephrase? You can ask about my experience, projects, skills, or engineering philosophy.",
@@ -73,6 +114,8 @@ export class TemplateEngine {
           { label: 'Tell me about your experience', query: 'Tell me about your experience' },
           { label: 'Show me your projects', query: 'Show me your projects' },
         ],
+        score: 0,
+        matched: false,
       };
     }
 
@@ -80,7 +123,7 @@ export class TemplateEngine {
     let bestScore = 0;
 
     for (const entry of this.entries) {
-      const s = this.score(queryTokens, entry);
+      const s = this.score(queryTokens, entry) + (boosted.has(entry.question) ? ALIAS_BOOST : 0);
       if (s > bestScore) {
         bestScore = s;
         bestEntry = entry;
@@ -95,12 +138,16 @@ export class TemplateEngine {
           { label: 'Tell me about your experience', query: 'Tell me about your experience' },
           { label: "What's your tech stack?", query: "What's your tech stack?" },
         ],
+        score: bestScore,
+        matched: false,
       };
     }
 
     return {
       answer: bestEntry.answer,
       suggestions: bestEntry.suggestions,
+      score: bestScore,
+      matched: true,
     };
   }
 }

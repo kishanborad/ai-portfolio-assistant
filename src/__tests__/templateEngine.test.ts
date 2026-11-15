@@ -32,6 +32,22 @@ const TEST_FAQS: FAQEntry[] = [
     category: 'personality',
     suggestions: [],
   },
+  {
+    question: 'Tell me About Me',
+    answer: 'I am Kishan Borad, based in the US, with seven years in QA and delivery.',
+    keywords: ['about', 'who', 'personal', 'background', 'interests'],
+    category: 'personality',
+    suggestions: [],
+  },
+];
+
+const TEST_MAP = [
+  { tokens: ['kishan', 'borad'], target: 'Tell me About Me' },
+  { phrase: 'who are you', target: 'Tell me About Me' },
+  { phrase: 'about yourself', target: 'Tell me About Me' },
+  { tokens: ['job', 'jobs', 'worked'], target: 'Tell me about your experience' },
+  { tokens: ['languages'], target: "What's your tech stack?" },
+  { phrase: 'how many projects', target: 'Show me your projects' },
 ];
 
 describe('TemplateEngine', () => {
@@ -97,5 +113,56 @@ describe('TemplateEngine', () => {
     expect(result.answer).toContain('linkedin.com/in/kishanborad27');
     expect(result.answer).toContain('github.com/kishanborad');
     expect(result.answer).toContain('borad.kishan0@gmail.com');
+  });
+
+  it('reports its winning score and whether it matched', () => {
+    expect(engine.respond('Tell me about your experience').matched).toBe(true);
+    expect(engine.respond('favorite pizza topping').matched).toBe(false);
+    expect(engine.respond('favorite pizza topping').score).toBe(0);
+  });
+});
+
+describe('TemplateEngine with a keyword map', () => {
+  const mapped = new TemplateEngine(TEST_FAQS, TEST_MAP);
+
+  it('answers the reported question about who Kishan is', () => {
+    const result = mapped.respond('Can you tell me who kishan is and what he does');
+    expect(result.matched).toBe(true);
+    expect(result.answer).toContain('Kishan Borad');
+  });
+
+  it('answers a bare name question', () => {
+    expect(mapped.respond('Who is Kishan?').answer).toContain('Kishan Borad');
+  });
+
+  it('answers a question made only of common words when a phrase maps it', () => {
+    expect(mapped.respond('Who are you?').answer).toContain('Kishan Borad');
+  });
+
+  it('answers an about-yourself paraphrase', () => {
+    expect(mapped.respond('Tell me about yourself').answer).toContain('Kishan Borad');
+  });
+
+  it('links a jobs paraphrase to the experience entry', () => {
+    expect(mapped.respond('What jobs have you had?').answer).toContain('QA automation');
+  });
+
+  it('links a single synonym to the tech stack entry', () => {
+    expect(mapped.respond('What languages?').answer).toContain('Python');
+  });
+
+  it('links a project-count paraphrase to the projects entry', () => {
+    expect(mapped.respond('How many projects have you built?').answer).toContain('playgrounds');
+  });
+
+  it('still lets real keyword overlap outscore a mapped entry', () => {
+    const result = mapped.respond('What projects have you built?');
+    expect(result.answer).toContain('playgrounds');
+  });
+
+  it('still falls back for unmapped out-of-scope questions', () => {
+    const result = mapped.respond('What is the weather today?');
+    expect(result.matched).toBe(false);
+    expect(result.answer).toContain("don't have specific details");
   });
 });
