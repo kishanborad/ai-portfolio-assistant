@@ -1,4 +1,4 @@
-import type { KnowledgeChunk } from '../types';
+import type { KeywordMapEntry, KnowledgeChunk } from '../types';
 
 /**
  * Compute cosine similarity between two numeric vectors.
@@ -44,6 +44,31 @@ export async function loadFAQ(): Promise<unknown[]> {
     return [];
   }
   return response.json();
+}
+
+/**
+ * Load the keyword map from the pre-built keyword-map.json file.
+ * A missing or broken map is not fatal: matching falls back to
+ * plain FAQ scoring.
+ */
+export async function loadKeywordMap(): Promise<KeywordMapEntry[]> {
+  const base = (import.meta as { env?: { BASE_URL?: string } }).env?.BASE_URL || '/';
+  try {
+    const response = await fetch(`${base}keyword-map.json`);
+    if (!response.ok) {
+      return [];
+    }
+    const data: unknown = await response.json();
+    if (!Array.isArray(data)) {
+      return [];
+    }
+    return data.filter(
+      (e): e is KeywordMapEntry =>
+        typeof e === 'object' && e !== null && typeof (e as { target?: unknown }).target === 'string',
+    );
+  } catch {
+    return [];
+  }
 }
 
 /**
