@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { TierState } from '../types';
 import { Avatar, type AvatarState } from '../chat/Avatar';
-import { exportQuestionLog, getQuestionLog } from '../ai/questionLog';
 
 interface SidebarProps {
   tierState: TierState;
@@ -71,23 +70,6 @@ export function Sidebar({ tierState, isBusy, onCategoryClick }: SidebarProps) {
         ? 'idle'
         : 'greeting';
 
-  const [logCount, setLogCount] = useState(0);
-  useEffect(() => {
-    if (!isBusy) {
-      setLogCount(getQuestionLog().length);
-    }
-  }, [isBusy]);
-
-  const downloadLog = () => {
-    const blob = new Blob([exportQuestionLog()], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = 'kishan-assistant-question-log.json';
-    anchor.click();
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <aside className="w-[260px] border-r border-line flex flex-col p-5 bg-navy-deep/90 flex-shrink-0 hidden md:flex">
       {/* Avatar + Name */}
@@ -141,20 +123,6 @@ export function Sidebar({ tierState, isBusy, onCategoryClick }: SidebarProps) {
         >
           ✉️ Email
         </a>
-      </div>
-
-      {/* Question log */}
-      <div className="text-[10px] uppercase tracking-widest text-dimmed mb-2 mt-5">Question log</div>
-      <button
-        type="button"
-        onClick={downloadLog}
-        disabled={logCount === 0}
-        className="px-3 py-2 rounded-lg text-left text-xs glass-surface-hover cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-      >
-        ⬇️ Download log ({logCount})
-      </button>
-      <div className="text-[10px] text-dimmed leading-relaxed mt-1.5 px-1">
-        Questions stay in this browser. The download helps Kishan teach the assistant new phrasings.
       </div>
 
       {/* Privacy Note */}
