@@ -178,6 +178,17 @@ async function getEmbedder(): Promise<EmbedderFn> {
 }
 
 /**
+ * Start loading the embedding pipeline in the background so the first
+ * LLM-tier query does not pay the model download and session setup.
+ * Failures are ignored here: the first real query retries the load.
+ */
+export function warmEmbedder(): void {
+  getEmbedder().catch(() => {
+    // First real query retries the load.
+  });
+}
+
+/**
  * Embed a query and retrieve the top-K most relevant knowledge chunks.
  *
  * Uses Transformers.js to embed the query with all-MiniLM-L6-v2, then

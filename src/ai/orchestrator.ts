@@ -1,7 +1,7 @@
 import type { Tier, TierState, FAQEntry, SuggestionChip, KnowledgeChunk } from '../types';
 import { detectTier } from './tierDetector';
 import { TemplateEngine, WebGPUEngine, WASMEngine } from './engines';
-import { loadKnowledge, loadFAQ, retrieveChunks } from './retriever';
+import { loadKnowledge, loadFAQ, retrieveChunks, warmEmbedder } from './retriever';
 
 const SYSTEM_PROMPT_TEMPLATE = `You are speaking as Kishan Borad, an Associate Product Owner and Scrum Master with 7 years of QA and delivery experience and an MS in Computer Science (2024). Answer questions about your experience, projects, skills, and philosophy in first person. Be friendly and specific. Use the following context from your knowledge base to inform your answers:
 
@@ -67,6 +67,13 @@ export class Orchestrator {
 
     // Detect tier
     this.detectedTier = await detectTier();
+
+    // Warm the embedder while the LLM loads so the first LLM-tier
+    // query does not pay the embedding model download on top of
+    // generation. Template-only devices skip this entirely.
+    if (this.detectedTier !== 'template') {
+      warmEmbedder();
+    }
 
     if (this.detectedTier === 'webgpu') {
       this.updateTier({
@@ -177,13 +184,47 @@ export class Orchestrator {
 
     // Route to the current engine
     if (this.tierState.current === 'webgpu' && this.webgpuEngine) {
+      // Bridge the engine's token callback into yielded chunks so the
+      // first words reach the UI as they are generated instead of
+      // waiting for the whole answer. The queue and wake-up resolver
+      // below turn the callback into an async iterator: each delta
+      // wakes the drain loop, which yields it immediately.
+      const deltas: string[] = [];
+      let wake: (() => void) | null = null;
+      let settled = false;
+      let failed = false;
+      void this.webgpuEngine
+        .generate(query, systemPrompt, (delta) => {
+          deltas.push(delta);
+          wake?.();
+        })
+        .then(
+          () => {
+            settled = true;
+            wake?.();
+          },
+          () => {
+            failed = true;
+            settled = true;
+            wake?.();
+          },
+        );
+
       let fullResponse = '';
-      try {
-        fullResponse = await this.webgpuEngine.generate(query, systemPrompt, () => {
-          // Yielded below after the full response
+      for (;;) {
+        while (deltas.length > 0) {
+          const delta = deltas.shift()!;
+          fullResponse += delta;
+          yield { type: 'token', content: delta, suggestions: [] };
+        }
+        if (settled) break;
+        await new Promise<void>((resolve) => {
+          wake = resolve;
         });
-      } catch {
-        // Fall back to template
+      }
+
+      if (failed && fullResponse === '') {
+        // Nothing streamed: fall back to the template answer.
         const result = this.templateEngine!.respond(query);
         yield { type: 'done', content: result.answer, suggestions: result.suggestions };
         return;
