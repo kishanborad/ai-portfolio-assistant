@@ -1,0 +1,83 @@
+[
+  {
+    "target": "Tell me About Me",
+    "tokens": [
+      "kishan",
+      "borad"
+    ]
+  },
+  {
+    "phrase": "who are you",
+    "target": "Tell me About Me"
+  },
+  {
+    "phrase": "about yourself",
+    "target": "Tell me About Me"
+  },
+  {
+    "phrase": "tell me about you",
+    "target": "Tell me About Me"
+  },
+  {
+    "phrase": "introduce yourself",
+    "target": "Tell me About Me"
+  },
+  {
+    "target": "Tell me about your experience",
+    "tokens": [
+      "job",
+      "jobs",
+      "worked",
+      "working",
+      "employment",
+      "roles",
+      "positions"
+    ]
+  },
+  {
+    "target": "Show me your projects",
+    "tokens": [
+      "built",
+      "made",
+      "created",
+      "portfolio"
+    ]
+  },
+  {
+    "phrase": "how many projects",
+    "target": "Show me your projects"
+  },
+  {
+    "target": "What's your tech stack?",
+    "tokens": [
+      "languages",
+      "frameworks",
+      "technologies"
+    ]
+  },
+  {
+    "target": "Tell me Contact",
+    "tokens": [
+      "hire",
+      "reach",
+      "email"
+    ]
+  },
+  {
+    "target": "Tell me about your Education",
+    "tokens": [
+      "degree",
+      "masters",
+      "university",
+      "studied",
+      "school",
+      "college"
+    ]
+  },
+  {
+    "target": "What is your Testing Philosophy?",
+    "tokens": [
+      "beliefs"
+    ]
+  }
+]
