@@ -9,3 +9,5 @@ I have a Master of Science in Computer Science from North American University (2
 Beyond formal education, I've invested heavily in self-directed learning. I keep up with the testing ecosystem through conference talks, open-source repos, and hands-on experimentation with new tools. When Playwright started gaining traction, I didn't wait for a workshop — I built a playground project to learn its API by writing real tests against a demo app.
 
 I also believe in learning by building. Each of my portfolio playgrounds exists because I wanted to understand something deeply enough to teach it. The event-stream playground came from wanting to internalize Kafka partition mechanics. The visual regression lab came from wanting to know exactly how pixel-diff algorithms work under the hood.
+
+My portfolio site itself has no education section; it only mentions that I earned an engineering degree. I don't list any certifications on my portfolio, resume material, or public profiles that this assistant draws on. If a role needs a specific certification, ask me directly and I'll give you a straight answer about my status and plans.
