@@ -1,6 +1,6 @@
 # AI Portfolio Assistant
 
-A browser-based AI chatbot that answers questions about my experience, projects, skills, and engineering philosophy. The language model runs entirely client-side, with no server and no API keys. Your questions and answers stay in the browser, while model weights and fonts are downloaded from content delivery networks.
+A browser-based AI chatbot that answers questions about my experience, projects, skills, and engineering philosophy. The language model runs entirely client-side. Questions are logged anonymously to improve answers. Model weights and fonts are downloaded from content delivery networks.
 
 **Live demo:** [kishanborad.github.io/ai-portfolio-assistant](https://kishanborad.github.io/ai-portfolio-assistant/)
 

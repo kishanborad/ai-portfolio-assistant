@@ -128,7 +128,7 @@ export function Sidebar({ tierState, isBusy, onCategoryClick }: SidebarProps) {
       {/* Privacy Note */}
       <div className="mt-auto pt-4">
         <div className="p-3 rounded-lg bg-chip border border-line text-[10px] text-dimmed leading-relaxed">
-          🔒 Your questions and answers stay in your browser. Model weights and fonts are downloaded from content delivery networks.
+          🔒 Questions are logged anonymously to improve answers. Model weights and fonts are downloaded from content delivery networks.
         </div>
       </div>
     </aside>
