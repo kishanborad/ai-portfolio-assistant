@@ -159,6 +159,33 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
     let meta: ResponseMeta | undefined;
     const startedAt = Date.now();
 
+    // Fast path: a matched template answer is already complete, so
+    // answer it synchronously instead of pushing it through the
+    // streaming generator. The logged duration covers the match only.
+    const fast = orchestrator.tryTemplate(query);
+    if (fast !== null) {
+      if (fast.suggestions.length > 0) {
+        setSuggestions(fast.suggestions);
+      }
+      void logQuestionToServer({
+        question: query.trim(),
+        tier: tierState.current,
+        route: 'template',
+        templateScore: fast.score,
+        fallback: false,
+        durationMs: Date.now() - startedAt,
+        firstTokenMs: null,
+      });
+      setMessages((prev) => [...prev, { ...botMessage, content: fast.answer }]);
+      setIsTyping(false);
+      setIsStreaming(false);
+      setJustAnswered(true);
+      window.clearTimeout(answerTimerRef.current);
+      answerTimerRef.current = window.setTimeout(() => setJustAnswered(false), 3500);
+      inputRef.current?.focus();
+      return;
+    }
+
     for await (const chunk of orchestrator.send(query)) {
       if (chunk.type === 'token') {
         if (firstTokenMs === null) {

@@ -165,6 +165,28 @@ export class Orchestrator {
    * already the right information. Only unmatched questions reach
    * the model tiers.
    */
+  /**
+   * Synchronous template fast path: returns the template answer when
+   * the template engine matches, without entering the streaming
+   * generator. ChatPanel uses this so complete template answers skip
+   * the async-generator and scheduling overhead of send(). Returns
+   * null when there is no match, and the caller falls through to
+   * send() for the LLM and fallback paths. The match decision comes
+   * from the same respond() call send() makes first, so the two
+   * paths cannot disagree.
+   */
+  tryTemplate(query: string): {
+    answer: string;
+    suggestions: SuggestionChip[];
+    score: number;
+  } | null {
+    const result = this.templateEngine?.respond(query);
+    if (result?.matched) {
+      return { answer: result.answer, suggestions: result.suggestions, score: result.score };
+    }
+    return null;
+  }
+
   async *send(
     query: string,
   ): AsyncGenerator<{
