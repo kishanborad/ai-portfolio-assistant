@@ -6,8 +6,6 @@ tags: [goals, future, career, growth, aspirations]
 
 My near-term goal is to work at a company where engineering quality is a competitive advantage, not a checkbox. I want to be in a role where I can influence how testing is done across the organization — not just write tests, but shape the strategy, tools, and culture.
 
-I'm now focused on Product Owner / Associate Product Manager, Scrum Master / Agile Delivery Lead, and Associate Technical Program Manager roles. I bring 7 years of QA and delivery experience to that work, including mentoring 3 junior QA engineers, coordinating a 6-person QA team, cutting the regression cycle by 40%, and moving releases from biweekly to weekly.
-
 Longer term, I'm exploring how AI can transform testing — from intelligent test generation to self-healing selectors to automated visual comparison. My AI assistant project is a step in that direction: understanding how language models work at a low enough level to integrate them into developer workflows.
 
 I want to keep building in the open. Every project in my portfolio is public, and I plan to keep shipping work that demonstrates real capability, not just polished demos.
