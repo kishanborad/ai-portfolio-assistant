@@ -15,6 +15,7 @@ from ingest_portfolio import (
     publication_markdown,
     role_markdown,
     sanitize,
+    sync,
 )
 from knowledge_validator import validate_frontmatter
 
@@ -194,3 +195,129 @@ class TestKeywordMapMerge:
         ])
         assert added_again == []
 
+
+class TestSync:
+    def _run(self, tmp_path, monkeypatch, fixtures=None):
+        monkeypatch.setattr(
+            ingest_portfolio, "fetch_github_file",
+            lambda path, token: (fixtures or FIXTURES)[path])
+        knowledge = str(tmp_path / "knowledge")
+        public = str(tmp_path / "public")
+        keyword_path = os.path.join(public, "keyword-map.json")
+        if not os.path.exists(keyword_path):
+            _write(keyword_path, "[]\n")
+        return sync(knowledge, public, OVERRIDES, "fake-token"), knowledge, public
+
+    def test_full_pass_creates_files_flags_conflicts_and_maps(self, tmp_path, monkeypatch):
+        report, knowledge, public = self._run(tmp_path, monkeypatch)
+        assert "role Prudential Financial" in report["added"]
+        assert "project ai-assistant" in report["added"]
+        assert len(report["conflicts"]) == 2
+        assert any("Prudential" in c for c in report["conflicts"])
+        assert any("ai-assistant" in c for c in report["conflicts"])
+        assert "retired-widget" not in str(report["added"])
+        assert len(report["keyword_added"]) == 4
+        with open(os.path.join(public, "keyword-map.json"), encoding="utf-8") as handle:
+            entries = json.load(handle)
+        targets = {entry["target"] for entry in entries}
+        assert "Tell me about your Prudential Financial" in targets
+        assert "Tell me about Local AI Portfolio Assistant" in targets
+        assert report["grid"] == [("Java", "software"), ("Bash", "qa")]
+        role_path = os.path.join(knowledge, "resume", "prudential.md")
+        assert validate_frontmatter(role_path)["valid"] is True
+
+    def test_second_pass_is_a_noop(self, tmp_path, monkeypatch):
+        self._run(tmp_path, monkeypatch)
+        report, _, _ = self._run(tmp_path, monkeypatch)
+        assert report["added"] == []
+        assert report["changed"] == []
+        assert report["removed"] == []
+        assert report["keyword_added"] == []
+
+    def test_hand_maintained_files_are_never_touched(self, tmp_path, monkeypatch):
+        role_path = os.path.join(str(tmp_path), "knowledge", "resume",
+                                 "prudential.md")
+        _write(role_path, "---\ntitle: Prudential Financial\ncategory: resume\n"
+                          "tags: [prudential]\n---\n\nHand written.\n")
+        report, _, _ = self._run(tmp_path, monkeypatch)
+        assert "role Prudential Financial" in report["skipped"]
+        with open(role_path, encoding="utf-8") as handle:
+            assert handle.read().endswith("Hand written.\n")
+
+    def test_generated_file_for_removed_element_is_deleted(self, tmp_path, monkeypatch):
+        report, knowledge, _ = self._run(tmp_path, monkeypatch)
+        assert "project ai-assistant" in report["added"]
+        gone = dict(FIXTURES)
+        gone["frontend/src/constants/playgrounds.ts"] = (
+            PLAYGROUNDS_FIXTURE.replace("'live'", "'archived'"))
+        report2, _, _ = self._run(tmp_path, monkeypatch, fixtures=gone)
+        assert os.path.join("projects", "ai-assistant.md") in report2["removed"]
+        assert not os.path.exists(
+            os.path.join(knowledge, "projects", "ai-assistant.md"))
+
+    def test_empty_parse_fails_closed(self, tmp_path, monkeypatch):
+        empty = dict(FIXTURES)
+        empty["frontend/src/constants/experiences.ts"] = "const x = [];"
+        with pytest.raises(RuntimeError):
+            self._run(tmp_path, monkeypatch, fixtures=empty)
+
+
+    def test_keyword_targets_derive_from_file_titles(self, tmp_path, monkeypatch):
+        ul_fixture = """
+export const experiences: Experience[] = [
+  {
+    title: 'QA Engineer',
+    company_name: 'UL Solutions Inc',
+    date: 'Jul 2024 - Jun 2025',
+    points: [{ text: 'Built reporting tools.', lens: 'qa' }],
+  },
+];
+"""
+        fixtures = dict(FIXTURES)
+        fixtures["frontend/src/constants/experiences.ts"] = ul_fixture
+        base = str(tmp_path)
+        _write(os.path.join(base, "knowledge", "resume", "ul-solutions.md"),
+               "---\ntitle: UL Solutions\ncategory: resume\ntags: [ul]\n---\n\nHand written.\n")
+        _write(os.path.join(base, "knowledge", "resume", "viva-tech-paper.md"),
+               "---\ntitle: Methods for Sentiment Analysis\ncategory: resume\ntags: [paper]\n---\n\nHand written.\n")
+        _write(os.path.join(base, "knowledge", "projects", "ai-assistant.md"),
+               "---\ntitle: AI Portfolio Assistant\ncategory: projects\ntags: [ai]\n---\n\nHand written.\n")
+        _write(os.path.join(base, "knowledge", "personality", "contact.md"),
+               "---\ntitle: Contact\ncategory: personality\ntags: [contact]\n---\n\nHand written.\n")
+        overrides = dict(OVERRIDES)
+        overrides["covered_publications"] = {"project-1": "viva-tech-paper.md"}
+        monkeypatch.setattr(ingest_portfolio, "fetch_github_file",
+                            lambda path, token: fixtures[path])
+        knowledge = os.path.join(base, "knowledge")
+        public = os.path.join(base, "public")
+        _write(os.path.join(public, "keyword-map.json"), "[]\n")
+        report = sync(knowledge, public, overrides, "fake-token")
+        assert not os.path.exists(os.path.join(
+            knowledge, "resume", "sentiment-analysis-literature-study.md"))
+        assert any("viva-tech-paper.md" in n for n in report["notes"])
+        with open(os.path.join(public, "keyword-map.json"), encoding="utf-8") as handle:
+            entries = json.load(handle)
+        targets = {entry["target"] for entry in entries}
+        assert "Tell me about your UL Solutions" in targets
+        assert "Tell me about your UL Solutions Inc" not in targets
+        assert "Tell me about your Methods for Sentiment Analysis" in targets
+        assert ("Tell me about your Methods for Sentiment Analysis: "
+                "A Literature Study") not in targets
+        project_entries = [e for e in entries
+                           if e["target"] == "Tell me about AI Portfolio Assistant"]
+        phrases = {e["phrase"] for e in project_entries}
+        assert phrases == {"local ai portfolio assistant", "ai portfolio assistant"}
+        contact_entries = [e for e in entries if e["target"] == "Tell me Contact"]
+        token_entry = next(e for e in contact_entries if "tokens" in e)
+        assert set(token_entry["tokens"]) == {"contact", "reach", "touch", "email"}
+        assert any(e.get("phrase") == "get in touch" for e in contact_entries)
+        assert all("github" not in e.get("tokens", [])
+                   and "linkedin" not in e.get("tokens", [])
+                   for e in contact_entries)
+
+
+class TestMain:
+    def test_missing_token_fails_closed(self, monkeypatch, capsys):
+        monkeypatch.delenv("PORTFOLIO_PAT", raising=False)
+        assert ingest_portfolio.main([]) == 2
+        assert "PORTFOLIO_PAT" in capsys.readouterr().err
