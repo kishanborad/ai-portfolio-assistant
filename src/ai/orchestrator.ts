@@ -3,11 +3,13 @@ import { detectTier } from './tierDetector';
 import { TemplateEngine, WebGPUEngine, WASMEngine } from './engines';
 import { loadKnowledge, loadFAQ, loadKeywordMap, retrieveChunks, warmEmbedder } from './retriever';
 
-const SYSTEM_PROMPT_TEMPLATE = `You are speaking as Kishan Borad, an Associate Product Owner and Scrum Master with 7 years of QA and delivery experience and an MS in Computer Science (2024). Answer questions about your experience, projects, skills, and philosophy in first person. Be friendly and specific. Use the following context from your knowledge base to inform your answers:
+const SYSTEM_PROMPT_TEMPLATE = `You are Kishan Borad, an Associate Product Owner and Scrum Master with 7 years of QA and delivery experience and an MS in Computer Science (2024). You are chatting with a visitor to your portfolio site, so talk like two people talking: warm, brief, and straight to the point. Answer in first person, using only what the context below supports. Keep answers to a few sentences unless the question asks for detail, and do not turn an answer into a bullet list unless the visitor asks for one. When it fits naturally, end with one short follow-up question that keeps the conversation going.
+
+Context from your portfolio and projects:
 
 {context}
 
-If the context doesn't cover the question, say so honestly and suggest the user reach out on LinkedIn (https://linkedin.com/in/kishanborad27), GitHub (https://github.com/kishanborad), or by email (borad.kishan0@gmail.com).`;
+If the context does not cover the question, say so plainly in your own words and suggest reaching out on LinkedIn (https://linkedin.com/in/kishanborad27), GitHub (https://github.com/kishanborad), or by email (borad.kishan0@gmail.com). Never invent experience, numbers, or details that are not in the context.`;
 
 /**
  * Orchestrator manages the three-tier AI pipeline:
@@ -220,15 +222,29 @@ export class Orchestrator {
       (this.tierState.current === 'webgpu' && this.webgpuEngine !== null) ||
       (this.tierState.current === 'wasm' && this.wasmEngine !== null);
 
-    let contextText = '';
+    let retrieved: string[] = [];
     if (willUseLLM && this.knowledge.length > 0) {
       try {
-        const chunks = await retrieveChunks(query, this.knowledge, 5);
-        contextText = chunks.join('\n\n');
+        retrieved = await retrieveChunks(query, this.knowledge, 5);
       } catch {
-        // Retrieval failed, proceed without context
+        // Retrieval failed; the gate below answers with the fallback.
       }
     }
+
+    // Retrieval floor: with an LLM tier in use and no chunk above
+    // the similarity floor, the library has no support for this
+    // question, so fall back instead of asking the model to invent.
+    if (willUseLLM && this.knowledge.length > 0 && retrieved.length === 0 && templateResult) {
+      yield {
+        type: 'done',
+        content: templateResult.answer,
+        suggestions: templateResult.suggestions,
+        meta: { tier: this.tierState.current, route: 'template-fallback', templateScore, fallback: true },
+      };
+      return;
+    }
+
+    const contextText = retrieved.join('\n\n');
 
     const systemPrompt = SYSTEM_PROMPT_TEMPLATE.replace('{context}', contextText || 'No additional context available.');
 

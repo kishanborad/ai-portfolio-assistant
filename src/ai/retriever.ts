@@ -73,8 +73,10 @@ export async function loadKeywordMap(): Promise<KeywordMapEntry[]> {
 
 /**
  * Minimum combined score for a chunk to be returned as context.
- * Measured score separation on this corpus: on-topic queries score
- * 0.20 to 0.56 at top-1, off-topic probes score 0.05 to 0.12.
+ * Measured on the 68-chunk bank corpus: on-topic golden questions
+ * score 0.19 to 1.08 at top-1 and off-topic probes 0.05 to 0.29, so
+ * the sets overlap; the system prompt honesty line is the second
+ * layer for weak matches that clear this floor.
  */
 export const RETRIEVAL_SIMILARITY_THRESHOLD = 0.15;
 
