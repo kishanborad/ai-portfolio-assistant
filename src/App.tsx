@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import type { TierState } from './types';
 import { Orchestrator } from './ai/orchestrator';
 import { ChatPanel } from './chat/ChatPanel';
-import { ProblemBanner } from './ProblemBanner';
 import { Sidebar } from './sidebar/Sidebar';
 
 const orchestrator = new Orchestrator();
@@ -24,7 +23,6 @@ export default function App() {
 
   return (
     <div className="flex flex-col h-screen bg-navy font-poppins">
-      <ProblemBanner />
       <div className="flex flex-1 min-h-0">
         <Sidebar tierState={tierState} isBusy={assistantBusy} onCategoryClick={handleCategoryClick} />
         <ChatPanel ref={chatPanelRef} orchestrator={orchestrator} tierState={tierState} onBusyChange={setAssistantBusy} />
