@@ -77,7 +77,7 @@
   },
   {
     "question": "Tell me about AI Portfolio Assistant",
-    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys. Your questions and answers stay in the browser, while model weights and fonts are downloaded from content delivery networks.",
+    "answer": "This chatbot is the AI Portfolio Assistant, a browser-based chatbot that answers questions about my experience, projects, and skills. It runs a small language model (Phi-3) entirely in your browser and grounds every answer in a fixed knowledge base about my background. Questions are logged anonymously to improve answers.",
     "keywords": [
       "transformers",
       "wasm",
@@ -94,7 +94,7 @@
   },
   {
     "question": "What is AI Portfolio Assistant?",
-    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys. Your questions and answers stay in the browser, while model weights and fonts are downloaded from content delivery networks.",
+    "answer": "This chatbot is the AI Portfolio Assistant, a browser-based chatbot that answers questions about my experience, projects, and skills. It runs a small language model (Phi-3) entirely in your browser and grounds every answer in a fixed knowledge base about my background. Questions are logged anonymously to improve answers.",
     "keywords": [
       "transformers",
       "wasm",
@@ -111,7 +111,7 @@
   },
   {
     "question": "How does AI Portfolio Assistant work?",
-    "answer": "The AI Portfolio Assistant is a browser-based chatbot that answers questions about my experience, projects, and skills using a language model running entirely client-side. No server, no API keys. Your questions and answers stay in the browser, while model weights and fonts are downloaded from content delivery networks.",
+    "answer": "This chatbot is the AI Portfolio Assistant, a browser-based chatbot that answers questions about my experience, projects, and skills. It runs a small language model (Phi-3) entirely in your browser and grounds every answer in a fixed knowledge base about my background. Questions are logged anonymously to improve answers.",
     "keywords": [
       "transformers",
       "wasm",
@@ -128,7 +128,7 @@
   },
   {
     "question": "Tell me about AI Test Generator",
-    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU.",
+    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU. Unlike the Test Runner Playground, which executes tests you write against a demo shop, this tool writes the test code for you.",
     "keywords": [
       "webllm",
       "ai",
@@ -145,7 +145,7 @@
   },
   {
     "question": "What is AI Test Generator?",
-    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU.",
+    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU. Unlike the Test Runner Playground, which executes tests you write against a demo shop, this tool writes the test code for you.",
     "keywords": [
       "webllm",
       "ai",
@@ -162,7 +162,7 @@
   },
   {
     "question": "How does AI Test Generator work?",
-    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU.",
+    "answer": "The AI Test Generator lets you describe what to test in plain English or record your clicks, then an in-browser LLM writes categorized test code, runs it live against a sandbox, and exports to Playwright or Cypress format. The model runs entirely on your device via WebGPU. Unlike the Test Runner Playground, which executes tests you write against a demo shop, this tool writes the test code for you.",
     "keywords": [
       "webllm",
       "ai",
@@ -236,7 +236,7 @@
   },
   {
     "question": "Tell me about SQL Analytics Workbench",
-    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install.",
+    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install. It includes three built-in datasets: e-commerce, GitHub activity, and weather stations. Results appear in sortable tables and can be visualized with six chart types.",
     "keywords": [
       "wasm",
       "workbench",
@@ -253,7 +253,7 @@
   },
   {
     "question": "What is SQL Analytics Workbench?",
-    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install.",
+    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install. It includes three built-in datasets: e-commerce, GitHub activity, and weather stations. Results appear in sortable tables and can be visualized with six chart types.",
     "keywords": [
       "wasm",
       "workbench",
@@ -270,7 +270,7 @@
   },
   {
     "question": "How does SQL Analytics Workbench work?",
-    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install.",
+    "answer": "The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts \u2014 no backend, no database server, nothing to install. It includes three built-in datasets: e-commerce, GitHub activity, and weather stations. Results appear in sortable tables and can be visualized with six chart types.",
     "keywords": [
       "wasm",
       "workbench",
@@ -287,7 +287,7 @@
   },
   {
     "question": "Tell me about Test Runner Playground",
-    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
+    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes. It includes 12 pre-written tests covering shop flows, and runs produce downloadable HTML reports and video recordings. Unlike the AI Test Generator, which writes test code from descriptions or recorded clicks, this playground executes tests you write.",
     "keywords": [
       "test-runner",
       "playwright",
@@ -304,7 +304,7 @@
   },
   {
     "question": "What is Test Runner Playground?",
-    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
+    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes. It includes 12 pre-written tests covering shop flows, and runs produce downloadable HTML reports and video recordings. Unlike the AI Test Generator, which writes test code from descriptions or recorded clicks, this playground executes tests you write.",
     "keywords": [
       "test-runner",
       "playwright",
@@ -321,7 +321,7 @@
   },
   {
     "question": "How does Test Runner Playground work?",
-    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.",
+    "answer": "The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes. It includes 12 pre-written tests covering shop flows, and runs produce downloadable HTML reports and video recordings. Unlike the AI Test Generator, which writes test code from descriptions or recorded clicks, this playground executes tests you write.",
     "keywords": [
       "test-runner",
       "playwright",
@@ -394,8 +394,251 @@
     "suggestions": []
   },
   {
+    "question": "Tell me about AI Document Intelligence",
+    "answer": "AI Document Intelligence is a browser-based document intelligence wizard that runs OCR, named entity recognition, and document classification entirely in the browser, with zero backend. You upload a document and walk through OCR, entity recognition, and classification steps. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "classification",
+      "tesseract",
+      "document",
+      "ocr",
+      "transformers",
+      "ner",
+      "ai document intelligence"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is AI Document Intelligence?",
+    "answer": "AI Document Intelligence is a browser-based document intelligence wizard that runs OCR, named entity recognition, and document classification entirely in the browser, with zero backend. You upload a document and walk through OCR, entity recognition, and classification steps. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "classification",
+      "tesseract",
+      "document",
+      "ocr",
+      "transformers",
+      "ner",
+      "ai document intelligence"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does AI Document Intelligence work?",
+    "answer": "AI Document Intelligence is a browser-based document intelligence wizard that runs OCR, named entity recognition, and document classification entirely in the browser, with zero backend. You upload a document and walk through OCR, entity recognition, and classification steps. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "classification",
+      "tesseract",
+      "document",
+      "ocr",
+      "transformers",
+      "ner",
+      "ai document intelligence"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about Bug Hunt Playground",
+    "answer": "Bug Hunt: Manual vs Automated is a playground that runs accessibility, functional, and visual probes against demo scenarios, showing what manual testing and automated probing each catch. It presents bug lists, pins, tooltips, and a report card. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "accessibility",
+      "manual",
+      "bug",
+      "bug-hunt",
+      "automated",
+      "hunt",
+      "axe",
+      "axe-core",
+      "core",
+      "probes",
+      "bug hunt playground"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is Bug Hunt Playground?",
+    "answer": "Bug Hunt: Manual vs Automated is a playground that runs accessibility, functional, and visual probes against demo scenarios, showing what manual testing and automated probing each catch. It presents bug lists, pins, tooltips, and a report card. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "accessibility",
+      "manual",
+      "bug",
+      "bug-hunt",
+      "automated",
+      "hunt",
+      "axe",
+      "axe-core",
+      "core",
+      "probes",
+      "bug hunt playground"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does Bug Hunt Playground work?",
+    "answer": "Bug Hunt: Manual vs Automated is a playground that runs accessibility, functional, and visual probes against demo scenarios, showing what manual testing and automated probing each catch. It presents bug lists, pins, tooltips, and a report card. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "accessibility",
+      "manual",
+      "bug",
+      "bug-hunt",
+      "automated",
+      "hunt",
+      "axe",
+      "axe-core",
+      "core",
+      "probes",
+      "bug hunt playground"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about Kanha",
+    "answer": "Kanha is a desktop-style AI assistant web app, titled ZARVIS, with a boot sequence, desktop, window manager, dock, and app registry. It is an AI assistant presented as a working desktop operating system in the browser. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "desktop",
+      "assistant",
+      "voice",
+      "kanha",
+      "llm",
+      "zarvis",
+      "providers",
+      "kanha"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is Kanha?",
+    "answer": "Kanha is a desktop-style AI assistant web app, titled ZARVIS, with a boot sequence, desktop, window manager, dock, and app registry. It is an AI assistant presented as a working desktop operating system in the browser. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "desktop",
+      "assistant",
+      "voice",
+      "kanha",
+      "llm",
+      "zarvis",
+      "providers",
+      "kanha"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does Kanha work?",
+    "answer": "Kanha is a desktop-style AI assistant web app, titled ZARVIS, with a boot sequence, desktop, window manager, dock, and app registry. It is an AI assistant presented as a working desktop operating system in the browser. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "desktop",
+      "assistant",
+      "voice",
+      "kanha",
+      "llm",
+      "zarvis",
+      "providers",
+      "kanha"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about Projects Overview",
+    "answer": "My portfolio site features six projects: the Local AI Portfolio Assistant, the SQL Analytics Workbench, the Event-Stream Playground, the Test Runner Playground, the Visual Regression Lab, and the AI Test Generator. I have built ten public repos in total on GitHub; the other four are Kanha (a desktop-style AI assistant), AI Document Intelligence, the Bug Hunt Playground, and a sentiment analysis system. They all run client-side in the browser with no server, and they are all public on my GitHub.",
+    "keywords": [
+      "overview",
+      "demos",
+      "flagship",
+      "oldest",
+      "newest",
+      "portfolio",
+      "projects",
+      "projects overview"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is Projects Overview?",
+    "answer": "My portfolio site features six projects: the Local AI Portfolio Assistant, the SQL Analytics Workbench, the Event-Stream Playground, the Test Runner Playground, the Visual Regression Lab, and the AI Test Generator. I have built ten public repos in total on GitHub; the other four are Kanha (a desktop-style AI assistant), AI Document Intelligence, the Bug Hunt Playground, and a sentiment analysis system. They all run client-side in the browser with no server, and they are all public on my GitHub.",
+    "keywords": [
+      "overview",
+      "demos",
+      "flagship",
+      "oldest",
+      "newest",
+      "portfolio",
+      "projects",
+      "projects overview"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does Projects Overview work?",
+    "answer": "My portfolio site features six projects: the Local AI Portfolio Assistant, the SQL Analytics Workbench, the Event-Stream Playground, the Test Runner Playground, the Visual Regression Lab, and the AI Test Generator. I have built ten public repos in total on GitHub; the other four are Kanha (a desktop-style AI assistant), AI Document Intelligence, the Bug Hunt Playground, and a sentiment analysis system. They all run client-side in the browser with no server, and they are all public on my GitHub.",
+    "keywords": [
+      "overview",
+      "demos",
+      "flagship",
+      "oldest",
+      "newest",
+      "portfolio",
+      "projects",
+      "projects overview"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about Sentiment Analysis",
+    "answer": "The sentiment analysis system combines a Morphological Sentence Pattern (MSP) model with a convolutional neural network. The idea is that systematically researching opinions yields information that is valuable to companies, and combining sentiment analysis with the MSP model obtains better results, with the MSP output improving performance. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "fastapi",
+      "nlp",
+      "sentiment",
+      "tensorflow",
+      "cnn",
+      "msp",
+      "sentiment analysis"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "What is Sentiment Analysis?",
+    "answer": "The sentiment analysis system combines a Morphological Sentence Pattern (MSP) model with a convolutional neural network. The idea is that systematically researching opinions yields information that is valuable to companies, and combining sentiment analysis with the MSP model obtains better results, with the MSP output improving performance. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "fastapi",
+      "nlp",
+      "sentiment",
+      "tensorflow",
+      "cnn",
+      "msp",
+      "sentiment analysis"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
+    "question": "How does Sentiment Analysis work?",
+    "answer": "The sentiment analysis system combines a Morphological Sentence Pattern (MSP) model with a convolutional neural network. The idea is that systematically researching opinions yields information that is valuable to companies, and combining sentiment analysis with the MSP model obtains better results, with the MSP output improving performance. It is not one of the six projects featured on my portfolio site.",
+    "keywords": [
+      "fastapi",
+      "nlp",
+      "sentiment",
+      "tensorflow",
+      "cnn",
+      "msp",
+      "sentiment analysis"
+    ],
+    "category": "projects",
+    "suggestions": []
+  },
+  {
     "question": "Tell me About Me",
-    "answer": "I'm Kishan Borad, a QA Engineer and Developer based in the US. I build test automation infrastructure and interactive developer tools. My portfolio site at kishanborad.com showcases my work across both software development and quality assurance.",
+    "answer": "I'm Kishan Borad, based in the US. I've spent about seven years in QA automation and software development across four companies, most recently as a Software Engineer in Test at Prudential, and I'm now moving from QA toward Product Owner, Scrum Master, and Associate Technical Program Manager roles.",
     "keywords": [
       "about",
       "who",
@@ -409,7 +652,7 @@
   },
   {
     "question": "What are your About Me?",
-    "answer": "I'm Kishan Borad, a QA Engineer and Developer based in the US. I build test automation infrastructure and interactive developer tools. My portfolio site at kishanborad.com showcases my work across both software development and quality assurance.",
+    "answer": "I'm Kishan Borad, based in the US. I've spent about seven years in QA automation and software development across four companies, most recently as a Software Engineer in Test at Prudential, and I'm now moving from QA toward Product Owner, Scrum Master, and Associate Technical Program Manager roles.",
     "keywords": [
       "about",
       "who",
@@ -417,6 +660,36 @@
       "background",
       "interests",
       "about me"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me What Drives Me",
+    "answer": "What drives me is the intersection of testing and development. I don't think of QA and dev as separate disciplines. I write production-quality code that makes testing better, and I bring a tester's eye for edge cases into everything I build.",
+    "keywords": [
+      "problems",
+      "testing",
+      "motivation",
+      "interests",
+      "drives",
+      "development",
+      "what drives me"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "What are your What Drives Me?",
+    "answer": "What drives me is the intersection of testing and development. I don't think of QA and dev as separate disciplines. I write production-quality code that makes testing better, and I bring a tester's eye for edge cases into everything I build.",
+    "keywords": [
+      "problems",
+      "testing",
+      "motivation",
+      "interests",
+      "drives",
+      "development",
+      "what drives me"
     ],
     "category": "personality",
     "suggestions": []
@@ -445,6 +718,38 @@
       "goals",
       "growth",
       "goals"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me Career Pivot",
+    "answer": "I'm moving away from coding-heavy QA work because I want to influence how quality and delivery work across an organization: shaping strategy, tools, and culture, not just writing tests. That is why I'm now focused on Product Owner / Associate Product Manager, Scrum Master / Agile Delivery Lead, and Associate Technical Program Manager roles. I bring 7 years of QA and delivery experience to that work, including mentoring 3 junior QA engineers, coordinating a 6-person QA team, cutting the regression cycle by 40%, and moving releases from biweekly to weekly.",
+    "keywords": [
+      "moving",
+      "coding",
+      "scrum",
+      "tpm",
+      "product",
+      "pivot",
+      "career change",
+      "career pivot"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "What are your Career Pivot?",
+    "answer": "I'm moving away from coding-heavy QA work because I want to influence how quality and delivery work across an organization: shaping strategy, tools, and culture, not just writing tests. That is why I'm now focused on Product Owner / Associate Product Manager, Scrum Master / Agile Delivery Lead, and Associate Technical Program Manager roles. I bring 7 years of QA and delivery experience to that work, including mentoring 3 junior QA engineers, coordinating a 6-person QA team, cutting the regression cycle by 40%, and moving releases from biweekly to weekly.",
+    "keywords": [
+      "moving",
+      "coding",
+      "scrum",
+      "tpm",
+      "product",
+      "pivot",
+      "career change",
+      "career pivot"
     ],
     "category": "personality",
     "suggestions": []
@@ -499,6 +804,124 @@
       "contact",
       "linkedin",
       "contact"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me GitHub Profile",
+    "answer": "My GitHub profile is at github.com/kishanborad. All ten of my public portfolio projects are there, including the AI Portfolio Assistant you are using now.",
+    "keywords": [
+      "code",
+      "repos",
+      "github",
+      "profile",
+      "github profile"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "What are your GitHub Profile?",
+    "answer": "My GitHub profile is at github.com/kishanborad. All ten of my public portfolio projects are there, including the AI Portfolio Assistant you are using now.",
+    "keywords": [
+      "code",
+      "repos",
+      "github",
+      "profile",
+      "github profile"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me LinkedIn Profile",
+    "answer": "My LinkedIn profile is at linkedin.com/in/kishanborad27. That is the best place to connect professionally.",
+    "keywords": [
+      "professional",
+      "linkedin",
+      "profile",
+      "connect",
+      "linkedin profile"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "What are your LinkedIn Profile?",
+    "answer": "My LinkedIn profile is at linkedin.com/in/kishanborad27. That is the best place to connect professionally.",
+    "keywords": [
+      "professional",
+      "linkedin",
+      "profile",
+      "connect",
+      "linkedin profile"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me Location and Availability",
+    "answer": "I'm based in Jersey City, New Jersey, in the US. I won't share my home address here; for anything location-specific, reach out through the contact channels.",
+    "keywords": [
+      "jersey city",
+      "eastern",
+      "availability",
+      "remote",
+      "timezone",
+      "location",
+      "location and availability"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "What are your Location and Availability?",
+    "answer": "I'm based in Jersey City, New Jersey, in the US. I won't share my home address here; for anything location-specific, reach out through the contact channels.",
+    "keywords": [
+      "jersey city",
+      "eastern",
+      "availability",
+      "remote",
+      "timezone",
+      "location",
+      "location and availability"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me Boundaries",
+    "answer": "What salary do I want? I don't discuss salary or compensation through the assistant. If you have a role in mind, reach out on LinkedIn at https://linkedin.com/in/kishanborad27 or by email at borad.kishan0@gmail.com and we can discuss it directly.",
+    "keywords": [
+      "boundaries",
+      "personal",
+      "address",
+      "phone",
+      "compensation",
+      "visa",
+      "salary",
+      "sponsorship",
+      "private",
+      "boundaries"
+    ],
+    "category": "personality",
+    "suggestions": []
+  },
+  {
+    "question": "What are your Boundaries?",
+    "answer": "What salary do I want? I don't discuss salary or compensation through the assistant. If you have a role in mind, reach out on LinkedIn at https://linkedin.com/in/kishanborad27 or by email at borad.kishan0@gmail.com and we can discuss it directly.",
+    "keywords": [
+      "boundaries",
+      "personal",
+      "address",
+      "phone",
+      "compensation",
+      "visa",
+      "salary",
+      "sponsorship",
+      "private",
+      "boundaries"
     ],
     "category": "personality",
     "suggestions": []
@@ -619,7 +1042,7 @@
   },
   {
     "question": "Tell me about your Professional Experience",
-    "answer": "I've been in QA automation and software development for about seven years across four companies, from ed-tech startups to a regulatory compliance lab to Fortune 500 financial services.",
+    "answer": "My career in QA automation and software development spans about seven years across four companies, from ed-tech startups to a regulatory compliance lab to Fortune 500 financial services.",
     "keywords": [
       "qa",
       "work",
@@ -635,7 +1058,7 @@
   },
   {
     "question": "What is your Professional Experience?",
-    "answer": "I've been in QA automation and software development for about seven years across four companies, from ed-tech startups to a regulatory compliance lab to Fortune 500 financial services.",
+    "answer": "My career in QA automation and software development spans about seven years across four companies, from ed-tech startups to a regulatory compliance lab to Fortune 500 financial services.",
     "keywords": [
       "qa",
       "work",
@@ -650,8 +1073,228 @@
     "suggestions": []
   },
   {
+    "question": "Tell me about your iSchoolConnect",
+    "answer": "My role at iSchoolConnect was Product Quality Specialist II, from December 2019 to August 2022. I built the Selenium and Cypress automation framework on Page Object Model with Postman API regression suites, moving releases from bi-weekly to weekly.",
+    "keywords": [
+      "cypress",
+      "ischoolconnect",
+      "selenium",
+      "coordination",
+      "ai",
+      "load testing",
+      "ischoolconnect"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your iSchoolConnect?",
+    "answer": "My role at iSchoolConnect was Product Quality Specialist II, from December 2019 to August 2022. I built the Selenium and Cypress automation framework on Page Object Model with Postman API regression suites, moving releases from bi-weekly to weekly.",
+    "keywords": [
+      "cypress",
+      "ischoolconnect",
+      "selenium",
+      "coordination",
+      "ai",
+      "load testing",
+      "ischoolconnect"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your Prudential Financial",
+    "answer": "What was my role at Prudential? From July 2025 to August 2026 I was a Software Engineer in Test at Prudential Financial, where I built and maintained the Playwright/TypeScript test infrastructure for advisor dashboards managing annuity policies. The framework used layered Page Object Model abstractions with custom fixtures for authentication, test data, and API state. Regression coverage was around 85%.",
+    "keywords": [
+      "test infrastructure",
+      "shift-left",
+      "playwright",
+      "left",
+      "mentoring",
+      "prudential",
+      "shift",
+      "sdet",
+      "prudential financial"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your Prudential Financial?",
+    "answer": "What was my role at Prudential? From July 2025 to August 2026 I was a Software Engineer in Test at Prudential Financial, where I built and maintained the Playwright/TypeScript test infrastructure for advisor dashboards managing annuity policies. The framework used layered Page Object Model abstractions with custom fixtures for authentication, test data, and API state. Regression coverage was around 85%.",
+    "keywords": [
+      "test infrastructure",
+      "shift-left",
+      "playwright",
+      "left",
+      "mentoring",
+      "prudential",
+      "shift",
+      "sdet",
+      "prudential financial"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your Quantiphi",
+    "answer": "From August 2018 to December 2019 I worked at Quantiphi, starting as an intern and moving to full-time Quality Analyst. It was my first QA role and the start of my career in test automation.",
+    "keywords": [
+      "cross",
+      "selenium",
+      "browser",
+      "intern",
+      "quantiphi",
+      "cross-browser",
+      "defects",
+      "quantiphi"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your Quantiphi?",
+    "answer": "From August 2018 to December 2019 I worked at Quantiphi, starting as an intern and moving to full-time Quality Analyst. It was my first QA role and the start of my career in test automation.",
+    "keywords": [
+      "cross",
+      "selenium",
+      "browser",
+      "intern",
+      "quantiphi",
+      "cross-browser",
+      "defects",
+      "quantiphi"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your SAR Testing",
+    "answer": "I automated SAR testing for wireless certification across about 50 devices per week in an accredited compliance lab, standardizing manual spreadsheet tracking. The SAR testing work was part of my role as a QA and Automation Engineer at UL Solutions, from July 2024 to June 2025, where I worked on regulatory compliance testing.",
+    "keywords": [
+      "testing",
+      "sar",
+      "wireless",
+      "ul",
+      "certification",
+      "sar testing"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your SAR Testing?",
+    "answer": "I automated SAR testing for wireless certification across about 50 devices per week in an accredited compliance lab, standardizing manual spreadsheet tracking. The SAR testing work was part of my role as a QA and Automation Engineer at UL Solutions, from July 2024 to June 2025, where I worked on regulatory compliance testing.",
+    "keywords": [
+      "testing",
+      "sar",
+      "wireless",
+      "ul",
+      "certification",
+      "sar testing"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your Mentoring and Coordination",
+    "answer": "I coordinated a 6-person QA team at iSchoolConnect, where I was a Product Quality Specialist II, on a platform serving 500K+ students, covering test planning, regression coverage, defect triage, and release readiness. Coordination was not a formal management title.",
+    "keywords": [
+      "triage",
+      "coordination",
+      "mentoring",
+      "team",
+      "ischoolconnect",
+      "planning",
+      "mentoring and coordination"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your Mentoring and Coordination?",
+    "answer": "I coordinated a 6-person QA team at iSchoolConnect, where I was a Product Quality Specialist II, on a platform serving 500K+ students, covering test planning, regression coverage, defect triage, and release readiness. Coordination was not a formal management title.",
+    "keywords": [
+      "triage",
+      "coordination",
+      "mentoring",
+      "team",
+      "ischoolconnect",
+      "planning",
+      "mentoring and coordination"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your UL Solutions",
+    "answer": "From July 2024 to June 2025 I was a QA and Automation Engineer at UL Solutions. I built Python and SQL automation pipelines for regulatory compliance data workflows, replacing roughly 50 hours a week of manual processing.",
+    "keywords": [
+      "automation",
+      "pipelines",
+      "compliance",
+      "audit",
+      "ul",
+      "sar",
+      "ul solutions"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your UL Solutions?",
+    "answer": "From July 2024 to June 2025 I was a QA and Automation Engineer at UL Solutions. I built Python and SQL automation pipelines for regulatory compliance data workflows, replacing roughly 50 hours a week of manual processing.",
+    "keywords": [
+      "automation",
+      "pipelines",
+      "compliance",
+      "audit",
+      "ul",
+      "sar",
+      "ul solutions"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your Publications",
+    "answer": "Yes. My experience page lists five works under Research and Writing: a research paper on methods for sentiment analysis, a conference paper on sentiment analysis using neural networks, a literature study on decision tree pre-processing techniques for data mining, and two technology reviews, one on quantum computing and one on augmented reality. The site cards show no authors or dates, except that the sentiment analysis literature study is verifiably co-authored with Shiv Dhar, Suyog Pednekar, and Ashwini Save in VIVA-Tech IJRI, October 2018.",
+    "keywords": [
+      "viva-tech",
+      "quantum",
+      "viva",
+      "sentiment",
+      "research",
+      "papers",
+      "tech",
+      "publications",
+      "ieee",
+      "publications"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your Publications?",
+    "answer": "Yes. My experience page lists five works under Research and Writing: a research paper on methods for sentiment analysis, a conference paper on sentiment analysis using neural networks, a literature study on decision tree pre-processing techniques for data mining, and two technology reviews, one on quantum computing and one on augmented reality. The site cards show no authors or dates, except that the sentiment analysis literature study is verifiably co-authored with Shiv Dhar, Suyog Pednekar, and Ashwini Save in VIVA-Tech IJRI, October 2018.",
+    "keywords": [
+      "viva-tech",
+      "quantum",
+      "viva",
+      "sentiment",
+      "research",
+      "papers",
+      "tech",
+      "publications",
+      "ieee",
+      "publications"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
     "question": "Tell me about your Technical Skills",
-    "answer": "My primary languages are Python, SQL, and TypeScript. Python handles test automation, data processing, build scripts, and CLI tools. SQL is for data validation against production and test databases. TypeScript covers the frontend: React components, Playwright test suites, and Node-based tooling.",
+    "answer": "My primary languages are Python, SQL, and TypeScript. I have 4 years of JavaScript/TypeScript experience. Python handles test automation, data processing, build scripts, and CLI tools. SQL is for data validation against production and test databases. TypeScript covers the frontend: React components, Playwright test suites, and Node-based tooling. The split follows the job: Python for data and pipelines, TypeScript for the browser and the test framework, and SQL alongside both for data validation.",
     "keywords": [
       "skills",
       "testing tools",
@@ -666,7 +1309,7 @@
   },
   {
     "question": "What is your Technical Skills?",
-    "answer": "My primary languages are Python, SQL, and TypeScript. Python handles test automation, data processing, build scripts, and CLI tools. SQL is for data validation against production and test databases. TypeScript covers the frontend: React components, Playwright test suites, and Node-based tooling.",
+    "answer": "My primary languages are Python, SQL, and TypeScript. I have 4 years of JavaScript/TypeScript experience. Python handles test automation, data processing, build scripts, and CLI tools. SQL is for data validation against production and test databases. TypeScript covers the frontend: React components, Playwright test suites, and Node-based tooling. The split follows the job: Python for data and pipelines, TypeScript for the browser and the test framework, and SQL alongside both for data validation.",
     "keywords": [
       "skills",
       "testing tools",
@@ -675,6 +1318,226 @@
       "tools",
       "frameworks",
       "technical skills"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your API Testing",
+    "answer": "I have done API testing across REST and GraphQL. At Prudential I wrote API tests for the REST and GraphQL services behind retirement projections, with contract checks that catch schema drift before release. I used Postman API regression suites at iSchoolConnect as part of the automation framework. I also list REST Assured and API contract testing in my practices.",
+    "keywords": [
+      "rest",
+      "postman",
+      "api",
+      "contract",
+      "graphql",
+      "api testing"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your API Testing?",
+    "answer": "I have done API testing across REST and GraphQL. At Prudential I wrote API tests for the REST and GraphQL services behind retirement projections, with contract checks that catch schema drift before release. I used Postman API regression suites at iSchoolConnect as part of the automation framework. I also list REST Assured and API contract testing in my practices.",
+    "keywords": [
+      "rest",
+      "postman",
+      "api",
+      "contract",
+      "graphql",
+      "api testing"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your Playwright Experience",
+    "answer": "I have 4 years of JavaScript/TypeScript experience. Playwright with TypeScript is my primary automation stack. At Prudential I built and maintained the Playwright/TypeScript test infrastructure for advisor dashboards, using layered Page Object Model abstractions with custom fixtures for authentication, test data, and API state, with parallel execution in Docker containers. I also built two browser playgrounds around Playwright: one that generates tests and one that runs them live.",
+    "keywords": [
+      "automation",
+      "playwright",
+      "fixtures",
+      "typescript",
+      "playwright experience"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your Playwright Experience?",
+    "answer": "I have 4 years of JavaScript/TypeScript experience. Playwright with TypeScript is my primary automation stack. At Prudential I built and maintained the Playwright/TypeScript test infrastructure for advisor dashboards, using layered Page Object Model abstractions with custom fixtures for authentication, test data, and API state, with parallel execution in Docker containers. I also built two browser playgrounds around Playwright: one that generates tests and one that runs them live.",
+    "keywords": [
+      "automation",
+      "playwright",
+      "fixtures",
+      "typescript",
+      "playwright experience"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your Python Experience",
+    "answer": "Python is one of my three primary languages. I use it for test automation, data processing, build scripts, and CLI tools. Examples: data generation and seeding scripts at Prudential, automation pipelines at UL Solutions, the embedding and knowledge pipeline behind this assistant, and Python diff and simulation engines running in the browser via Pyodide.",
+    "keywords": [
+      "scripts",
+      "data",
+      "automation",
+      "python",
+      "python experience"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your Python Experience?",
+    "answer": "Python is one of my three primary languages. I use it for test automation, data processing, build scripts, and CLI tools. Examples: data generation and seeding scripts at Prudential, automation pipelines at UL Solutions, the embedding and knowledge pipeline behind this assistant, and Python diff and simulation engines running in the browser via Pyodide.",
+    "keywords": [
+      "scripts",
+      "data",
+      "automation",
+      "python",
+      "python experience"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your React and Frontend",
+    "answer": "I build frontends with React, Tailwind CSS, Vite, and the Canvas API, and I use Node-based tooling with TypeScript. All of my portfolio playgrounds are React and TypeScript apps, and my portfolio site lists React and Node.js on the dev side. My primary professional depth is in test automation and delivery rather than product frontend development. I've built interactive demos that run Python in the browser via Pyodide and SQL engines via DuckDB-WASM.",
+    "keywords": [
+      "frontend",
+      "tailwind",
+      "react",
+      "vite",
+      "nodejs",
+      "react and frontend"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your React and Frontend?",
+    "answer": "I build frontends with React, Tailwind CSS, Vite, and the Canvas API, and I use Node-based tooling with TypeScript. All of my portfolio playgrounds are React and TypeScript apps, and my portfolio site lists React and Node.js on the dev side. My primary professional depth is in test automation and delivery rather than product frontend development. I've built interactive demos that run Python in the browser via Pyodide and SQL engines via DuckDB-WASM.",
+    "keywords": [
+      "frontend",
+      "tailwind",
+      "react",
+      "vite",
+      "nodejs",
+      "react and frontend"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your Selenium and Cypress",
+    "answer": "I used Selenium WebDriver from the start of my career: scaling the Quantiphi suite from zero to 120+ test cases, and building the Selenium and Cypress framework at iSchoolConnect. I also wrote the Selenium suites that caught regressions before production, as noted on my portfolio site. At iSchoolConnect I built the Selenium and Cypress automation framework on Page Object Model with Postman API regression suites, which moved releases from biweekly to weekly. The AI Test Generator also exports generated tests to Cypress format.",
+    "keywords": [
+      "framework",
+      "cypress",
+      "webdriver",
+      "selenium",
+      "selenium and cypress"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your Selenium and Cypress?",
+    "answer": "I used Selenium WebDriver from the start of my career: scaling the Quantiphi suite from zero to 120+ test cases, and building the Selenium and Cypress framework at iSchoolConnect. I also wrote the Selenium suites that caught regressions before production, as noted on my portfolio site. At iSchoolConnect I built the Selenium and Cypress automation framework on Page Object Model with Postman API regression suites, which moved releases from biweekly to weekly. The AI Test Generator also exports generated tests to Cypress format.",
+    "keywords": [
+      "framework",
+      "cypress",
+      "webdriver",
+      "selenium",
+      "selenium and cypress"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your SQL Experience",
+    "answer": "SQL is one of my primary languages, used for data validation against production and test databases. At Prudential I wrote SQL queries against account and policy databases to validate downstream state, and at UL Solutions I built Python and SQL automation pipelines for compliance data workflows. I also built a browser-based SQL workbench backed by DuckDB-WASM that supports window functions, CTEs, aggregations, and joins.",
+    "keywords": [
+      "sql",
+      "database",
+      "validation",
+      "duckdb",
+      "sql experience"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your SQL Experience?",
+    "answer": "SQL is one of my primary languages, used for data validation against production and test databases. At Prudential I wrote SQL queries against account and policy databases to validate downstream state, and at UL Solutions I built Python and SQL automation pipelines for compliance data workflows. I also built a browser-based SQL workbench backed by DuckDB-WASM that supports window functions, CTEs, aggregations, and joins.",
+    "keywords": [
+      "sql",
+      "database",
+      "validation",
+      "duckdb",
+      "sql experience"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your Methods for Sentiment Analysis",
+    "answer": "\"Methods for Sentiment Analysis: A Literature Study\" was published in VIVA-Tech IJRI, Volume 1, Issue 1, Article 8, pages 1-8, in October 2018, DOI 10.11242/viva-tech.01.01.08. The authors are Shiv Dhar, Suyog Pednekar, Kishan Borad, and Ashwini Save. Its keywords are Machine Learning, Sentiment Analysis, CNN, analysis, AI, SVM, and NLP. It is listed as a research paper on my experience page.",
+    "keywords": [
+      "research",
+      "tech",
+      "viva-tech",
+      "sentiment",
+      "paper",
+      "viva",
+      "doi",
+      "methods for sentiment analysis"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your Methods for Sentiment Analysis?",
+    "answer": "\"Methods for Sentiment Analysis: A Literature Study\" was published in VIVA-Tech IJRI, Volume 1, Issue 1, Article 8, pages 1-8, in October 2018, DOI 10.11242/viva-tech.01.01.08. The authors are Shiv Dhar, Suyog Pednekar, Kishan Borad, and Ashwini Save. Its keywords are Machine Learning, Sentiment Analysis, CNN, analysis, AI, SVM, and NLP. It is listed as a research paper on my experience page.",
+    "keywords": [
+      "research",
+      "tech",
+      "viva-tech",
+      "sentiment",
+      "paper",
+      "viva",
+      "doi",
+      "methods for sentiment analysis"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "Tell me about your Sentiment Analysis Using Neural Network",
+    "answer": "What is the neural network sentiment analysis paper? My experience page lists a conference paper titled \"Sentiment Analysis Using Neural Network: A New Approach\", published as an IEEE Conference Publication, IEEE Xplore document 8473049. The site card shows no authors or dates, so I can't give you more detail than the title and venue from verified sources.",
+    "keywords": [
+      "sentiment",
+      "ieee",
+      "neural",
+      "paper",
+      "conference",
+      "sentiment analysis using neural network"
+    ],
+    "category": "resume",
+    "suggestions": []
+  },
+  {
+    "question": "What is your Sentiment Analysis Using Neural Network?",
+    "answer": "What is the neural network sentiment analysis paper? My experience page lists a conference paper titled \"Sentiment Analysis Using Neural Network: A New Approach\", published as an IEEE Conference Publication, IEEE Xplore document 8473049. The site card shows no authors or dates, so I can't give you more detail than the title and venue from verified sources.",
+    "keywords": [
+      "sentiment",
+      "ieee",
+      "neural",
+      "paper",
+      "conference",
+      "sentiment analysis using neural network"
     ],
     "category": "resume",
     "suggestions": []
