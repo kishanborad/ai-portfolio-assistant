@@ -22,6 +22,7 @@ Usage:
 
 import base64
 import json
+import os
 import re
 import urllib.error
 import urllib.request
@@ -296,4 +297,97 @@ def faq_target(category, title):
 
 def phrase_of(title):
     return re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
+
+
+def merge_keyword_map(path, additions):
+    """Append new mappings, preserving every existing entry."""
+    with open(path, encoding="utf-8") as handle:
+        entries = json.load(handle)
+
+    def key(entry):
+        return (entry.get("target"), tuple(sorted(entry.get("tokens", []))),
+                entry.get("phrase"))
+
+    seen = {key(entry) for entry in entries}
+    added = []
+    for entry in additions:
+        if key(entry) not in seen:
+            entries.append(entry)
+            seen.add(key(entry))
+            added.append(entry)
+    with open(path, "w", encoding="utf-8") as handle:
+        json.dump(entries, handle, indent=2)
+        handle.write("\n")
+    return added
+
+
+def read_frontmatter(path):
+    """Read title and category from a knowledge file, without YAML."""
+    with open(path, encoding="utf-8") as handle:
+        text = handle.read()
+    match = re.match(r"^---\s*\n(.*?)\n---\s*\n", text, re.DOTALL)
+    meta = {}
+    if match:
+        for line in match.group(1).split("\n"):
+            field, sep, value = line.partition(":")
+            if sep:
+                meta[field.strip()] = value.strip().strip('"')
+    return meta
+
+
+def write_or_skip(path, content, report, key):
+    """Write a generated file, or record why it was left alone."""
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as handle:
+            existing = handle.read()
+        if GENERATED_LINE not in existing:
+            report["skipped"].append(key)
+            return
+        if existing == content:
+            report["unchanged"].append(key)
+            return
+        action = "changed"
+    else:
+        action = "added"
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as handle:
+        handle.write(content)
+    report[action].append(key)
+
+
+def remove_stale_generated(knowledge_dir, owned, report):
+    """Delete generated files whose element left the portfolio."""
+    for subdir in ("resume", "projects"):
+        folder = os.path.join(knowledge_dir, subdir)
+        if not os.path.isdir(folder):
+            continue
+        for fname in sorted(os.listdir(folder)):
+            if not fname.endswith(".md"):
+                continue
+            path = os.path.join(folder, fname)
+            if path in owned:
+                continue
+            with open(path, encoding="utf-8") as handle:
+                if GENERATED_LINE in handle.read():
+                    os.remove(path)
+                    report["removed"].append(os.path.join(subdir, fname))
+
+
+def file_meta(knowledge_dir, subdir, fname):
+    """Read title and category from a knowledge file, or None."""
+    path = os.path.join(knowledge_dir, subdir, fname)
+    if not os.path.exists(path):
+        return None
+    meta = read_frontmatter(path)
+    if "title" not in meta or "category" not in meta:
+        return None
+    return meta
+
+
+def file_target(knowledge_dir, subdir, fname):
+    """Build the FAQ question for a knowledge file, or None."""
+    meta = file_meta(knowledge_dir, subdir, fname)
+    if not meta:
+        return None
+    return faq_target(meta["category"], meta["title"])
 
