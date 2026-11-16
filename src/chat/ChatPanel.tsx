@@ -11,7 +11,7 @@ interface ChatPanelProps {
   onBusyChange?: (busy: boolean) => void;
 }
 
-const GREETING = "Hey! I'm Kishan's AI assistant, running entirely in your browser. Questions are logged anonymously to improve answers. Model weights and fonts are downloaded from content delivery networks. I can tell you about my experience, projects, technical skills, or engineering philosophy. What are you curious about?";
+const GREETING = "Hey, welcome. I'm Kishan's assistant, happy to chat about his work, his projects, and how he thinks about quality and delivery. Questions are logged anonymously to improve answers. What are you curious about?";
 
 const STARTER_CHIPS: SuggestionChip[] = [
   { label: 'Tell me about your experience', query: 'Tell me about your experience' },
@@ -111,7 +111,8 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
   }, [theme]);
 
   const scrollToBottom = useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    messagesEndRef.current?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
   }, []);
 
   useEffect(() => {
@@ -269,7 +270,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
       </div>
 
       {/* Messages */}
-      <div className="flex-1 px-5 py-5 overflow-y-auto flex flex-col gap-4">
+      <div className="flex-1 px-5 py-5 overflow-y-auto flex flex-col gap-5">
         {messages.map((msg) => (
           <MessageBubble key={msg.id} message={msg} />
         ))}
@@ -293,7 +294,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
         {isTyping && !isStreaming && (
           <div className="flex gap-3 max-w-[85%] opacity-60">
             <Avatar state="thinking" sizeClass="h-7 w-7" />
-            <div className="glass-surface rounded-tl-[4px] rounded-tr-xl rounded-br-xl rounded-bl-xl px-5 py-3 flex gap-1 items-center">
+            <div className="bg-chip border border-line rounded-tl-[4px] rounded-tr-xl rounded-br-xl rounded-bl-xl px-5 py-3 flex gap-1 items-center">
               <span className="w-1.5 h-1.5 rounded-full bg-accent" style={{ animation: 'typing-dot 1.4s 0s infinite' }} />
               <span className="w-1.5 h-1.5 rounded-full bg-accent" style={{ animation: 'typing-dot 1.4s 0.2s infinite' }} />
               <span className="w-1.5 h-1.5 rounded-full bg-accent" style={{ animation: 'typing-dot 1.4s 0.4s infinite' }} />
@@ -313,7 +314,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask me anything about Kishan..."
+            placeholder="Ask about his work, projects, or skills..."
             className="flex-1 bg-surface border border-line rounded-xl px-4 py-2.5 text-sm text-ink placeholder:text-dimmed focus:outline-none focus:ring-2 focus:ring-accent/30 focus:shadow-glow transition-all duration-200"
             disabled={isTyping}
           />
