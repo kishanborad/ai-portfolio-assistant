@@ -1,8 +1,7 @@
 name: Sync Knowledge Base
 
 on:
-  schedule:
-    - cron: '0 6 * * 1'  # Every Monday 6am UTC
+  # Schedule removed 16 Nov 2026: the scheduled run pushed directly to main. Manual trigger kept until the replacement workflow is decided.
   workflow_dispatch:       # Manual trigger
 
 permissions:
