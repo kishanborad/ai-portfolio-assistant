@@ -391,3 +391,151 @@ def file_target(knowledge_dir, subdir, fname):
         return None
     return faq_target(meta["category"], meta["title"])
 
+
+def build_keyword_additions(knowledge_dir, experiences, playgrounds,
+                            publications, covered, report):
+    """Build keyword map additions with file-derived targets.
+
+    FAQ questions are generated from knowledge file frontmatter, so
+    every target is derived from the file, never from site strings:
+    site names differ (UL Solutions Inc vs UL Solutions, Local AI
+    Portfolio Assistant vs AI Portfolio Assistant) and a target
+    built from a site string would never fire.
+    """
+    additions = []
+    for role in experiences:
+        company = role["company_name"]
+        filename = ROLE_FILES.get(company, slugify(company) + ".md")
+        target = file_target(knowledge_dir, "resume", filename)
+        if not target:
+            report["notes"].append(
+                f"No keyword mapping for role {company}: {filename} not found.")
+            continue
+        tokens = ROLE_TOKENS.get(company, [slugify(company).split("-")[0]])
+        additions.append({"target": target, "tokens": tokens})
+    for project in playgrounds:
+        if project.get("status") != "live":
+            continue
+        pid = project["id"]
+        filename = PROJECT_FILES.get(pid, slugify(pid) + ".md")
+        meta = file_meta(knowledge_dir, "projects", filename)
+        if not meta:
+            report["notes"].append(
+                f"No keyword mapping for project {pid}: {filename} not found.")
+            continue
+        target = faq_target(meta["category"], meta["title"])
+        phrases = {phrase_of(project["title"]), phrase_of(meta["title"])}
+        for phrase in sorted(phrases):
+            additions.append({"target": target, "phrase": phrase})
+    for pub in publications:
+        pid = pub["id"]
+        if pid in covered:
+            filename = covered[pid]
+        else:
+            filename = PUBLICATION_FILES.get(pid, slugify(pub["name"]) + ".md")
+        target = file_target(knowledge_dir, "resume", filename)
+        if not target:
+            report["notes"].append(
+                f"No keyword mapping for publication {pub['name']}: file not found.")
+            continue
+        phrase = PUBLICATION_PHRASES.get(pid, phrase_of(pub["name"]))
+        additions.append({"target": target, "phrase": phrase})
+
+    target = file_target(knowledge_dir, "personality", "location.md")
+    if target:
+        additions.append({"target": target,
+                          "tokens": ["based", "location", "located", "jersey"]})
+        additions.append({"target": target, "phrase": "jersey city"})
+    target = file_target(knowledge_dir, "personality", "contact.md")
+    if target:
+        additions.append({"target": target,
+                          "tokens": ["contact", "reach", "touch", "email"]})
+        additions.append({"target": target, "phrase": "get in touch"})
+    target = file_target(knowledge_dir, "resume", "publications.md")
+    if target:
+        additions.append({"target": target, "tokens": ["paper", "papers",
+                                                       "publication",
+                                                       "publications",
+                                                       "research"]})
+    return additions
+
+
+def sync(knowledge_dir, public_dir, overrides, token):
+    """Run one full ingestion pass. Returns the drift report data."""
+    sources = {name: fetch_github_file(path, token)
+               for name, path in SOURCE_FILES.items()}
+    experiences = parse_ts_array(sources["experiences"])
+    playgrounds = parse_ts_array(sources["playgrounds"])
+    publications = parse_ts_array(sources["publications"])
+    technologies = parse_ts_array(sources["technologies"])
+    for label, items in (("experiences", experiences),
+                         ("playgrounds", playgrounds),
+                         ("publications", publications),
+                         ("technologies", technologies)):
+        if not items:
+            raise RuntimeError(f"parsed zero {label}; refusing to sync")
+    report = {"added": [], "changed": [], "unchanged": [], "removed": [],
+              "skipped": [], "conflicts": [], "notes": [],
+              "keyword_added": [],
+              "grid": [(item["name"], item["group"]) for item in technologies]}
+    owned = set()
+
+    role_overrides = overrides.get("roles", {})
+    for role in experiences:
+        company = role["company_name"]
+        filename = ROLE_FILES.get(company, slugify(company) + ".md")
+        path = os.path.join(knowledge_dir, "resume", filename)
+        owned.add(path)
+        date = role["date"]
+        override = role_overrides.get(company, {}).get("date")
+        if override and override != date:
+            report["conflicts"].append(
+                f"Role {company}: site date {date} replaced with confirmed date {override}.")
+            date = override
+        write_or_skip(path, role_markdown(role, date), report, "role " + company)
+
+    blurb_overrides = overrides.get("project_blurbs", {})
+    for project in playgrounds:
+        if project.get("status") != "live":
+            continue
+        pid = project["id"]
+        filename = PROJECT_FILES.get(pid, slugify(pid) + ".md")
+        path = os.path.join(knowledge_dir, "projects", filename)
+        owned.add(path)
+        blurb = project.get("blurb", "")
+        override = blurb_overrides.get(pid)
+        if override and sanitize(override) != sanitize(blurb):
+            report["conflicts"].append(
+                f"Project {pid}: site blurb replaced by the override in "
+                "ingest_overrides.json; the site text is stale.")
+            blurb = override
+        write_or_skip(path, project_markdown(project, blurb),
+                      report, "project " + pid)
+
+    pub_overrides = overrides.get("publications", {})
+    covered = overrides.get("covered_publications", {})
+    for pub in publications:
+        pid = pub["id"]
+        if pid in covered:
+            report["notes"].append(
+                f"Publication {pub['name']} is covered by hand-maintained "
+                f"{covered[pid]}; no file generated.")
+            continue
+        filename = PUBLICATION_FILES.get(pid, slugify(pub["name"]) + ".md")
+        path = os.path.join(knowledge_dir, "resume", filename)
+        owned.add(path)
+        write_or_skip(path, publication_markdown(pub, pub_overrides.get(pid)),
+                      report, "publication " + pub["name"])
+
+    remove_stale_generated(knowledge_dir, owned, report)
+
+    additions = build_keyword_additions(
+        knowledge_dir, experiences, playgrounds,
+        publications, covered, report)
+
+    keyword_path = os.path.join(public_dir, "keyword-map.json")
+    if os.path.exists(keyword_path):
+        report["keyword_added"] = merge_keyword_map(keyword_path, additions)
+    else:
+        report["notes"].append("keyword-map.json not found; no mappings added.")
+    return report
