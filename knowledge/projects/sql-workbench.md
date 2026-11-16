@@ -4,7 +4,7 @@ category: projects
 tags: [sql, analytics, workbench, duckdb, wasm, database, query, data]
 ---
 
-The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts — no backend, no database server, nothing to install.
+The SQL Analytics Workbench is a browser-based SQL editor backed by DuckDB compiled to WebAssembly. You write queries against a preloaded dataset and get instant results rendered as tables or charts — no backend, no database server, nothing to install. It includes three built-in datasets: e-commerce, GitHub activity, and weather stations. Results appear in sortable tables and can be visualized with six chart types.
 
 I built it to show that serious data analysis can happen entirely client-side. DuckDB-WASM handles the query engine, so the SQL dialect supports window functions, CTEs, aggregations, and joins at full speed. The UI includes a Monaco-based editor with syntax highlighting and a results panel that switches between tabular and chart views.
 
