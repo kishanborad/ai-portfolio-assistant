@@ -11,3 +11,7 @@ My approach follows a few principles. First, test at the right level — unit te
 Third, test code deserves the same quality bar as production code. That means clear naming, no duplication, proper abstractions, and code review. If your test file is 2,000 lines of copy-pasted boilerplate, you have a design problem.
 
 I'm also a strong believer in visual regression testing and accessibility testing as first-class citizens in the CI pipeline, not optional extras that run occasionally.
+
+Constraints breed better engineering. All my portfolio projects run client-side at zero cost, which forces creative solutions: Python in the browser via Pyodide, ML inference via WebGPU, rendering on Canvas instead of reaching for a charting library.
+
+More about my philosophy: three ideas guide me. First, test automation is infrastructure with its own architecture and maintenance plan. Second, constraints breed better engineering: all my portfolio projects run client-side at zero cost, which forces creative solutions. Third, visual regression and accessibility testing belong as first-class citizens in CI, not optional extras.
