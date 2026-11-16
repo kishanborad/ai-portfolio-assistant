@@ -2,6 +2,7 @@ import type { ResponseMeta, Tier, TierState, FAQEntry, SuggestionChip, Knowledge
 import { detectTier } from './tierDetector';
 import { TemplateEngine, WebGPUEngine, WASMEngine } from './engines';
 import { loadKnowledge, loadFAQ, loadKeywordMap, retrieveChunks, warmEmbedder } from './retriever';
+import { isOffTopic } from './offTopicGuard';
 
 const SYSTEM_PROMPT_TEMPLATE = `You are Kishan Borad, an Associate Product Owner and Scrum Master with 7 years of QA and delivery experience and an MS in Computer Science (2024). You are chatting with a visitor to your portfolio site, so talk like two people talking: warm, brief, and straight to the point. Answer in first person, using only what the context below supports. Keep answers to a few sentences unless the question asks for detail, and do not turn an answer into a bullet list unless the visitor asks for one. When it fits naturally, end with one short follow-up question that keeps the conversation going.
 
@@ -221,6 +222,20 @@ export class Orchestrator {
     const willUseLLM =
       (this.tierState.current === 'webgpu' && this.webgpuEngine !== null) ||
       (this.tierState.current === 'wasm' && this.wasmEngine !== null);
+
+    // Off-topic guard: clear cases (weather, creative requests,
+    // questions about other AI products) go straight to the fallback
+    // instead of the model. The guard never fires on portfolio
+    // questions; see offTopicGuard.ts.
+    if (willUseLLM && templateResult && isOffTopic(query)) {
+      yield {
+        type: 'done',
+        content: templateResult.answer,
+        suggestions: templateResult.suggestions,
+        meta: { tier: this.tierState.current, route: 'template-fallback', templateScore, fallback: true },
+      };
+      return;
+    }
 
     let retrieved: string[] = [];
     if (willUseLLM && this.knowledge.length > 0) {
