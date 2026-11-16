@@ -1,0 +1,67 @@
+{
+  "confirmed_numbers": [
+    "40% regression cycle cut (Quantiphi)",
+    "Biweekly to weekly release move (iSchoolConnect)",
+    "Around 85% regression coverage (Prudential)",
+    "500K+ students served (iSchoolConnect platform)",
+    "10K+ concurrent users in load tests (iSchoolConnect)",
+    "About 35% page load cut (iSchoolConnect)",
+    "About 50 hours per week of manual processing replaced (UL Solutions)",
+    "Report turnaround from 3 days to about 4 hours (UL Solutions)",
+    "About 50 devices per week in SAR testing (UL Solutions)",
+    "0 to 120+ tests (Quantiphi)",
+    "80+ pre-launch defects (Quantiphi)",
+    "12-engineer squad, 3 mentored juniors (Prudential)",
+    "4 years JavaScript/TypeScript"
+  ],
+  "contact": {
+    "email": "borad.kishan0@gmail.com",
+    "github": "https://github.com/kishanborad",
+    "linkedin": "https://linkedin.com/in/kishanborad27",
+    "note": "The portfolio contact form mailto target differs; never promote it over this email."
+  },
+  "covered_publications": {
+    "project-1": "viva-tech-paper.md",
+    "project-2": "publications.md",
+    "project-3": "neural-network-paper.md",
+    "project-4": "publications.md",
+    "project-5": "publications.md"
+  },
+  "education": {
+    "note": "The library education.md is richer and confirmed; the thin portfolio FAQ answer must never overwrite it.",
+    "source_of_truth": "library"
+  },
+  "location": {
+    "base": "Jersey City, NJ",
+    "note": "No location renders on the portfolio site. The assistant answers Jersey City."
+  },
+  "project_blurbs": {
+    "ai-assistant": "Ask questions about my experience and get answers from a language model running entirely in your browser. Questions are logged anonymously to improve answers."
+  },
+  "publications": {
+    "project-1": {
+      "authors": [
+        "Shiv Dhar",
+        "Suyog Pednekar",
+        "Kishan Borad",
+        "Ashwini Save"
+      ],
+      "date": "October 2018",
+      "doi": "10.11242/viva-tech.01.01.08",
+      "venue": "VIVA-Tech IJRI Vol 1 Issue 1"
+    }
+  },
+  "roles": {
+    "Prudential Financial": {
+      "date": "Jul 2025 - Aug 2026",
+      "note": "Site says Jul 2025 - Present; confirmed end is Aug 2026."
+    }
+  },
+  "stale_site_claims": [
+    {
+      "claim": "no server, no API keys",
+      "element": "ai-assistant playground blurb",
+      "fact": "Questions are logged anonymously to improve answers."
+    }
+  ]
+}

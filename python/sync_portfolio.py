@@ -2,7 +2,7 @@
 
 Fetches the latest playground data from the portfolio GitHub repo and
 creates knowledge markdown files for any new projects not yet covered.
-Existing files are never overwritten — only missing ones get created.
+Existing files are never overwritten. Only missing ones get created.
 
 Usage:
     python sync_portfolio.py --knowledge-dir ../knowledge
@@ -13,7 +13,6 @@ import base64
 import json
 import os
 import re
-import subprocess
 import urllib.request
 
 REPO = "kishanborad/kishanborad-portfolio"
@@ -33,41 +32,30 @@ ID_TO_FILENAME: dict[str, str] = {
 
 
 def _gh_token() -> str | None:
-    """Get GitHub token from env, .pat_token file, or gh CLI."""
-    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
-    if token:
-        return token
+    """Get GitHub token from the environment only.
 
-    # Check .pat_token file in repo root (for local runs)
-    pat_file = os.path.join(os.path.dirname(__file__), os.pardir, ".pat_token")
-    if os.path.isfile(pat_file):
-        with open(pat_file, encoding="utf-8") as f:
-            token = f.read().strip()
-        if token:
-            return token
-
-    try:
-        result = subprocess.run(
-            ["gh", "auth", "token"],
-            capture_output=True, text=True, timeout=10, check=False,
-        )
-        if result.returncode == 0:
-            return result.stdout.strip()
-    except FileNotFoundError:
-        pass
-    return None
+    ingest_portfolio.py supersedes this script. The plaintext
+    .pat_token file fallback was removed: the token comes from the
+    PORTFOLIO_PAT or GITHUB_TOKEN environment variable, and the
+    caller fails closed when neither is set.
+    """
+    return os.environ.get("PORTFOLIO_PAT") or os.environ.get("GITHUB_TOKEN")
 
 
 def fetch_github_file(path: str) -> str:
     """Fetch a file from the portfolio repo via GitHub API."""
     token = _gh_token()
+    if not token:
+        raise RuntimeError(
+            "No GitHub token found. Set PORTFOLIO_PAT in the environment; "
+            "the .pat_token file fallback was removed."
+        )
     url = f"https://api.github.com/repos/{REPO}/contents/{path}?ref=main"
     headers: dict[str, str] = {
         "Accept": "application/vnd.github.v3+json",
         "User-Agent": "portfolio-sync",
+        "Authorization": f"Bearer {token}",
     }
-    if token:
-        headers["Authorization"] = f"Bearer {token}"
 
     req = urllib.request.Request(url, headers=headers)
     try:
@@ -75,9 +63,8 @@ def fetch_github_file(path: str) -> str:
             data = json.loads(resp.read().decode("utf-8"))
     except urllib.error.HTTPError as e:
         if e.code == 404:
-            auth_hint = "with token" if token else "WITHOUT token (repo may be private)"
             raise RuntimeError(
-                f"404 fetching {path} from {REPO} ({auth_hint}). "
+                f"404 fetching {path} from {REPO}. "
                 f"Check PORTFOLIO_PAT secret is set and has repo scope."
             ) from e
         raise
