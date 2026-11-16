@@ -1,5 +1,5 @@
 ---
-title: Methods for Sentiment Analysis
+title: Methods for Sentiment Analysis Paper
 category: resume
 tags: [viva-tech, sentiment, paper, research, doi]
 ---
