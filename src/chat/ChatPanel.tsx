@@ -3,7 +3,7 @@ import type { Message, ResponseMeta, SuggestionChip, TierState } from '../types'
 import { MessageBubble } from './MessageBubble';
 import { Avatar } from './Avatar';
 import type { Orchestrator } from '../ai/orchestrator';
-import { logQuestion } from '../ai/questionLog';
+import { logQuestionToServer } from '../ai/serverLog';
 
 interface ChatPanelProps {
   orchestrator: Orchestrator;
@@ -181,10 +181,9 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
       }
     }
 
-    // Record the question and how it was answered, locally only, so
-    // missed questions can be turned into keyword mappings later.
-    logQuestion({
-      askedAt: new Date(startedAt).toISOString(),
+    // Record the question and how it was answered, server-side only,
+    // so missed questions can be turned into keyword mappings later.
+    void logQuestionToServer({
       question: query.trim(),
       tier: meta?.tier ?? tierState.current,
       route: meta?.route ?? 'template',
