@@ -22,6 +22,7 @@ Usage:
 
 import base64
 import json
+import re
 import urllib.error
 import urllib.request
 
@@ -224,4 +225,75 @@ def parse_ts_array(text):
     if not isinstance(result, list):
         raise TypeError("top level value is not an array")
     return result
+
+
+def sanitize(text):
+    """Remove characters banned from generated content."""
+    text = text.replace(" \u2014 ", ", ").replace("\u2014", ",")
+    text = text.replace("\u2013", "-")
+    text = re.sub("\u007e(\\d)", r"about \1", text)
+    return text.replace("\u007e", "")
+
+
+def slugify(text):
+    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+
+
+def frontmatter(title, category, tags):
+    lines = ["---", "title: " + json.dumps(title), "category: " + category,
+             "tags: [" + ", ".join(tags) + "]", GENERATED_LINE, "---", ""]
+    return "\n".join(lines)
+
+
+def role_markdown(role, date):
+    company = role["company_name"]
+    points = [sanitize(point["text"]) for point in role["points"]]
+    opening = "From {} I was a {} at {}.".format(date, role["title"], company)
+    if points:
+        opening += " " + points[0]
+    body = "\n\n".join([opening] + points[1:])
+    tags = [slugify(company), slugify(role["title"])]
+    return frontmatter(company, "resume", tags) + "\n" + body + "\n"
+
+
+def project_markdown(project, blurb):
+    tech = ", ".join(project["tech"])
+    track = "development" if project.get("track") == "dev" else "QA"
+    body = (sanitize(blurb)
+            + f"\n\nThis is a {track} track project. A live demo and the source repo "
+            f"are linked from the portfolio.\n\nTech stack: {tech}.")
+    tags = [project["id"]] + project["id"].split("-")
+    for item in project["tech"]:
+        tag = slugify(item)
+        if tag not in tags:
+            tags.append(tag)
+    return frontmatter(project["title"], "projects", tags) + "\n" + body + "\n"
+
+
+def publication_markdown(pub, verified):
+    name = pub["name"]
+    kind = pub["category"].lower()
+    if verified:
+        authors = verified["authors"]
+        if len(authors) > 2:
+            byline = ", ".join(authors[:-1]) + ", and " + authors[-1]
+        else:
+            byline = " and ".join(authors)
+        body = ('A {} titled "{}" by {}, published in {}, {} (DOI {}). '
+                "Read it at: {}.".format(kind, name, byline, verified["venue"], verified["date"],
+                   verified["doi"], pub["demo"]))
+    else:
+        body = ('A {} titled "{}". Read it at: {}. '
+                "The site card shows no authors or date.".format(kind, name, pub["demo"]))
+    tags = ["publication", slugify(pub["category"])]
+    return frontmatter(name, "resume", tags) + "\n" + body + "\n"
+
+
+def faq_target(category, title):
+    template = FAQ_QUESTION.get(category, "Tell me about {title}")
+    return template.format(title=title)
+
+
+def phrase_of(title):
+    return re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
 
