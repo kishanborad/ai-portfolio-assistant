@@ -90,3 +90,138 @@ def fetch_github_file(path, token):
         raise RuntimeError(f"GitHub API request failed for {path}: {exc}") from exc
     return base64.b64decode(data["content"]).decode("utf-8")
 
+
+class TSParser:
+    """Minimal parser for TypeScript object literal arrays.
+
+    Handles objects, arrays, single and double quoted strings with
+    escapes, bare identifiers, numbers, booleans, null, trailing
+    commas, and line and block comments. Never evaluates code.
+    """
+
+    def __init__(self, text):
+        self.text = text
+        self.pos = 0
+        self.end = len(text)
+
+    def parse_array(self):
+        self._skip()
+        if self._peek() != "[":
+            raise ValueError(f"expected '[' at offset {self.pos}")
+        return self._value()
+
+    def _peek(self):
+        return self.text[self.pos] if self.pos < self.end else ""
+
+    def _skip(self):
+        while self.pos < self.end:
+            ch = self.text[self.pos]
+            if ch in " \t\r\n":
+                self.pos += 1
+            elif self.text.startswith("//", self.pos):
+                while self.pos < self.end and self.text[self.pos] != "\n":
+                    self.pos += 1
+            elif self.text.startswith("/*", self.pos):
+                close = self.text.find("*/", self.pos + 2)
+                if close < 0:
+                    raise ValueError("unterminated block comment")
+                self.pos = close + 2
+            else:
+                return
+
+    def _value(self):
+        self._skip()
+        ch = self._peek()
+        if ch == "{":
+            return self._object()
+        if ch == "[":
+            return self._array()
+        if ch in "'\"":
+            return self._string()
+        return self._bare()
+
+    def _object(self):
+        self.pos += 1
+        obj = {}
+        while True:
+            self._skip()
+            if self._peek() == "}":
+                self.pos += 1
+                return obj
+            key = self._string() if self._peek() in "'\"" else self._bare()
+            self._skip()
+            if self._peek() != ":":
+                raise ValueError(f"expected ':' after key {key!r}")
+            self.pos += 1
+            obj[key] = self._value()
+            self._skip()
+            if self._peek() == ",":
+                self.pos += 1
+            elif self._peek() != "}":
+                raise ValueError("expected ',' or '}' in object")
+
+    def _array(self):
+        self.pos += 1
+        items = []
+        while True:
+            self._skip()
+            if self._peek() == "]":
+                self.pos += 1
+                return items
+            items.append(self._value())
+            self._skip()
+            if self._peek() == ",":
+                self.pos += 1
+            elif self._peek() != "]":
+                raise ValueError("expected ',' or ']' in array")
+
+    def _string(self):
+        quote = self.text[self.pos]
+        self.pos += 1
+        out = []
+        while self.pos < self.end:
+            ch = self.text[self.pos]
+            self.pos += 1
+            if ch == quote:
+                return "".join(out)
+            if ch == "\\" and self.pos < self.end:
+                esc = self.text[self.pos]
+                self.pos += 1
+                out.append({"n": "\n", "t": "\t", "r": "\r"}.get(esc, esc))
+            else:
+                out.append(ch)
+        raise ValueError("unterminated string")
+
+    def _bare(self):
+        start = self.pos
+        while self.pos < self.end and self.text[self.pos] not in " \t\r\n,]}:":
+            self.pos += 1
+        word = self.text[start:self.pos]
+        if word == "true":
+            return True
+        if word == "false":
+            return False
+        if word == "null":
+            return None
+        try:
+            return int(word)
+        except ValueError:
+            pass
+        try:
+            return float(word)
+        except ValueError:
+            pass
+        return word
+
+
+def parse_ts_array(text):
+    """Parse the first array literal assigned in a TS source file."""
+    assign = text.find("=")
+    start = text.find("[", assign)
+    if start < 0:
+        raise ValueError("no array literal found")
+    result = TSParser(text[start:]).parse_array()
+    if not isinstance(result, list):
+        raise TypeError("top level value is not an array")
+    return result
+
