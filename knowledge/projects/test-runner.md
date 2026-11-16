@@ -4,9 +4,9 @@ category: projects
 tags: [test-runner, playwright, testing, automation, sandbox, demo]
 ---
 
-The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes.
+The Test Runner Playground is an interactive web app where you can write Playwright-style tests against a live demo shop and watch every step execute in real time. It highlights elements as they're found, shows assertion results inline, and generates a full HTML report when the run completes. It includes 12 pre-written tests covering shop flows, and runs produce downloadable HTML reports and video recordings. Unlike the AI Test Generator, which writes test code from descriptions or recorded clicks, this playground executes tests you write.
 
-I built it to demonstrate how modern test automation works — not as slides or documentation, but as something you can actually use. The test editor supports Playwright's locator API syntax, and the execution engine interprets each step, runs it against an iframe-sandboxed shop app, and streams results back to the UI.
+I built it to demonstrate how modern test automation works — not as slides or documentation, but as something you can actually use. The test editor supports Playwright's locator API syntax, and the execution engine interprets each step, runs it against an iframe-sandboxed shop app, and streams results back to the UI. You can run any of the 12 pre-written tests or write your own in the editor.
 
 The Python backend includes a test generation engine that can produce test scripts from page analysis, a performance monitoring module, and an accessibility scanner powered by axe-core. Docker support lets you run the full test suite against any URL from a container.
 
