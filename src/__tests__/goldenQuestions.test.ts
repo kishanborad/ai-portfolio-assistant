@@ -351,4 +351,23 @@ describe('golden questions: FAQ matching', () => {
     expect(answer).toContain("don't have specific details");
     expect(answer).toContain('linkedin.com/in/kishanborad27');
   });
+
+  // Greetings are handled by the template tier, not retrieval: the
+  // bank notes single-word greetings retrieve noise (case 25.5).
+  it('bare greetings get a greeting reply, not the fallback', () => {
+    for (const query of ['Hi', 'hello', 'hey', 'good morning']) {
+      const { answer, matched } = engine.respond(query);
+      expect(matched).toBe(true);
+      expect(answer).toContain('good to see you');
+    }
+  });
+
+  it('a greeting followed by a real question still answers the question', () => {
+    const projects = engine.respond('Hello, show me your projects');
+    expect(projects.matched).toBe(true);
+    expect(projects.answer).toContain('6 interactive playgrounds');
+    const experience = engine.respond('Hi, tell me about your experience');
+    expect(experience.matched).toBe(true);
+    expect(experience.answer).toContain('seven years');
+  });
 });
