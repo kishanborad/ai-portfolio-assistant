@@ -6,6 +6,19 @@ import { Sidebar } from './sidebar/Sidebar';
 
 const orchestrator = new Orchestrator();
 
+/**
+ * Embed mode (?embed=1) renders the chat alone, without the sidebar
+ * or headers: the portfolio widget shell provides the panel frame,
+ * header, and close controls around the iframe.
+ */
+function isEmbedMode(): boolean {
+  try {
+    return new URLSearchParams(window.location.search).get('embed') === '1';
+  } catch {
+    return false;
+  }
+}
+
 export default function App() {
   const [tierState, setTierState] = useState<TierState>(orchestrator.getTierState());
   const [assistantBusy, setAssistantBusy] = useState(false);
@@ -20,6 +33,16 @@ export default function App() {
   const handleCategoryClick = useCallback((query: string) => {
     chatPanelRef.current?.sendMessage(query);
   }, []);
+
+  const embed = isEmbedMode();
+
+  if (embed) {
+    return (
+      <div className="flex flex-col h-screen bg-navy font-poppins">
+        <ChatPanel ref={chatPanelRef} orchestrator={orchestrator} tierState={tierState} onBusyChange={setAssistantBusy} embed />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col h-screen bg-navy font-poppins">

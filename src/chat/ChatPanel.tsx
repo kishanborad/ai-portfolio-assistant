@@ -9,6 +9,7 @@ interface ChatPanelProps {
   orchestrator: Orchestrator;
   tierState: TierState;
   onBusyChange?: (busy: boolean) => void;
+  embed?: boolean;
 }
 
 const GREETING = "Hey, welcome. I'm Kishan's assistant, happy to chat about his work, his projects, and how he thinks about quality and delivery. Questions are logged anonymously to improve answers. What are you curious about?";
@@ -59,7 +60,7 @@ function ThemeToggle({ theme, onToggle }: { theme: Theme; onToggle: () => void }
 }
 
 export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, ChatPanelProps>(
-  function ChatPanel({ orchestrator, tierState, onBusyChange }, ref) {
+  function ChatPanel({ orchestrator, tierState, onBusyChange, embed = false }, ref) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'greeting',
@@ -247,27 +248,31 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
 
   return (
     <div className="flex-1 flex flex-col min-w-0">
-      {/* Mobile top bar - visible on small screens */}
-      <div className="flex md:hidden items-center justify-between px-4 py-3 border-b border-line bg-navy-deep/90">
-        <div className="flex items-center gap-3">
-          <Avatar state={avatarState} sizeClass="h-8 w-8" />
+      {/* Mobile top bar - small screens only, hidden in embed mode */}
+      {!embed && (
+        <div className="flex md:hidden items-center justify-between px-4 py-3 border-b border-line bg-navy-deep/90">
+          <div className="flex items-center gap-3">
+            <Avatar state={avatarState} sizeClass="h-8 w-8" />
+            <div>
+              <div className="text-sm font-semibold">Kishan's Assistant</div>
+              <div className="text-[10px] text-accent">{tierState.label}</div>
+            </div>
+          </div>
+          <ThemeToggle theme={theme} onToggle={toggleTheme} />
+        </div>
+      )}
+
+      {/* Header - hidden in embed mode */}
+      {!embed && (
+        <div className="px-5 py-3 border-b border-line flex items-center gap-3">
+          <Avatar state={avatarState} sizeClass="h-7 w-7" />
           <div>
             <div className="text-sm font-semibold">Kishan's Assistant</div>
-            <div className="text-[10px] text-accent">{tierState.label}</div>
+            <div className="text-[10px] text-dimmed">Powered by Phi-3 · In-browser</div>
           </div>
+          <ThemeToggle theme={theme} onToggle={toggleTheme} />
         </div>
-        <ThemeToggle theme={theme} onToggle={toggleTheme} />
-      </div>
-
-      {/* Header */}
-      <div className="px-5 py-3 border-b border-line flex items-center gap-3">
-        <Avatar state={avatarState} sizeClass="h-7 w-7" />
-        <div>
-          <div className="text-sm font-semibold">Kishan's Assistant</div>
-          <div className="text-[10px] text-dimmed">Powered by Phi-3 · In-browser</div>
-        </div>
-        <ThemeToggle theme={theme} onToggle={toggleTheme} />
-      </div>
+      )}
 
       {/* Messages */}
       <div className="flex-1 px-5 py-5 overflow-y-auto flex flex-col gap-5">
