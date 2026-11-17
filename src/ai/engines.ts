@@ -20,6 +20,64 @@ const MATCH_THRESHOLD = 3;
 const ALIAS_BOOST = 3;
 
 /**
+ * Suggestion chips shown when an answer carries none of its own, so
+ * every response ends with somewhere useful to go next.
+ */
+export const DEFAULT_SUGGESTIONS: SuggestionChip[] = [
+  { label: 'Tell me about your experience', query: 'Tell me about your experience' },
+  { label: 'Show me your projects', query: 'Show me your projects' },
+  { label: "What's your tech stack?", query: "What's your tech stack?" },
+];
+
+const GREETING_WORDS = new Set(['hi', 'hello', 'hey', 'howdy', 'yo', 'sup', 'hiya', 'greetings']);
+const GREETING_FILLERS = new Set(['there', 'good', 'morning', 'afternoon', 'evening']);
+const FAREWELL_WORDS = new Set(['bye', 'goodbye', 'thanks', 'thank', 'cya', 'cheers']);
+const FAREWELL_FILLERS = new Set(['you', 'later', 'see', 'take', 'care', 'much', 'lot', 'so']);
+
+const GREETING_ANSWER =
+  'Hey, good to see you here. I can tell you about my experience, projects, skills, or how I think about quality and delivery. What are you curious about?';
+const THANKS_ANSWER =
+  "You're welcome. Anything else you'd like to know about my work, projects, or skills?";
+const FAREWELL_ANSWER =
+  "Thanks for stopping by. If you want to reach me, I'm on LinkedIn at https://linkedin.com/in/kishanborad27, on GitHub at https://github.com/kishanborad, or by email at borad.kishan0@gmail.com.";
+
+/**
+ * A query that is only a greeting or only a farewell, with no content
+ * words, is answered directly instead of scored against the FAQ: bare
+ * greetings share no keywords with any entry, so scoring alone can
+ * only fall back. A greeting followed by a real question keeps its
+ * content words and routes normally.
+ */
+function conversationalReply(tokens: string[]): {
+  answer: string;
+  suggestions: SuggestionChip[];
+} | null {
+  if (tokens.length === 0) return null;
+  const allGreeting = tokens.every((t) => GREETING_WORDS.has(t) || GREETING_FILLERS.has(t));
+  const hasGreetingWord = tokens.some((t) => GREETING_WORDS.has(t));
+  const first = tokens[0];
+  const second = tokens[1];
+  const isDaypart =
+    tokens.length >= 2 &&
+    first === 'good' &&
+    (second === 'morning' || second === 'afternoon' || second === 'evening') &&
+    tokens.slice(2).every((t) => t === 'there');
+  if ((allGreeting && hasGreetingWord) || isDaypart) {
+    return { answer: GREETING_ANSWER, suggestions: DEFAULT_SUGGESTIONS };
+  }
+  const allFarewell = tokens.every((t) => FAREWELL_WORDS.has(t) || FAREWELL_FILLERS.has(t));
+  const hasThanks = tokens.some((t) => t === 'thanks' || t === 'thank');
+  const hasFarewellWord = tokens.some((t) => FAREWELL_WORDS.has(t));
+  if (allFarewell && hasThanks) {
+    return { answer: THANKS_ANSWER, suggestions: DEFAULT_SUGGESTIONS };
+  }
+  if (allFarewell && hasFarewellWord) {
+    return { answer: FAREWELL_ANSWER, suggestions: DEFAULT_SUGGESTIONS };
+  }
+  return null;
+}
+
+/**
  * FAQ-based template matching engine.
  * Tokenizes the query, drops stopwords, and scores against FAQ entries
  * by keyword overlap with a small bonus for question similarity,
@@ -101,7 +159,12 @@ export class TemplateEngine {
     score: number;
     matched: boolean;
   } {
-    const queryTokens = this.tokenize(query).filter((t) => !STOPWORDS.has(t));
+    const rawTokens = this.tokenize(query);
+    const conversational = conversationalReply(rawTokens);
+    if (conversational) {
+      return { ...conversational, score: MATCH_THRESHOLD, matched: true };
+    }
+    const queryTokens = rawTokens.filter((t) => !STOPWORDS.has(t));
     const boosted = this.aliasTargets(query);
 
     // A query of only common words still matches when a keyword-map

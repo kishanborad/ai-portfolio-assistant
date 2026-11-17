@@ -94,7 +94,7 @@ describe('TemplateEngine', () => {
   });
 
   it('does not match a single unrelated word', () => {
-    const result = engine.respond('hello');
+    const result = engine.respond('quasar');
     expect(result.answer).toContain("don't have specific details");
   });
 
@@ -119,6 +119,39 @@ describe('TemplateEngine', () => {
     expect(engine.respond('Tell me about your experience').matched).toBe(true);
     expect(engine.respond('favorite pizza topping').matched).toBe(false);
     expect(engine.respond('favorite pizza topping').score).toBe(0);
+  });
+});
+
+describe('TemplateEngine conversational replies', () => {
+  const engine = new TemplateEngine(TEST_FAQS);
+
+  it('answers a bare hi instead of falling back', () => {
+    const result = engine.respond('Hi');
+    expect(result.matched).toBe(true);
+    expect(result.answer).toContain('good to see you');
+  });
+
+  it('answers hello, hey, and good morning', () => {
+    for (const query of ['hello', 'hey', 'good morning', 'hey there', 'Hello!']) {
+      expect(engine.respond(query).answer).toContain('good to see you');
+    }
+  });
+
+  it('answers a bare thanks without saying goodbye', () => {
+    expect(engine.respond('thanks').answer).toContain("You're welcome");
+  });
+
+  it('answers a bare goodbye', () => {
+    expect(engine.respond('goodbye').answer).toContain('Thanks for stopping by');
+  });
+
+  it('carries suggestion chips on greeting and farewell replies', () => {
+    expect(engine.respond('Hi').suggestions.length).toBeGreaterThan(0);
+    expect(engine.respond('bye').suggestions.length).toBeGreaterThan(0);
+  });
+
+  it('does not greet on a bare filler word', () => {
+    expect(engine.respond('there').matched).toBe(false);
   });
 });
 
@@ -158,6 +191,11 @@ describe('TemplateEngine with a keyword map', () => {
   it('still lets real keyword overlap outscore a mapped entry', () => {
     const result = mapped.respond('What projects have you built?');
     expect(result.answer).toContain('playgrounds');
+  });
+
+  it('does not let a greeting hijack a real question', () => {
+    expect(mapped.respond('Hi, who is Kishan?').answer).toContain('Kishan Borad');
+    expect(mapped.respond('Hello, show me your projects').answer).toContain('playgrounds');
   });
 
   it('still falls back for unmapped out-of-scope questions', () => {
