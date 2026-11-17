@@ -51,6 +51,7 @@ vi.stubGlobal('fetch', vi.fn().mockImplementation((url: string) => {
 }));
 
 import { Orchestrator } from '../ai/orchestrator';
+import { DEFAULT_SUGGESTIONS } from '../ai/suggestions';
 
 async function waitForWebGPU(orch: Orchestrator, timeoutMs = 5000): Promise<void> {
   const deadline = Date.now() + timeoutMs;
@@ -101,7 +102,7 @@ describe('retrieval floor gate', () => {
     expect(chunks[chunks.length - 1]).toEqual({
       type: 'done',
       content: 'model answer',
-      suggestions: [],
+      suggestions: DEFAULT_SUGGESTIONS,
       meta: { tier: 'webgpu', route: 'webgpu', templateScore: 0, fallback: false },
     });
   });
