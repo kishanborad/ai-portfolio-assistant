@@ -1,5 +1,6 @@
 import type { FAQEntry, KeywordMapEntry, SuggestionChip } from '../types';
 import { STOPWORDS } from './retriever';
+import { DEFAULT_SUGGESTIONS } from './suggestions';
 
 // ── Template Engine (Tier 3) ───────────────────────────────────────────────
 
@@ -18,16 +19,6 @@ const MATCH_THRESHOLD = 3;
  * with real keyword overlap still outscores a merely mapped one.
  */
 const ALIAS_BOOST = 3;
-
-/**
- * Suggestion chips shown when an answer carries none of its own, so
- * every response ends with somewhere useful to go next.
- */
-export const DEFAULT_SUGGESTIONS: SuggestionChip[] = [
-  { label: 'Tell me about your experience', query: 'Tell me about your experience' },
-  { label: 'Show me your projects', query: 'Show me your projects' },
-  { label: "What's your tech stack?", query: "What's your tech stack?" },
-];
 
 const GREETING_WORDS = new Set(['hi', 'hello', 'hey', 'howdy', 'yo', 'sup', 'hiya', 'greetings']);
 const GREETING_FILLERS = new Set(['there', 'good', 'morning', 'afternoon', 'evening']);
@@ -208,7 +199,8 @@ export class TemplateEngine {
 
     return {
       answer: bestEntry.answer,
-      suggestions: bestEntry.suggestions,
+      suggestions:
+        bestEntry.suggestions.length > 0 ? bestEntry.suggestions : DEFAULT_SUGGESTIONS,
       score: bestScore,
       matched: true,
     };

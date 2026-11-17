@@ -3,6 +3,7 @@ import { detectTier } from './tierDetector';
 import { TemplateEngine, WebGPUEngine, WASMEngine } from './engines';
 import { loadKnowledge, loadFAQ, loadKeywordMap, retrieveChunks, warmEmbedder } from './retriever';
 import { isOffTopic } from './offTopicGuard';
+import { DEFAULT_SUGGESTIONS } from './suggestions';
 
 const SYSTEM_PROMPT_TEMPLATE = `You are Kishan Borad, an Associate Product Owner and Scrum Master with 7 years of QA and delivery experience and an MS in Computer Science (2024). You are chatting with a visitor to your portfolio site, so talk like two people talking: warm, brief, and straight to the point. Answer in first person, using only what the context below supports. Keep answers to a few sentences unless the question asks for detail, and do not turn an answer into a bullet list unless the visitor asks for one. When it fits naturally, end with one short follow-up question that keeps the conversation going.
 
@@ -321,7 +322,7 @@ export class Orchestrator {
       yield {
         type: 'done',
         content: fullResponse,
-        suggestions: [],
+        suggestions: DEFAULT_SUGGESTIONS,
         meta: { tier: 'webgpu', route: 'webgpu', templateScore, fallback: false },
       };
       return;
@@ -333,7 +334,7 @@ export class Orchestrator {
         yield {
           type: 'done',
           content: response,
-          suggestions: [],
+          suggestions: DEFAULT_SUGGESTIONS,
           meta: { tier: 'wasm', route: 'wasm', templateScore, fallback: false },
         };
         return;

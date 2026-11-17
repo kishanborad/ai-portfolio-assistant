@@ -47,6 +47,9 @@ describe('tryTemplate fast path', () => {
     expect(fast).not.toBeNull();
     expect(fast?.answer).toBe('Five years of QA.');
     expect(fast?.score).toBeGreaterThanOrEqual(3);
+    // The mock entry carries no suggestions, so the fast path must
+    // still offer the default chips after the answer.
+    expect(fast?.suggestions.length).toBeGreaterThan(0);
   });
 
   it('returns null when nothing matches', async () => {
