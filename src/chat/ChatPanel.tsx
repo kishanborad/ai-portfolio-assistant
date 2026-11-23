@@ -4,6 +4,8 @@ import { MessageBubble } from './MessageBubble';
 import { Avatar } from './Avatar';
 import type { Orchestrator } from '../ai/orchestrator';
 import { logQuestionToServer } from '../ai/serverLog';
+import type { Theme } from './theme';
+import { readForcedTheme } from './theme';
 
 interface ChatPanelProps {
   orchestrator: Orchestrator;
@@ -20,11 +22,15 @@ const STARTER_CHIPS: SuggestionChip[] = [
   { label: "What's your tech stack?", query: "What's your tech stack?" },
 ];
 
-type Theme = 'day' | 'night';
-
 const THEME_STORAGE_KEY = 'assistant-theme';
 
-function readInitialTheme(): Theme {
+function readInitialTheme(embed: boolean): Theme {
+  // In embed mode the embedding page may lock the theme (?embed=1&theme=day).
+  // That wins over the stored choice and the system preference.
+  if (embed && typeof window !== 'undefined') {
+    const forced = readForcedTheme(window.location.search);
+    if (forced) return forced;
+  }
   if (typeof document !== 'undefined') {
     const applied = document.documentElement.getAttribute('data-theme');
     if (applied === 'day' || applied === 'night') return applied;
@@ -76,7 +82,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
   const [isStreaming, setIsStreaming] = useState(false);
   const [justAnswered, setJustAnswered] = useState(false);
   const answerTimerRef = useRef<number | undefined>(undefined);
-  const [theme, setTheme] = useState<Theme>(readInitialTheme);
+  const [theme, setTheme] = useState<Theme>(() => readInitialTheme(embed));
   const [themeChosen, setThemeChosen] = useState(() => {
     try {
       return localStorage.getItem(THEME_STORAGE_KEY) !== null;
@@ -92,13 +98,15 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
   }, [theme]);
 
   // Until the visitor picks a theme, follow the system preference live.
+  // A forced embed theme (?embed=1&theme=day) is never overridden.
   useEffect(() => {
     if (themeChosen) return;
+    if (embed && readForcedTheme(window.location.search)) return;
     const query = window.matchMedia('(prefers-color-scheme: dark)');
     const onChange = (event: MediaQueryListEvent) => setTheme(event.matches ? 'night' : 'day');
     query.addEventListener('change', onChange);
     return () => query.removeEventListener('change', onChange);
-  }, [themeChosen]);
+  }, [themeChosen, embed]);
 
   const toggleTheme = useCallback(() => {
     const next: Theme = theme === 'night' ? 'day' : 'night';
@@ -277,7 +285,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
       {/* Messages */}
       <div className="flex-1 px-5 py-5 overflow-y-auto flex flex-col gap-5">
         {messages.map((msg) => (
-          <MessageBubble key={msg.id} message={msg} />
+          <MessageBubble key={msg.id} message={msg} embed={embed} />
         ))}
 
         {/* Suggestion chips after last bot message */}
@@ -287,7 +295,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
               <button
                 key={chip.query}
                 onClick={() => handleSend(chip.query)}
-                className="px-3 py-1.5 rounded-full text-[11px] text-accent border border-accent/25 bg-accent/10 hover:bg-accent/20 hover:border-accent/40 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
+                className={`px-3 py-1.5 rounded-full ${embed ? 'text-[10px]' : 'text-[11px]'} text-accent border border-accent/25 bg-accent/10 hover:bg-accent/20 hover:border-accent/40 hover:-translate-y-0.5 transition-all duration-200 cursor-pointer`}
               >
                 {chip.label}
               </button>
@@ -320,7 +328,7 @@ export const ChatPanel = forwardRef<{ sendMessage: (query: string) => void }, Ch
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask about his work, projects, or skills..."
-            className="flex-1 bg-surface border border-line rounded-xl px-4 py-2.5 text-sm text-ink placeholder:text-dimmed focus:outline-none focus:ring-2 focus:ring-accent/30 focus:shadow-glow transition-all duration-200"
+            className={`flex-1 bg-surface border border-line rounded-xl px-4 py-2.5 ${embed ? 'text-[13px]' : 'text-sm'} text-ink placeholder:text-dimmed focus:outline-none focus:ring-2 focus:ring-accent/30 focus:shadow-glow transition-all duration-200`}
             disabled={isTyping}
           />
           <button
