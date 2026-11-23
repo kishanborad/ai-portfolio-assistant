@@ -9,11 +9,18 @@
     <script>
       // Apply the saved theme (or the system preference) before first paint
       // so the page never flashes the wrong theme. The toggle in the chat
-      // panel owns the choice afterwards.
+      // panel owns the choice afterwards. In embed mode the embedding page
+      // may lock the theme (?embed=1&theme=day|night); that wins over the
+      // stored choice and the system preference.
       (function () {
         try {
-          var stored = localStorage.getItem('assistant-theme');
-          var theme = stored === 'day' || stored === 'night' ? stored : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day');
+          var params = new URLSearchParams(window.location.search);
+          var forced = params.get('embed') === '1' ? params.get('theme') : null;
+          var theme = forced === 'day' || forced === 'night' ? forced : null;
+          if (!theme) {
+            var stored = localStorage.getItem('assistant-theme');
+            theme = stored === 'day' || stored === 'night' ? stored : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'night' : 'day');
+          }
           document.documentElement.setAttribute('data-theme', theme);
           document.documentElement.style.backgroundColor = theme === 'night' ? '#141414' : '#F6F3ED';
         } catch (e) { /* storage unavailable: fall back to the day theme */ }
